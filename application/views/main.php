@@ -1,3 +1,7 @@
+
+<?php
+//$this->load->helper('url');
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -6,29 +10,22 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>SMIS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/bootstrap.css"/>
+        <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/style.css"/>
     </head>
     <body>
         <div class="container">
             <div class="container">
                 <div class="jumbotron">
-                    <h1>Welcome to Code Using CI and BT</h1>
-                    <p>Resize this responsive page to see the effect!</p> 
-                </div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h3>Column 1</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="col-sm-4">
-                            <?php $this->load->view($content) ?>
-                        </div>
-                        
-                    </div>
+                    <?php $this->load->view($content) ?>
+                    <?php
+//                    foreach ($records as $rec) {
+//                        echo $rec->id . ' - ' . $rec->examYear . ' - ' . $rec->studId . "<br>";
+//                    }
+                    ?> 
                 </div>
             </div>
         </div>
