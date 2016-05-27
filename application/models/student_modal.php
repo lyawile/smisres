@@ -6,9 +6,13 @@ class Student_modal extends CI_Model {
         $data = array(
             'firstname' => $this->input->post('firstname'),
             'middlename' => $this->input->post('middlename'),
-            'surname' => $this->input->post('surname')
+            'surname' => $this->input->post('surname'),
+            'dateRegistered' => $this->input->post('date')
         );
-        $this->db->insert('student', $data);
+        $results = $this->db->insert('student', $data);
+        if (isset($results)) {
+            
+        }
     }
 
 }

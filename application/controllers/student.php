@@ -30,7 +30,7 @@ class Student extends CI_Controller {
         }
        
     }
-    public function check_rule(){
+    public function check_rule($input = 'accept'){
             
         }
 
