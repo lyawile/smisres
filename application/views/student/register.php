@@ -1,6 +1,6 @@
 <?php echo form_open('student/ingizaData'); ?>
-<?php echo validation_errors(); ?>
 <div class="form-group">
+    <span><?php echo form_error('firstname') ?></span>
     <label for="firstname">Full Name</label>
     <?php
     $data = array(
@@ -15,6 +15,7 @@
     ?>
 </div>
 <div class="form-group">
+    <span><?php echo form_error('middlename') ?></span>
     <label for="middlename">Middle Name</label>
     <?php
     $data = array(
@@ -28,7 +29,8 @@
     ?>
 </div>
 <div class="form-group">
-    <label for="fullname">Full Name</label>
+    <span><?php echo form_error('surname') ?></span>
+    <label for="fullname">Last Name</label>
     <?php
     $data = array(
         'name' => 'surname',
@@ -44,34 +46,36 @@
 <div class="form-group">
     <label>Gender</label>
     <div class="radio">
-    <?php
-    $data = array(
-        'name' => 'gender',
-        'class' => '',
-        'value' => 'male',
-        'checked' => TRUE
-    );
-    echo '<label>'.form_radio($data).' Male</label>';
-    ?>
-</div>
-<div class="radio">
-    <?php
-    $data = array(
-        'name' => 'gender',
-        'class' => '',
-        'value' => 'female',
-        'checked' => TRUE
-    );
-    echo '<label>'.form_radio($data).'Female</label>';
-    ?>
-</div>
+        <?php
+        $data = array(
+            'name' => 'gender',
+            'class' => '',
+            'value' => 'male',
+            'checked' => TRUE
+        );
+        echo '<label>' . form_radio($data) . ' Male</label>';
+        ?>
+    </div>
+    <div class="radio">
+        <?php
+        $data = array(
+            'name' => 'gender',
+            'class' => '',
+            'value' => 'female',
+            'checked' => TRUE
+        );
+        echo '<label>' . form_radio($data) . 'Female</label>';
+        ?>
+    </div>
 </div>
 <input type="hidden" name="date" value="<?php echo date('Y-m-d : H:m:s') ?>" />
 <div class="form-group">
+    <span><?php echo form_error('dateOfBirth') ?></span>
     <label for="dateofbirth" style="display: block">Date of Birth</label>
     <input type="date" name="dateOfBirth" />  
 </div>
 <div class="form-group">
+    <span><?php echo form_error('address') ?></span>
     <label for="address">Address</label>
     <?php
     $data = array(
@@ -86,6 +90,7 @@
 
 </div>
 <div class="form-group">
+    <span><?php echo form_error('phonenumber') ?></span>
     <label for="phonenumber">Phone Number</label>
     <?php
     $data = array(
