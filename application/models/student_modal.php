@@ -14,9 +14,12 @@ class Student_modal extends CI_Model {
         );
         $results = $this->db->insert('student', $data);
         if (isset($results)) {
-            echo 'data successfully saved';
-        }
-        else{
+            $data['successMessage'] = '<div class="success">data successfully saved</div>';
+            $data['error'] = "";
+            $data['content'] = 'student/register';
+            $this->form_validation->unset_field_data();
+            $this->load->view('main', $data);
+        } else {
             echo 'no data saved';
         }
     }

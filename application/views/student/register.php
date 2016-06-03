@@ -1,4 +1,6 @@
-<?php echo form_open('student/ingizaData'); ?>
+<?php date_default_timezone_set('Africa/Dar_es_Salaam'); ?>
+<?php echo form_open_multipart('student/ingizaData'); ?>
+<?php echo $successMessage; ?>
 <div class="form-group">
     <span><?php echo form_error('firstname') ?></span>
     <label for="firstname">Full Name</label>
@@ -68,7 +70,7 @@
         ?>
     </div>
 </div>
-<input type="hidden" name="date" value="<?php echo date('Y-m-d : H:m:s') ?>" />
+<input type="hidden" name="date" value="<?php echo date('Y-m-d : H:i:s') ?>" />
 <div class="form-group">
     <span><?php echo form_error('dateOfBirth') ?></span>
     <label for="dateofbirth" style="display: block">Date of Birth</label>
@@ -103,6 +105,11 @@
     echo form_input($data);
     ?>
 
+</div>
+<div class="form-group">
+    <span style="display: block;"><p><?php echo $error ?></p></span>
+    <label for="phonenumber">Upload Picture</label>
+    <input type="file" name="userfile" size="20" />
 </div>
 <div class="form-group">
 

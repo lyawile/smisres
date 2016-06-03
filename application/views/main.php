@@ -17,16 +17,24 @@ and open the template in the editor.
         <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/style.css"/>
     </head>
     <body>
-        <div class="container">
-            <div class="container">
-                <div class="jumbotron">
-                    <?php $this->load->view($content) ?>
-                    <?php
+        <div class="menu col-lg-12 col-md-12 col-sm-12">
+
+        </div>
+        <div class="col-lg-12 wrapper">
+            <div class="col-lg-2 col-lg-offset-3 col-md-4 col-sm-12 margin-control" >
+                <ul>
+                    <li><a href="">Refgister students</a></li>
+                    <li><a href="">Edit students</a></li>
+                    <li><a href="">Transfer student</a> </li>
+                </ul> 
+            </div>
+            <div class="col-lg-4  col-md-8 col-sm-12 margin-control">
+                <?php $this->load->view($content) ?>
+                <?php
 //                    foreach ($records as $rec) {
 //                        echo $rec->id . ' - ' . $rec->examYear . ' - ' . $rec->studId . "<br>";
 //                    }
-                    ?> 
-                </div>
+                ?> 
             </div>
         </div>
     </body>
