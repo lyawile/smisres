@@ -2,12 +2,13 @@ a {
     text-decoration: none !important;
 }
 .menu{
-    border-bottom:1px solid #d0d0d0;
+    border-bottom:2px solid #d0d0d0;
     height:60px;
     margin-bottom: 10px;
     position: fixed;
     z-index: 1;
     width: 100%;
+    background: #fff;
 }
 .wrapper{
     position: relative;

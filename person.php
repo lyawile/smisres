@@ -1,9 +1,8 @@
 <?php 
 class Person{
     public function __construct() {
-        echo 'Constructed';;
+        echo 'Constructed';
     }
 }
-
 $obj = new Person();
 return $obj;
