@@ -121,6 +121,4 @@
     echo form_submit($data);
     ?>
 </div>
-
-
 <?php echo form_close(); ?>
