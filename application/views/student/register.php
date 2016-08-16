@@ -107,10 +107,25 @@
 
 </div>
 <div class="form-group">
+    <span><?php echo form_error('pic') ?></span>
+    <label for="pic">Upload Picture</label>
+    <?php
+    $data = array(
+        'name' => 'pic',
+        'placeholder' => 'Upload File',
+        'class' => 'form-control',
+        'id' => 'pic',
+        'value' => set_value('pic')
+    );
+    echo form_upload($data);
+    ?>
+
+</div>
+<!--<div class="form-group">
     <span style="display: block;"><p><?php echo $error ?></p></span>
     <label for="phonenumber">Upload Picture</label>
-    <input type="file" name="userfile" size="20" />
-</div>
+    <input type="file" name="userfile" />
+</div>-->
 <div class="form-group">
 
     <?php

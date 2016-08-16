@@ -1,5 +1,4 @@
 <?php
-
 class Student_modal extends CI_Model {
 
     public function insertData() {
@@ -11,7 +10,10 @@ class Student_modal extends CI_Model {
             'gender' => $this->input->post('gender'),
             'birthDate' => $this->input->post('dateOfBirth'),
             'phoneNumber' => $this->input->post('phonenumber'),
+            'picUrl' => $this->upload->data()['file_name']
+                
         );
+        var_dump($this->upload->data()['file_name']);
         $results = $this->db->insert('student', $data);
         if (isset($results)) {
             $data['successMessage'] = '<div class="success">data successfully saved</div>';
