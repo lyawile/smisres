@@ -1,3 +1,4 @@
+
 <?php date_default_timezone_set('Africa/Dar_es_Salaam'); ?>
 <?php echo form_open_multipart('student/ingizaData'); ?>
 <?php echo $successMessage; ?>
@@ -43,6 +44,16 @@
     );
     echo form_input($data);
     ?>
+
+</div>
+<div class="form-group">
+    <span><?php echo form_error('vision') ?></span>
+    <label for="impairment">Disability information</label>
+    <select class="form-control" name="vision">
+        <option value="1">Blind</option>
+        <option value="2">Low vision</option>
+        <option selected="" value="0">Normal</option>
+    </select>
 
 </div>
 <div class="form-group">

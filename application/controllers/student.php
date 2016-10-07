@@ -27,6 +27,7 @@ class Student extends CI_Controller {
             $this->form_validation->set_rules('address', 'Address', 'required');
             $this->form_validation->set_rules('phonenumber', 'Phone Number', 'required');
             $this->form_validation->set_rules('dateOfBirth', 'Date of Birth', 'required');
+            $this->form_validation->set_rules('vision', 'Vision', 'required');
             //$this->form_validation->set_rules('pic', 'Picture URL', 'required');
             $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png';

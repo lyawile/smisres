@@ -1,4 +1,5 @@
 <?php
+
 class Student_modal extends CI_Model {
 
     public function insertData() {
@@ -10,10 +11,9 @@ class Student_modal extends CI_Model {
             'gender' => $this->input->post('gender'),
             'birthDate' => $this->input->post('dateOfBirth'),
             'phoneNumber' => $this->input->post('phonenumber'),
-            'picUrl' => $this->upload->data()['file_name']
-                
+            'picUrl' => $this->upload->data()['file_name'],
+            'vision' => $this->input->post('vision')
         );
-        var_dump($this->upload->data()['file_name']);
         $results = $this->db->insert('student', $data);
         if (isset($results)) {
             $data['successMessage'] = '<div class="success">data successfully saved</div>';
@@ -22,7 +22,9 @@ class Student_modal extends CI_Model {
             $this->form_validation->unset_field_data();
             $this->load->view('main', $data);
         } else {
-            echo 'no data saved';
+            $data['successMessage'] = '<div class="success" style="color: red;">There is an error</div>';
+            $data['content'] = 'student/register';
+            $this->load->view('main', $data);
         }
     }
 
