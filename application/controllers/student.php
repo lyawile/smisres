@@ -53,4 +53,7 @@ class Student extends CI_Controller {
             }
         }
     }
+    public function load(){
+       
+    }
 }

@@ -22,9 +22,9 @@ and open the template in the editor.
         <div class="col-lg-12 wrapper">
             <div class="col-lg-2 col-lg-offset-3 col-md-4 col-sm-12 margin-control" >
                 <ul>
-                    <li><a href="">Refgister students</a></li>
-                    <li><a href="">Edit students</a></li>
-                    <li><a href="">Transfer student</a> </li>
+                    <li><?php echo anchor('student/register', 'Register student'); ?></li>
+                    <li><?php echo anchor('student/load', 'Load students') ?></li>
+                    <li><a href="">Edit Student detailst</a> </li>
                 </ul> 
             </div>
             <div class="col-lg-4  col-md-8 col-sm-12 margin-control">
