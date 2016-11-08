@@ -32,3 +32,7 @@ div ul:first-child li{
     padding-left: 10px;
     line-height: 40px;
 }
+.submit {
+    display: block;
+    margin-top: 20px;
+}
