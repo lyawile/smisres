@@ -56,18 +56,19 @@ class Student extends CI_Controller {
         $data['content'] = 'student/load';
         $this->load->view('main', $data);
     }
-
     public function loadData() {
         $config['upload_path'] = './files/';
-        $config['allowed_types'] = 'txt';
+        $config['allowed_types'] = 'xls|xlsx';
         $config['max_size'] = 100;
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload() == false) {
             $data['mpunga'] = $this->upload->data();
-            $this->load->view('student/data', $data);
+//           $this->load->view('student/data', $data);
+         echo  $data['mpunga']['file_name'];
         } else {
             $data['mpunga'] = $this->upload->display_errors();
             $this->load->view('student/data', $data);
+            
         }
     }
 

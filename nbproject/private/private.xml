@@ -6,8 +6,12 @@
             <file>file:/C:/xampp_yangu/htdocs/smis/application/views/student/data.php</file>
             <file>file:/C:/xampp_yangu/htdocs/smis/application/views/student/register.php</file>
             <file>file:/C:/xampp_yangu/htdocs/smis/application/views/student/load.php</file>
-            <file>file:/C:/xampp_yangu/htdocs/smis/application/views/main.php</file>
+            <file>file:/C:/xampp_yangu/htdocs/smis/get.php</file>
+            <file>file:/C:/xampp_yangu/htdocs/smis/application/config/autoload.php</file>
+            <file>file:/C:/xampp_yangu/htdocs/smis/application/models/student_modal.php</file>
+            <file>file:/C:/xampp_yangu/htdocs/smis/application/views/student/newEmptyPHP.php</file>
             <file>file:/C:/xampp_yangu/htdocs/smis/application/controllers/student.php</file>
+            <file>file:/C:/xampp_yangu/htdocs/smis/files/data</file>
         </group>
     </open-files>
 </project-private>
