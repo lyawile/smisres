@@ -56,19 +56,54 @@ class Student extends CI_Controller {
         $data['content'] = 'student/load';
         $this->load->view('main', $data);
     }
+
     public function loadData() {
-        $config['upload_path'] = './files/';
-        $config['allowed_types'] = 'xls|xlsx';
-        $config['max_size'] = 100;
-        $this->load->library('upload', $config);
-        if (!$this->upload->do_upload() == false) {
-            $data['mpunga'] = $this->upload->data();
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->form_validation->set_rules('userfile','FILE', 'required');
+            if ($this->form_validation->run() === FALSE) {
+                $message['content'] = 'student/load';
+                $message['msg'] = "<p> Plese select a file</p>";
+                $this->load->view('main', $message);
+            }
+            $config['upload_path'] = './files/';
+            $config['allowed_types'] = 'csv';
+            $config['max_size'] = 100;
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload() == false) {
+                $data['mpunga'] = $this->upload->data();
 //           $this->load->view('student/data', $data);
-         echo  $data['mpunga']['file_name'];
-        } else {
-            $data['mpunga'] = $this->upload->display_errors();
-            $this->load->view('student/data', $data);
-            
+                $filepath = $data['mpunga']['file_path'] . $data['mpunga']['file_name'];
+                $file = fopen($filepath, "r");
+                $count = 0;
+                while (($data = fgetcsv($file)) != false) {
+                    if ($count != 0) {
+                        $data = array(
+                            'firstName' => $data[0],
+                            'middleName' => $data[1],
+                            'surname' => $data[2],
+                            'birthDate' => $data[3],
+                            'phoneNumber' => $data[4],
+                            'Gender' => $data[5],
+                            'vision' => $data[6],
+                            'standardSeven' => $data[7],
+                            'year' => $data[8],
+                            'medium' => $data[9],
+                            'dateRegistered' => date("Y-m-d h:i:s")
+                        );
+                        $this->db->insert('student', $data);
+                    }
+                    $count = $count + 1;
+                }
+                fclose($file);
+                unlink($filepath);
+                $message['content'] = 'student/load';
+                $message['msg'] = "<p> Data upload is succcessful</p>";
+                $this->load->view('main', $message);
+            } else {
+                $data['mpunga'] = $this->upload->display_errors();
+                //$this->load->view('student/data', $data);
+            }
         }
     }
 

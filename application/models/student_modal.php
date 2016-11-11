@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Africa/Dar_es_Salaam');
 class Student_modal extends CI_Model {
 
     public function insertData() {
