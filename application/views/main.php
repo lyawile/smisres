@@ -1,12 +1,4 @@
-<?php
-//$this->load->helper('url');
-?>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>SMIS</title>
@@ -24,18 +16,27 @@ and open the template in the editor.
                 <ul>
                     <li><?php echo anchor('student/register', 'Register student'); ?></li>
                     <li><?php echo anchor('student/load', 'Load students') ?></li>
-                    <li><a href="">Edit Student detailst</a> </li>
+                    <li><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
+                    <li><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
                 </ul> 
             </div>
             <div class="col-lg-4  col-md-8 col-sm-12 margin-control">
+                <?php if (isset($msg)) echo $msg; ?>
+
                 <?php $this->load->view($content) ?>
-                <?php
-//                    foreach ($records as $rec) {
-//                        echo $rec->id . ' - ' . $rec->examYear . ' - ' . $rec->studId . "<br>";
-//                    }
-                ?> 
             </div>
         </div>
+        <script src="<?= base_url(); ?>public/js/jquery-3.1.1.js"></script>
+        <script>
+            $(document).ready(
+                    function () {
+                        $('#classId').change(function () {
+                            var classId = $('#classId').val();
+                            alert(classId);
+                        });
+                    }
+            );
+        </script>
     </body>
 </html>
 

@@ -12,7 +12,10 @@ class Student_modal extends CI_Model {
             'birthDate' => $this->input->post('dateOfBirth'),
             'phoneNumber' => $this->input->post('phonenumber'),
             'picUrl' => $this->upload->data()['file_name'],
-            'vision' => $this->input->post('vision')
+            'vision' => $this->input->post('vision'),
+            'standardSeven' => $this->input->post('stdSeven'),
+            'year' => $this->input->post('stdSevenYear'),
+            'medium' => $this->input->post('medium')
         );
         $results = $this->db->insert('student', $data);
         if (isset($results)) {

@@ -1,51 +1,52 @@
 
 <?php date_default_timezone_set('Africa/Dar_es_Salaam'); ?>
-<?php echo form_open_multipart('student/insert'); ?>
-<?php if(isset($successMessage))echo $successMessage; ?>
+<?php if (isset($successMessage)) echo $successMessage; ?>
+<?php echo form_open('student/searchStudent') ?>
 <div class="form-group">
-    <span class="error-message"><?php echo form_error('firstname') ?></span>
-    <label for="firstname">Full Name</label>
+    <span class="error-message"></span>
+    <label for="studentSearch">Student Search</label>
     <?php
     $data = array(
-        'name' => 'firstname',
-        'placeholder' => 'Enter First Name',
+        'name' => 'studentId',
+        'placeholder' => 'Enter student Number',
         'class' => 'form-control',
-        'id' => 'firstname',
-        'value' => set_value('firstname')
+        'id' => 'studentSearch',
+        'value' => set_value('studentId')
     );
-
     echo form_input($data);
     ?>
+    
+</div>
+<div class="form-group">
+    <?php 
+      $data = array(
+        'name'=> 'submit',
+        'class' => 'form-control',
+        'value' => 'search',
+          'id' => 'search'
+    );
+    echo form_submit($data);
+    ?>
+</div>
+<?php echo form_close(); ?>
+<hr/>
+<div class="form-group">
+    <span class="error-message"><?php echo form_error('middlename') ?></span>
+    <label for="fullname">First Name</label>
+    <input type="text" name="surname" value="<?php if (isset($firstname)) echo $firstname; ?>" class="form-control" id="fullname"  />
 </div>
 <div class="form-group">
     <span class="error-message"><?php echo form_error('middlename') ?></span>
-    <label for="middlename">Middle Name</label>
-    <?php
-    $data = array(
-        'name' => 'middlename',
-        'placeholder' => 'Enter Middle Name',
-        'class' => 'form-control',
-        'id' => 'middlename',
-        'value' => set_value('middlename')
-    );
-    echo form_input($data);
-    ?>
+    <label for="fullname">Middle Name</label>
+    <input type="text" name="surname" value="<?php if (isset($middlename)) echo $middlename; ?>" class="form-control" id="fullname"  />
 </div>
+
 <div class="form-group">
     <span class="error-message"><?php echo form_error('surname') ?></span>
     <label for="fullname">Last Name</label>
-    <?php
-    $data = array(
-        'name' => 'surname',
-        'placeholder' => 'Enter Last Name',
-        'class' => 'form-control',
-        'id' => 'fullname',
-        'value' => set_value('surname')
-    );
-    echo form_input($data);
-    ?>
-
+    <input type="text" name="surname" value="<?php if (isset($username)) echo $username; ?>" class="form-control" id="fullname"  />
 </div>
+
 <div class="form-group">
     <span class="error-message" ><?php echo form_error('vision') ?></span>
     <label for="impairment">Disability information</label>
@@ -59,26 +60,10 @@
 <div class="form-group">
     <label>Gender</label>
     <div class="radio">
-        <?php
-        $data = array(
-            'name' => 'gender',
-            'class' => '',
-            'value' => 'male',
-            'checked' => TRUE
-        );
-        echo '<label>' . form_radio($data) . ' Male</label>';
-        ?>
+        <label><input type="radio" name="gender" value="male" <?php if(isset($gender) && $gender !== "" && $gender === "male") echo "checked" ?> class=""> Male</label>   
     </div>
     <div class="radio">
-        <?php
-        $data = array(
-            'name' => 'gender',
-            'class' => '',
-            'value' => 'female',
-            'checked' => TRUE
-        );
-        echo '<label>' . form_radio($data) . 'Female</label>';
-        ?>
+        <label><input type="radio" name="gender" value="male" <?php if(isset($gender) && $gender !== "" && $gender === "female") echo "checked" ?> class=""> Female</label>   
     </div>
 </div>
 
@@ -86,7 +71,7 @@
 <div class="form-group">
     <span class="error-message"><?php echo form_error('dateOfBirth') ?></span>
     <label for="dateofbirth" style="display: block">Date of Birth</label>
-    <input type="date" name="dateOfBirth" />  
+    <input type="date" name="dateOfBirth" value="2015-10-25" />  
 </div>
 
 <div class="form-group">

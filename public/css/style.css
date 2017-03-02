@@ -36,3 +36,10 @@ div ul:first-child li{
     display: block;
     margin-top: 20px;
 }
+.error-message p{
+    color: red;
+}
+#search{
+    background-color: lightslategray;
+    color: #fff;
+}
