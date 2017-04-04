@@ -1,4 +1,4 @@
-
+<?php  ?>  
 <?php date_default_timezone_set('Africa/Dar_es_Salaam'); ?>
 <?php if (isset($successMessage)) echo $successMessage; ?>
 <?php echo form_open('student/searchStudent') ?>
@@ -51,9 +51,9 @@
     <span class="error-message" ><?php echo form_error('vision') ?></span>
     <label for="impairment">Disability information</label>
     <select class="form-control" name="vision">
-        <option value="1">Blind</option>
-        <option value="2">Low vision</option>
-        <option selected="" value="0">Normal</option>
+        <option value="<?php if(isset($vision) && $vision == 1) echo 1?>" <?php if(isset($vision) && $vision == 1) echo "selected"?>>Blind</option>
+        <option value="<?php if(isset($vision) && $vision == 2) echo 2?>" <?php if(isset($vision) && $vision == 2) echo "selected" ?>>Low vision</option>
+        <option  value="<?php if(isset($vision) && $vision == 0) echo 0?>" <?php if(isset($vision) && $vision == 0) echo "selected" ?>>Normal</option>
     </select>
 
 </div>
@@ -160,15 +160,9 @@
     );
     echo form_upload($data);
     ?>
-
 </div>
-<!--<div class="form-group">
-    <span style="display: block;"><p><?php echo $error ?></p></span>
-    <label for="phonenumber">Upload Picture</label>
-    <input type="file" name="userfile" />
-</div>-->
-<div class="form-group">
 
+<div class="form-group">
     <?php
     $data = array(
         'class' => 'btn btn-info',

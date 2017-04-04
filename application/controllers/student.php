@@ -43,6 +43,7 @@ class Student extends CI_Controller {
         $editData['year'] = $year;
         $editData['medium'] = $medium;
         $editData['content'] = 'student/editRegistration';
+        var_dump($editData);
         $this->load->view('main', $editData);
     }
 
