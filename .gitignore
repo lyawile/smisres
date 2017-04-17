@@ -8,3 +8,4 @@ application/logs/*
 !application/logs/.htaccess
 user_guide/*
 uploads/*
+/application/libraries/dompdf/nbproject/private/

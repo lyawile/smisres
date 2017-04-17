@@ -1,4 +1,4 @@
-<?php  ?>  
+<?php ?>  
 <?php date_default_timezone_set('Africa/Dar_es_Salaam'); ?>
 <?php if (isset($successMessage)) echo $successMessage; ?>
 <?php echo form_open('student/searchStudent') ?>
@@ -15,15 +15,15 @@
     );
     echo form_input($data);
     ?>
-    
+
 </div>
 <div class="form-group">
-    <?php 
-      $data = array(
-        'name'=> 'submit',
+    <?php
+    $data = array(
+        'name' => 'submit',
         'class' => 'form-control',
         'value' => 'search',
-          'id' => 'search'
+        'id' => 'search'
     );
     echo form_submit($data);
     ?>
@@ -51,19 +51,19 @@
     <span class="error-message" ><?php echo form_error('vision') ?></span>
     <label for="impairment">Disability information</label>
     <select class="form-control" name="vision">
-        <option value="<?php if(isset($vision) && $vision == 1) echo 1?>" <?php if(isset($vision) && $vision == 1) echo "selected"?>>Blind</option>
-        <option value="<?php if(isset($vision) && $vision == 2) echo 2?>" <?php if(isset($vision) && $vision == 2) echo "selected" ?>>Low vision</option>
-        <option  value="<?php if(isset($vision) && $vision == 0) echo 0?>" <?php if(isset($vision) && $vision == 0) echo "selected" ?>>Normal</option>
+        <option  value="1"  <?php if (isset($vision) && $vision == 1) echo "selected" ?>>Blind</option>
+        <option value="2"  <?php if (isset($vision) && $vision == 2) echo "selected" ?>>Low vision</option>
+        <option value="0"  <?php if (isset($vision) && $vision == 0) echo "selected" ?>>Normal</option>
     </select>
 
 </div>
 <div class="form-group">
     <label>Gender</label>
     <div class="radio">
-        <label><input type="radio" name="gender" value="male" <?php if(isset($gender) && $gender !== "" && $gender === "male") echo "checked" ?> class=""> Male</label>   
+        <label><input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender !== "" && $gender === "male") echo "checked" ?> class=""> Male</label>   
     </div>
     <div class="radio">
-        <label><input type="radio" name="gender" value="male" <?php if(isset($gender) && $gender !== "" && $gender === "female") echo "checked" ?> class=""> Female</label>   
+        <label><input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender !== "" && $gender === "female") echo "checked" ?> class=""> Female</label>   
     </div>
 </div>
 

@@ -8,18 +8,20 @@ class Student extends CI_Controller {
         $data['content'] = 'student/register';
         $this->load->view('main', $data);
     }
-    public function viewStudents(){
+
+    public function viewStudents() {
         $file['content'] = 'student/viewStudents';
-        $this->load->view('main',$file);
+        $this->load->view('main', $file);
     }
+
     public function searchStudent() {
 //        $data = $this->db->get('student', array(766));
-       $studentId =  $this->input->post('studentId');
+        $studentId = $this->input->post('studentId');
         $data = $this->db->query("SELECT * FROM student WHERE id = '$studentId'");
         foreach ($data->result() as $arr) {
-            $firstname =  $arr->firstname;
-            $middlename =  $arr->middlename;
-            $surname =  $arr->surname;
+            $firstname = $arr->firstname;
+            $middlename = $arr->middlename;
+            $surname = $arr->surname;
             $dateRegistered = $arr->dateRegistered;
             $gender = $arr->gender;
             $birthDate = $arr->birthDate;
@@ -33,7 +35,7 @@ class Student extends CI_Controller {
         $editData['username'] = $surname;
         $editData['firstname'] = $firstname;
         $editData['middlename'] = $middlename;
-        $editData['dateRegistered'] =$dateRegistered;
+        $editData['dateRegistered'] = $dateRegistered;
         $editData['gender'] = $gender;
         $editData['birthDate'] = $birthDate;
         $editData['phoneNumber'] = $phoneNumber;
@@ -93,6 +95,7 @@ class Student extends CI_Controller {
         $data['content'] = 'student/load';
         $this->load->view('main', $data);
     }
+
 //    public function searchStudent(){
 //        echo $this->input->post('studentId');
 //    }
@@ -144,6 +147,22 @@ class Student extends CI_Controller {
                 //$this->load->view('student/data', $data);
             }
         }
+    }
+
+    function path() {
+        echo APPPATH;
+    }
+
+    function mypdf() {
+        unlink('jioajsja.pdf');
+        $datec= date("h:m:i");
+        $this->load->library('pdf');
+        $this->pdf->load_view('student/mypdf');
+        $this->pdf->render();
+        $output = $this->pdf->output(); // added 
+        file_put_contents("jioajsja.pdf", $output);
+        //$this->pdf->stream("welcome.pdf",array("Attachment" => false));
+        //exit(0);
     }
 
 }
