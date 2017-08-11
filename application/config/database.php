@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '';
+$db['default']['password'] = '0404test';
 $db['default']['database'] = 'mtiss_db';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

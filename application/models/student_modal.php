@@ -30,5 +30,8 @@ class Student_modal extends CI_Model {
             $this->load->view('main', $data);
         }
     }
+    public function getStudents(){
+        return 2;
+    }
 
 }

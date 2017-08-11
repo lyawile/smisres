@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/bootstrap.css"/>
         <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/style.css"/>
+        <style>
+        </style>
     </head>
     <body>
         <div class="menu col-lg-12 col-md-12 col-sm-12">
@@ -32,7 +34,18 @@
                     function () {
                         $('#classId').change(function () {
                             var classId = $('#classId').val();
-                            alert(classId);
+                            $.ajax({
+                                type: 'POST',
+                                data:{classId: classId},
+                                url: "<?= base_url(); ?>"+"student/listStudent/"+classId,
+                                success: function (data) {
+                                    $('p').html(data);
+                                },
+                                beforeSend: function (xhr) {
+                                    
+                                }
+
+                            });
                         });
                     }
             );

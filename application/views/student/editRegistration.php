@@ -71,6 +71,14 @@
 <div class="form-group">
     <span class="error-message"><?php echo form_error('dateOfBirth') ?></span>
     <label for="dateofbirth" style="display: block">Date of Birth</label>
+    <?php 
+    $data = array(
+        'type'=>'date',
+        'name' => 'dateOfBirth',
+        'value' => set_value('dateOfBirth', $birthDate)
+    );
+    echo form_input($data);
+    ?>
     <input type="date" name="dateOfBirth" value="2015-10-25" />  
 </div>
 
@@ -99,7 +107,7 @@
         'placeholder' => 'Enter Phone Number',
         'class' => 'form-control',
         'id' => 'phonenumber',
-        'value' => set_value('phonenumber')
+        'value' => set_value('phonenumber',$phoneNumber)
     );
     echo form_input($data);
     ?>
@@ -115,7 +123,7 @@
         'placeholder' => 'Enter Standard Seven School',
         'class' => 'form-control',
         'id' => 'stdSeven',
-        'value' => set_value('stdSeven')
+        'value' => set_value('stdSeven',$standardSeven)
     );
     echo form_input($data);
     ?>
@@ -131,7 +139,7 @@
         'placeholder' => 'Enter Standard Seven Year',
         'class' => 'form-control',
         'id' => 'stdSevenYear',
-        'value' => set_value('stdSevenYear')
+        'value' => set_value('stdSevenYear',$year)
     );
     echo form_input($data);
     ?>
@@ -149,17 +157,18 @@
 
 <div class="form-group">
     <span class="error-message" ><?php echo form_error('pic') ?></span>
-    <label for="pic">Upload Picture</label>
+    <label for="pic">Change Picture</label>
     <?php
     $data = array(
         'name' => 'pic',
         'placeholder' => 'Upload File',
         'class' => 'form-control',
         'id' => 'pic',
-        'value' => set_value('pic')
+        'value' => set_value($picUrl)
     );
     echo form_upload($data);
     ?>
+    <img src="<?php echo base_url().'files/'.$picUrl ?>"/>
 </div>
 
 <div class="form-group">

@@ -164,5 +164,12 @@ class Student extends CI_Controller {
         //$this->pdf->stream("welcome.pdf",array("Attachment" => false));
         //exit(0);
     }
+    public function listStudent(){
+        $data = $this->input->get_post('classId');
+        $this->load->model('Student_modal');
+        $newData = $this->Student_modal->getStudents();
+        print_r($newData);
+        echo "Test if mpunga unakuja: ".$data;
+    }
 
 }
