@@ -10,19 +10,15 @@
         <div>
             <table class="table">
                 <tr>
-                    <th>Id</th>
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-                    <th>Surname</th>
+                    <th>Registration</th>
+                    <th>Full Name</th>
                     <th>Gender</th>
                 </tr>
-                <tr>
+<!--                <tr>
                     <td>Id</td>
-                    <td>Hassan</td>
-                    <td>Ally</td>
-                    <td>Lyawile</td>
+                    <td>Hassan Ally Lyawile </td>
                     <td>Male</td>
-                </tr>
+                </tr>-->
             </table>
             <p></p>
         </div>

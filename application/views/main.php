@@ -35,11 +35,16 @@
                         $('#classId').change(function () {
                             var classId = $('#classId').val();
                             $.ajax({
+//                                dataType: 'json',
                                 type: 'POST',
                                 data:{classId: classId},
                                 url: "<?= base_url(); ?>"+"student/listStudent/"+classId,
                                 success: function (data) {
-                                    $('p').html(data);
+                                    var parsed = JSON.parse(data);
+//                                    console.log(parsed[0].firstname);
+                                    $(parsed).each( function( i,k){
+                                       
+                                    });
                                 },
                                 beforeSend: function (xhr) {
                                     

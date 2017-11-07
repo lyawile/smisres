@@ -1,4 +1,4 @@
-<?php ?>  
+<?php echo $birthDate?>  
 <?php date_default_timezone_set('Africa/Dar_es_Salaam'); ?>
 <?php if (isset($successMessage)) echo $successMessage; ?>
 <?php echo form_open('student/searchStudent') ?>
@@ -75,7 +75,7 @@
     $data = array(
         'type'=>'date',
         'name' => 'dateOfBirth',
-        'value' => set_value('dateOfBirth', $birthDate)
+        'value' => $birthDate
     );
     echo form_input($data);
     ?>
@@ -91,7 +91,7 @@
         'placeholder' => 'Enter an Address',
         'class' => 'form-control',
         'id' => 'address',
-        'value' => set_value('address')
+        'value' => $address = isset($address)? $address: set_value()
     );
     echo form_input($data);
     ?>

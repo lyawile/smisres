@@ -1,5 +1,7 @@
 <?php
 
+//error_reporting(0);
+
 class Student extends CI_Controller {
 
     public function register() {
@@ -31,6 +33,7 @@ class Student extends CI_Controller {
             $standardSeven = $arr->standardSeven;
             $year = $arr->year;
             $medium = $arr->medium;
+            $address = $arr->address;
         }
         $editData['username'] = $surname;
         $editData['firstname'] = $firstname;
@@ -44,6 +47,7 @@ class Student extends CI_Controller {
         $editData['standardSeven'] = $standardSeven;
         $editData['year'] = $year;
         $editData['medium'] = $medium;
+        $editData['address'] = $address;
         $editData['content'] = 'student/editRegistration';
         var_dump($editData);
         $this->load->view('main', $editData);
@@ -155,7 +159,7 @@ class Student extends CI_Controller {
 
     function mypdf() {
         unlink('jioajsja.pdf');
-        $datec= date("h:m:i");
+        $datec = date("h:m:i");
         $this->load->library('pdf');
         $this->pdf->load_view('student/mypdf');
         $this->pdf->render();
@@ -164,12 +168,10 @@ class Student extends CI_Controller {
         //$this->pdf->stream("welcome.pdf",array("Attachment" => false));
         //exit(0);
     }
-    public function listStudent(){
-        $data = $this->input->get_post('classId');
-        $this->load->model('Student_modal');
-        $newData = $this->Student_modal->getStudents();
-        print_r($newData);
-        echo "Test if mpunga unakuja: ".$data;
+
+    public function listStudent($data) {
+     $this->load->model('student_modal');
+     $this->student_modal->getStudents($data);
     }
 
 }

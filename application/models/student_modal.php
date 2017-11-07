@@ -1,5 +1,7 @@
 <?php
+
 date_default_timezone_set('Africa/Dar_es_Salaam');
+
 class Student_modal extends CI_Model {
 
     public function insertData() {
@@ -15,7 +17,8 @@ class Student_modal extends CI_Model {
             'vision' => $this->input->post('vision'),
             'standardSeven' => $this->input->post('stdSeven'),
             'year' => $this->input->post('stdSevenYear'),
-            'medium' => $this->input->post('medium')
+            'medium' => $this->input->post('medium'),
+            'address' => $this->input->post('address')
         );
         $results = $this->db->insert('student', $data);
         if (isset($results)) {
@@ -30,8 +33,26 @@ class Student_modal extends CI_Model {
             $this->load->view('main', $data);
         }
     }
-    public function getStudents(){
-        return 2;
+
+    public function getStudents($id) {
+        $query = $this->db->get('student');
+            
+        foreach ($query->result() as $data) {
+
+            $t['firstname'] = $data->firstname;
+            $t['middlename'] = $data->middlename;
+            $t['surname'] = $data->surname;
+            $t['dateRegistered'] = $data->dateRegistered;
+            $t['phoneNumber'] = $data->phoneNumber;
+            $t['gender'] = $data->gender;
+            $t['birthDate'] = $data->birthDate;
+            $mdobaji[] = $t;
+            
+        }
+
+//        $mdobaji = array();
+        echo json_encode($mdobaji);
+        
     }
 
 }

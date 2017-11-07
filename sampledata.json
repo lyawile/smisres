@@ -1,0 +1,81 @@
+[{
+        "firstname": "Jamali",
+        "middlename": "Yusuf ",
+        "surname": "Kibana",
+        "dateRegistered": "2016-11-17 08:15:36",
+        "phoneNumber": "0688026388",
+        "gender": "male",
+        "birthDate": "2011-02-10"
+    }, {
+        "firstname": "Yaaqub",
+        "middlename": "Hassan",
+        "surname": "LYAWILE",
+        "dateRegistered": "2016-11-17 08:16:51",
+        "phoneNumber": "0688026388",
+        "gender": "male",
+        "birthDate": "2016-01-10"
+    }, {
+        "firstname": "Mdobaji",
+        "middlename": "Kagogo",
+        "surname": "Baisi",
+        "dateRegistered": "2016-11-17 08:18:29",
+        "phoneNumber": "0688026388",
+        "gender": "male",
+        "birthDate": "2016-11-17"
+    }, {
+        "firstname": "Jumanne",
+        "middlename": "Ally",
+        "surname": "Sange",
+        "dateRegistered": "2017-01-19 22:05:47",
+        "phoneNumber": "1212",
+        "gender": "male",
+        "birthDate": "2017-01-19"
+    }, {
+        "firstname": "Sofia ",
+        "middlename": "Ally ",
+        "surname": "Lyawile",
+        "dateRegistered": "2017-02-15 07:28:53",
+        "phoneNumber": "4785555",
+        "gender": "female",
+        "birthDate": "1993-05-25"
+    }, {
+        "firstname": "Twalib",
+        "middlename": "Rashid",
+        "surname": "Amiri",
+        "dateRegistered": "2017-04-05 07:00:44",
+        "phoneNumber": "0688026388",
+        "gender": "male",
+        "birthDate": "2006-05-23"
+    }, {
+        "firstname": "Robert",
+        "middlename": "Andrea ",
+        "surname": "Londo",
+        "dateRegistered": "2017-04-05 07:05:12",
+        "phoneNumber": "012223336",
+        "gender": "male",
+        "birthDate": "2004-01-07"
+    }, {
+        "firstname": "Juma",
+        "middlename": "Ally ",
+        "surname": "Fakihi",
+        "dateRegistered": "2017-04-05 07:29:51",
+        "phoneNumber": "1212455255",
+        "gender": "male",
+        "birthDate": "1987-06-02"
+    }, {
+        "firstname": "Robert",
+        "middlename": "Andrea",
+        "surname": "Mdobaji",
+        "dateRegistered": "2017-11-06 10:57:03",
+        "phoneNumber": "01222222",
+        "gender": "male",
+        "birthDate": "2008-06-11"
+    }, {
+        "firstname": "Yaaqub",
+        "middlename": "Hassan",
+        "surname": "Lyawile",
+        "dateRegistered": "2017-11-06 11:29:16",
+        "phoneNumber": "01222222",
+        "gender": "male",
+        "birthDate": "2011-06-11"
+    }]
