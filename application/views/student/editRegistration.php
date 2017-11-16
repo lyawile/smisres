@@ -1,6 +1,5 @@
-<?php echo $birthDate?>  
 <?php date_default_timezone_set('Africa/Dar_es_Salaam'); ?>
-<?php if (isset($successMessage)) echo $successMessage; ?>
+<?php if (isset($success_update)) echo $success_update; ?>
 <?php echo form_open('student/searchStudent') ?>
 <div class="form-group">
     <span class="error-message"></span>
@@ -30,15 +29,20 @@
 </div>
 <?php echo form_close(); ?>
 <hr/>
+<?php
+$id = array('id' => "$studentId");
+
+echo form_open_multipart('student/edit', '', $id)
+?>
 <div class="form-group">
     <span class="error-message"><?php echo form_error('middlename') ?></span>
     <label for="fullname">First Name</label>
-    <input type="text" name="surname" value="<?php if (isset($firstname)) echo $firstname; ?>" class="form-control" id="fullname"  />
+    <input type="text" name="firstname" value="<?php if (isset($firstname)) echo $firstname; ?>" class="form-control" id="fullname"  />
 </div>
 <div class="form-group">
     <span class="error-message"><?php echo form_error('middlename') ?></span>
     <label for="fullname">Middle Name</label>
-    <input type="text" name="surname" value="<?php if (isset($middlename)) echo $middlename; ?>" class="form-control" id="fullname"  />
+    <input type="text" name="middlename" value="<?php if (isset($middlename)) echo $middlename; ?>" class="form-control" id="fullname"  />
 </div>
 
 <div class="form-group">
@@ -63,23 +67,22 @@
         <label><input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender !== "" && $gender === "male") echo "checked" ?> class=""> Male</label>   
     </div>
     <div class="radio">
-        <label><input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender !== "" && $gender === "female") echo "checked" ?> class=""> Female</label>   
+        <label><input type="radio" name="gender" value="female" <?php if (isset($gender) && $gender !== "" && $gender === "female") echo "checked" ?> class=""> Female</label>   
     </div>
 </div>
 
-<input type="hidden" name="date" value="<?php echo date('Y-m-d : H:i:s') ?>" />
+<input type="hidden" name="dateRegistered" value="<?php echo $dateRegistered; ?>" />
 <div class="form-group">
     <span class="error-message"><?php echo form_error('dateOfBirth') ?></span>
     <label for="dateofbirth" style="display: block">Date of Birth</label>
-    <?php 
+    <?php
     $data = array(
-        'type'=>'date',
-        'name' => 'dateOfBirth',
+        'type' => 'date',
+        'name' => 'birthDate',
         'value' => $birthDate
     );
     echo form_input($data);
     ?>
-    <input type="date" name="dateOfBirth" value="2015-10-25" />  
 </div>
 
 <div class="form-group">
@@ -91,7 +94,7 @@
         'placeholder' => 'Enter an Address',
         'class' => 'form-control',
         'id' => 'address',
-        'value' => $address = isset($address)? $address: set_value()
+        'value' => $address = isset($address) ? $address : set_value()
     );
     echo form_input($data);
     ?>
@@ -99,15 +102,15 @@
 </div>
 
 <div class="form-group">
-    <span class="error-message" ><?php echo form_error('phonenumber') ?></span>
+    <span class="error-message" ><?php echo form_error('phoneNumber') ?></span>
     <label for="phonenumber">Phone Number</label>
     <?php
     $data = array(
-        'name' => 'phonenumber',
-        'placeholder' => 'Enter Phone Number',
+        'name' => 'phoneNumber',
+        'placeholder' => 'Edit Phone Number',
         'class' => 'form-control',
-        'id' => 'phonenumber',
-        'value' => set_value('phonenumber',$phoneNumber)
+        'id' => 'phoneNumber',
+        'value' => set_value('phoneNumber', $phoneNumber)
     );
     echo form_input($data);
     ?>
@@ -119,11 +122,11 @@
     <label for="stdSeven">Standard Seven School</label>
     <?php
     $data = array(
-        'name' => 'stdSeven',
+        'name' => 'standardSeven',
         'placeholder' => 'Enter Standard Seven School',
         'class' => 'form-control',
         'id' => 'stdSeven',
-        'value' => set_value('stdSeven',$standardSeven)
+        'value' => set_value('stdSeven', $standardSeven)
     );
     echo form_input($data);
     ?>
@@ -135,11 +138,11 @@
     <label for="stdSevenYear">Standard Seven Year</label>
     <?php
     $data = array(
-        'name' => 'stdSevenYear',
+        'name' => 'year',
         'placeholder' => 'Enter Standard Seven Year',
         'class' => 'form-control',
         'id' => 'stdSevenYear',
-        'value' => set_value('stdSevenYear',$year)
+        'value' => set_value('stdSevenYear', $year)
     );
     echo form_input($data);
     ?>
@@ -150,8 +153,8 @@
     <span class="error-message" ><?php echo form_error('medium') ?></span>
     <label for="medium">Standard Seven Medium</label>
     <select class="form-control" id="medium" name="medium">
-        <option value="English">English</option>
-        <option selected="" value="Swahili">Swahili</option>
+        <option value="English" <?php if($medium =='English') echo "selected";  ?>>English</option>
+        <option value ="Swahili" <?php if($medium == 'Swahili') echo "selected";  ?>>Swahili</option>
     </select>
 </div>
 
@@ -160,7 +163,7 @@
     <label for="pic">Change Picture</label>
     <?php
     $data = array(
-        'name' => 'pic',
+        'name' => 'picUrl',
         'placeholder' => 'Upload File',
         'class' => 'form-control',
         'id' => 'pic',
@@ -168,7 +171,8 @@
     );
     echo form_upload($data);
     ?>
-    <img src="<?php echo base_url().'files/'.$picUrl ?>"/>
+    <img src="<?php echo base_url() . 'files/' . $picUrl ?>"/>
+    <?php echo form_hidden('picUrl', $picUrl); ?>
 </div>
 
 <div class="form-group">

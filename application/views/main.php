@@ -35,19 +35,27 @@
                         $('#classId').change(function () {
                             var classId = $('#classId').val();
                             $.ajax({
-//                                dataType: 'json',
+                                dataType: 'json',
                                 type: 'POST',
-                                data:{classId: classId},
-                                url: "<?= base_url(); ?>"+"student/listStudent/"+classId,
+                                data: {classId: classId},
+                                url: "<?= base_url(); ?>" + "student/listStudent/" + classId,
                                 success: function (data) {
-                                    var parsed = JSON.parse(data);
+                                    console.log(data);
+                                   // var parsed = JSON.parse(data);
 //                                    console.log(parsed[0].firstname);
-                                    $(parsed).each( function( i,k){
-                                       
+                                    var student_data = '';
+                                    var parsed = data;
+                                    $(parsed).each(function (i, k) {
+                                        student_data += '<tr>';
+                                        student_data += '<td>'+parsed[i].id+'</td>'
+                                        student_data+='<td>'+ parsed[i].firstname +' '+parsed[i].middlename +' '+ parsed[i].surname+' ('+parsed[i].gender+')'+ '</td>';
+                                        student_data+='<td><a href="searchStudent/'+parsed[i].id+'">Edit</a> |<a href="delete/'+parsed[i].id+'"> Delete</a></td>';
+                                        student_data += '<tr>';
                                     });
+                                    $('tr.removeit').replaceWith(student_data);
                                 },
                                 beforeSend: function (xhr) {
-                                    
+
                                 }
 
                             });

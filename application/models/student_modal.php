@@ -36,9 +36,8 @@ class Student_modal extends CI_Model {
 
     public function getStudents($id) {
         $query = $this->db->get('student');
-            
         foreach ($query->result() as $data) {
-
+            $t['id'] = $data->id;
             $t['firstname'] = $data->firstname;
             $t['middlename'] = $data->middlename;
             $t['surname'] = $data->surname;

@@ -12,15 +12,11 @@
                 <tr>
                     <th>Registration</th>
                     <th>Full Name</th>
-                    <th>Gender</th>
+                    <th>Action</th>
                 </tr>
-<!--                <tr>
-                    <td>Id</td>
-                    <td>Hassan Ally Lyawile </td>
-                    <td>Male</td>
-                </tr>-->
+                <tr class="removeit"><td></td></tr>
             </table>
-            <p></p>
+
         </div>
     </div>
 

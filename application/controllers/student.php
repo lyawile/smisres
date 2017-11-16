@@ -1,6 +1,5 @@
 <?php
-
-//error_reporting(0);
+error_reporting(0);
 
 class Student extends CI_Controller {
 
@@ -16,9 +15,12 @@ class Student extends CI_Controller {
         $this->load->view('main', $file);
     }
 
-    public function searchStudent() {
+    public function searchStudent($studentIdFromEdit) {
 //        $data = $this->db->get('student', array(766));
         $studentId = $this->input->post('studentId');
+        if ($studentIdFromEdit != "") {
+            $studentId = $studentIdFromEdit;
+        }
         $data = $this->db->query("SELECT * FROM student WHERE id = '$studentId'");
         foreach ($data->result() as $arr) {
             $firstname = $arr->firstname;
@@ -48,6 +50,7 @@ class Student extends CI_Controller {
         $editData['year'] = $year;
         $editData['medium'] = $medium;
         $editData['address'] = $address;
+        $editData['studentId'] = $studentId;
         $editData['content'] = 'student/editRegistration';
         var_dump($editData);
         $this->load->view('main', $editData);
@@ -170,8 +173,58 @@ class Student extends CI_Controller {
     }
 
     public function listStudent($data) {
-     $this->load->model('student_modal');
-     $this->student_modal->getStudents($data);
+        $this->load->model('student_modal');
+        $this->student_modal->getStudents($data);
+    }
+
+    public function edit() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = $this->input->post();
+
+            if (!empty($_FILES['picUrl']['name'])) {
+                $config['upload_path'] = './files/';
+                $config['allowed_types'] = 'gif|jpg|png';
+                $config['max_size'] = '1024';
+                $config['max_width'] = '1024';
+                $config['max_height'] = '768';
+                $config['overwrite'] = FALSE;
+                $this->load->library('upload', $config);
+                $this->upload->do_upload('picUrl');
+                $data['picUrl'] = $this->upload->data()['file_name'];
+            }
+            $id = $data['id'];
+            $this->db->where('id', $id);
+            $result = $this->db->update('student', $data);
+            if ($result == TRUE) {
+                $editData['success_update'] = '<div class="success">data successfully updated</div>';
+            }
+            $editData['picUrl'] = $data['picUrl'];
+            $editData['username'] = $data['surname'];
+            $editData['firstname'] = $data['firstname'];
+            $editData['middlename'] = $data['middlename'];
+            $editData['dateRegistered'] = $data['dateRegistered'];
+            $editData['gender'] = $data['gender'];
+            $editData['birthDate'] = $data['surname'];
+            $editData['phoneNumber'] = $data['phoneNumber'];
+            $editData['birthDate'] = $data['birthDate'];
+            $editData['vision'] = $data['vision'];
+            $editData['standardSeven'] = $data['standardSeven'];
+            $editData['year'] = $data['year'];
+            $editData['medium'] = $data['medium'];
+            $editData['address'] = $data['address'];
+            $editData['studentId'] = $data['studentId'];
+            $editData['content'] = 'student/editRegistration';
+            $editData['content'] = 'student/editRegistration';
+            $editData['medium'] =$data['medium'];
+            $this->load->view('main', $editData);
+            ?>
+            <pre>
+                <?php // print_r($editData); ?>
+            </pre>
+
+            <?php
+        }
     }
 
 }
+?>
