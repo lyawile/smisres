@@ -62,9 +62,9 @@ class Student extends CI_Controller {
 
     public function insert() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->form_validation->set_rules('firstname', 'First Name', 'required');
-            $this->form_validation->set_rules('middlename', 'Middle Name', 'required');
-            $this->form_validation->set_rules('surname', 'Last Name', 'required');
+            $this->form_validation->set_rules('firstname', 'First Name', 'required|callback_validateHumanName');
+            $this->form_validation->set_rules('middlename', 'Middle Name', 'required|callback_validateHumanName');
+            $this->form_validation->set_rules('surname', 'Last Name', 'required|callback_validateHumanName');
             $this->form_validation->set_rules('gender', 'Gender', 'required');
             $this->form_validation->set_rules('date', 'Date', 'required');
             $this->form_validation->set_rules('address', 'Address', 'required');
@@ -215,7 +215,7 @@ class Student extends CI_Controller {
             $editData['studentId'] = $data['studentId'];
             $editData['content'] = 'student/editRegistration';
             $editData['content'] = 'student/editRegistration';
-            $editData['medium'] =$data['medium'];
+            $editData['medium'] = $data['medium'];
             $this->load->view('main', $editData);
             ?>
             <pre>
@@ -223,6 +223,15 @@ class Student extends CI_Controller {
             </pre>
 
             <?php
+        }
+    }
+
+    public function validateHumanName($name) {
+        if (preg_match('/^[A-Za-z\']+$/', $name)) {
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('validateHumanName', 'The %s is invalid');
+            return FALSE;
         }
     }
 
