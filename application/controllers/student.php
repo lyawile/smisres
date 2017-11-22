@@ -56,8 +56,14 @@ class Student extends CI_Controller {
         $this->load->view('main', $editData);
     }
 
-    public function delete() {
-        
+    public function delete($studentId) {
+        $this->load->model('student_modal');
+        $result = $this->student_modal->delete($studentId);
+//         if($result == 1){
+//            $data['delete_success'] ="student number: ".$id." is deleted successfully";
+//            $data['content'] ='student/viewStudents';
+//            $this->load->view('main', $data);
+//        }
     }
 
     public function insert() {

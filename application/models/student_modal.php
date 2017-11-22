@@ -50,8 +50,14 @@ class Student_modal extends CI_Model {
         }
 
 //        $mdobaji = array();
+//        sleep(5);
         echo json_encode($mdobaji);
         
+        
+    }
+    public function delete($id){
+//        $msg = $this->db->delete('student', array('id'=>$id));
+        echo $id;
     }
 
 }
