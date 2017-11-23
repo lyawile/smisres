@@ -30,58 +30,52 @@
         </div>
         <script src="<?= base_url(); ?>public/js/jquery-3.1.1.js"></script>
         <script>
-            $(document).ready(
-                    function () {
-                        $('#classId').change(function () {
-                            var classId = $('#classId').val();
-                            $.ajax({
-                                dataType: 'json',
-                                type: 'POST',
-                                data: {classId: classId},
-                                url: "<?= base_url(); ?>" + "student/listStudent/" + classId,
-                                success: function (data) {
-                                    console.log(data);
-                                    // var parsed = JSON.parse(data);
-//                                    console.log(parsed[0].firstname);
-                                    var student_data = '';
-                                    var parsed = data;
-                                    $(parsed).each(function (i, k) {
-                                        student_data += '<tr>';
-                                        student_data += '<td>' + parsed[i].id + '</td>'
-                                        student_data += '<td>' + parsed[i].firstname + ' ' + parsed[i].middlename + ' ' + parsed[i].surname + ' (' + parsed[i].gender + ')' + '</td>';
-                                        student_data += '<td><a  href="searchStudent/' + parsed[i].id + '">Edit</a> |<a id="delete" onclick="return deleteStudent();" href="delete/' + parsed[i].id + '"> Delete</a></td>';
-                                        student_data += '<tr>';
-                                    });
-                                    $('p').replaceWith(student_data);
-                                },
-                                beforeSend: function (xhr) {
-                                    $('tr.removeit').replaceWith('<p>Loading data ...</p>');
-                                }
-
-                            });
-                        });
-                    }
-            );
-
-            function deleteStudent() {
-                var con = confirm();
-                if (con == false) {
-                    return false;
-                } else {
+            $(document).ready(function () {
+                $('#classId').change(function () {
+                    var classId = $('#classId').val();
                     $.ajax({
-                        url: '<?= base_url() ?>index.php/student/delete/7',
-                        data: 7,
-                        success: function (data, textStatus, jqXHR) {
-                            alert(data);
-                           
+                        dataType: 'json',
+                        type: 'POST',
+                        data: {classId: classId},
+                        url: "<?= base_url(); ?>" + "student/listStudent/" + classId,
+                        success: function (data) {
+                            console.log(data);
+                            // var parsed = JSON.parse(data);
+//                                    console.log(parsed[0].firstname);
+                            var student_data = '';
+                            var parsed = data;
+                            $(parsed).each(function (i, k) {
+                                student_data += '<tr>';
+                                student_data += '<td>' + parsed[i].id + '</td>'
+                                student_data += '<td>' + parsed[i].firstname + ' ' + parsed[i].middlename + ' ' + parsed[i].surname + ' (' + parsed[i].gender + ')' + '</td>';
+                                student_data += '<td><a  href="searchStudent/' + parsed[i].id + '">Edit</a> |<a id="delete" onclick="return deleteStudent(this)"  href="delete/' + parsed[i].id + '"> Delete</a></td>';
+                                student_data += '<tr>';
+                            });
+                            $('p').replaceWith(student_data);
                         },
                         beforeSend: function (xhr) {
-
+                            $('tr.removeit').replaceWith('<p>Loading data ...</p>');
                         }
 
                     });
+                });
+            }
+            );
+            function deleteStudent(e) {
+                var activeLink = $(e).attr('href');
+                var con = confirm("Are you sure you want to delete?");
+                if (con == true) {
+                    alert("the record to delete is no: " + activeLink);
+                    $.ajax({
+                        url: "<?= base_url(); ?>" + "student/" + activeLink,
+                        success: function (data, textStatus, jqXHR) {
+                            alert(data);
+                            location.reload();
+
+                        }
+                    });
                 }
-                 return false;
+                return false;
             }
         </script>
     </body>

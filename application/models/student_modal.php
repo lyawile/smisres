@@ -56,8 +56,10 @@ class Student_modal extends CI_Model {
         
     }
     public function delete($id){
-//        $msg = $this->db->delete('student', array('id'=>$id));
-        echo $id;
+        $msg = $this->db->delete('student', array('id'=>$id));
+        if($msg == 1){
+            echo "Student number: $id is successfully deleted";
+        }
     }
 
 }
