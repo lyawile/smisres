@@ -3,7 +3,7 @@
 <?php echo form_open_multipart('student/insert'); ?>
 <?php if(isset($successMessage))echo $successMessage; ?>
 <div class="form-group">
-    <span class="error-message"><?php echo form_error('firstname') ?></span>
+    <span class="error-message"><?php echo form_error('firstname'); ?></span>
     <label for="firstname">Full Name</label>
     <?php
     $data = array(
