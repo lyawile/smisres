@@ -15,11 +15,12 @@
         </div>
         <div class="col-lg-12 wrapper">
             <div class="col-lg-2 col-lg-offset-3 col-md-4 col-sm-12 margin-control">
-                <ul>
+                <ul><?php $data=array('target'=>'_blank') ?>
                     <li><?php echo anchor('student/register', 'Register student'); ?></li>
                     <li><?php echo anchor('student/load', 'Load students') ?></li>
                     <li><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
                     <li><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
+                    <li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>
                 </ul> 
             </div>
             <div class="col-lg-4  col-md-8 col-sm-12 margin-control">
