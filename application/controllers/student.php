@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 
 class Student extends CI_Controller {
 
@@ -11,6 +11,8 @@ class Student extends CI_Controller {
     }
 
     public function viewStudents() {
+        $class = $this->db->get('stream');
+        $file['class'] = $class;
         $file['content'] = 'student/viewStudents';
         $this->load->view('main', $file);
     }
@@ -52,7 +54,7 @@ class Student extends CI_Controller {
         $editData['address'] = $address;
         $editData['studentId'] = $studentId;
         $editData['content'] = 'student/editRegistration';
-        var_dump($editData);
+        var_dump($editData); // for debugging 
         $this->load->view('main', $editData);
     }
 
@@ -135,35 +137,6 @@ class Student extends CI_Controller {
 
                 $files = scandir('./excelFiles/');
                 $files = array_diff($files, array('.', '..'));
-             
-                echo "<br/>";
-                   echo $fileNumber = count($files);
-                echo '<pre>';
-                unlink($filepath);
-                  echo $fileNumber = count($files);
-                echo '</pre>';
-
-//                while (($data = fgetcsv($file)) != false) {
-//                    if ($count != 0) {
-//                        $data = array(
-//                            'firstName' => $data[0],
-//                            'middleName' => $data[1],
-//                            'surname' => $data[2],
-//                            'birthDate' => $data[3],
-//                            'phoneNumber' => $data[4],
-//                            'Gender' => $data[5],
-//                            'vision' => $data[6],
-//                            'standardSeven' => $data[7],
-//                            'year' => $data[8],
-//                            'medium' => $data[9],
-//                            'dateRegistered' => date("Y-m-d h:i:s")
-//                        );
-//                        $this->db->insert('student', $data);
-//                    }
-//                    $count = $count + 1;
-//                }
-//                fclose($file);
-//                unlink($filepath);
                 $message = "<p> Data upload is succcessful</p>";
                 echo $message;
             } else {

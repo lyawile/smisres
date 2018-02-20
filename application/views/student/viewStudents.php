@@ -1,12 +1,11 @@
 <div class="col-md-12">
-    <?php if(isset($delete_success))echo $delete_success; ?>
+    <?php if (isset($delete_success)) echo $delete_success; ?>
     <h3>Select Class and stream</h3>
     <div class="form-group">
         <select id="classId" class="form-control">
-            <option value="1">Form One</option>
-            <option value="2">Form Two</option>
-            <option value="3">Form Three</option>
-            <option value="4">Form Four</option>
+            <?php foreach ($class->result() as $t) { ?>
+                <option value="<?php echo $t->id ?>"><?php echo $t->streamName ?></option>
+            <?php } ?>
         </select>
         <div>
             <table class="table">
