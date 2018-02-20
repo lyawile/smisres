@@ -38,27 +38,64 @@ Class Excel extends CI_Controller {
         foreach ($query->result() as $value) {
             $numberOfCands = $value->idadi;
         }
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $reader->setReadDataOnly(true);
-        $spreadsheet = $reader->load("excelFiles/smis__template.xlsx");
-        echo $spreadsheet->getActiveSheet()->getCell('B4')->getValue();
-        echo '<table border="1">';
+    }
 
-        for ($i = 11; $i <= 16; $i++) {
-            echo '<tr>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('B' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('C' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('D' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('E' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('G' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('H' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('I' . $i)->getValue() . '</td>';
-            echo '<td>' . $spreadsheet->getActiveSheet()->getCell('J' . $i)->getValue() . '</td>';
-            echo '<tr>';
+    public function loadData() {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->form_validation->set_rules('userfile', 'FILE', 'required');
+            if ($this->form_validation->run() === FALSE) {
+                $message['content'] = 'student/load';
+                $message['msg'] = "<p> Plese select a file</p>";
+                $this->load->view('main', $message);
+            }
+            $config['upload_path'] = './excelFiles/';
+            $config['allowed_types'] = 'xlsx';
+            $config['max_size'] = 100;
+            $config['overwrite'] = TRUE;
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload() == false) {
+                $file['mpunga'] = $this->upload->data();
+//           $this->load->view('student/data', $data);
+                echo $filepath = $file['mpunga']['file_path'] . $file['mpunga']['file_name'];
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                $reader->setReadDataOnly(true);
+                $spreadsheet = $reader->load($filepath);
+                echo $classId = $spreadsheet->getActiveSheet()->getCell('B4')->getValue();
+                echo '<table border="1">';
+
+                for ($i = 11; $i > 0; $i++) { // made an endless loop, and break inside in case it finds empty cell
+                    $firstName = $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue();
+                    if ($firstName == "")
+                        break;
+                    $data['classId']=$classId;
+                    $data['firstname'] = $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue();
+                    $data['middlename'] = $spreadsheet->getActiveSheet()->getCell('B' . $i)->getValue();
+                    $data['surname'] = $spreadsheet->getActiveSheet()->getCell('C' . $i)->getValue();
+                    $data['vision'] = $spreadsheet->getActiveSheet()->getCell('D' . $i)->getValue();
+                    $data['gender'] = $spreadsheet->getActiveSheet()->getCell('E' . $i)->getValue();
+                    $data['birthDate'] = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
+                    $data['address'] = $spreadsheet->getActiveSheet()->getCell('G' . $i)->getValue();
+                    $data['phoneNumber'] = $spreadsheet->getActiveSheet()->getCell('H' . $i)->getValue();
+                    $data['standardSeven'] = $spreadsheet->getActiveSheet()->getCell('I' . $i)->getValue() . '</td>';
+                    $data['medium'] = $spreadsheet->getActiveSheet()->getCell('J' . $i)->getValue();
+                    $data['dateRegistered'] = date("Y-m-d");
+                    $data['year']=$spreadsheet->getActiveSheet()->getCell('K' . $i)->getValue();
+                    $this->db->insert('student',$data);
+                }
+                $r = $this->db->query("SELECT COUNT(id) numberOfRecords FROM student");
+                foreach ($r->result() as $value) {
+                    $value = $value->numberOfRecords;
+                    if(isset($value)){
+                        $message = "<p> ".$value." Records upload is succcessful</p>";
+                    }
+                }
+                echo $message;
+            } else {
+                $data['mpunga'] = $this->upload->display_errors();
+                //$this->load->view('student/data', $data);
+            }
         }
-        echo '</table>';
     }
 
 }

@@ -114,37 +114,6 @@ class Student extends CI_Controller {
 //        echo $this->input->post('studentId');
 //    }
 
-    public function loadData() {
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->form_validation->set_rules('userfile', 'FILE', 'required');
-            if ($this->form_validation->run() === FALSE) {
-                $message['content'] = 'student/load';
-                $message['msg'] = "<p> Plese select a file</p>";
-                $this->load->view('main', $message);
-            }
-            $config['upload_path'] = './excelFiles/';
-            $config['allowed_types'] = 'xlsx';
-            $config['max_size'] = 100;
-            $config['overwrite'] = TRUE;
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload() == false) {
-                $data['mpunga'] = $this->upload->data();
-//           $this->load->view('student/data', $data);
-                echo $filepath = $data['mpunga']['file_path'] . $data['mpunga']['file_name'];
-                $file = fopen($filepath, "r");
-                $count = 0;
-
-                $files = scandir('./excelFiles/');
-                $files = array_diff($files, array('.', '..'));
-                $message = "<p> Data upload is succcessful</p>";
-                echo $message;
-            } else {
-                $data['mpunga'] = $this->upload->display_errors();
-                //$this->load->view('student/data', $data);
-            }
-        }
-    }
 
     function path() {
         echo APPPATH;
