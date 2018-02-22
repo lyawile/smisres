@@ -63,7 +63,7 @@ Class Excel extends CI_Controller {
                 $spreadsheet = $reader->load($filepath);
                 echo $classId = $spreadsheet->getActiveSheet()->getCell('B4')->getValue();
                 echo '<table border="1">';
-
+                $records='';
                 for ($i = 11; $i > 0; $i++) { // made an endless loop, and break inside in case it finds empty cell
                     $firstName = $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue();
                     if ($firstName == "")
@@ -82,12 +82,13 @@ Class Excel extends CI_Controller {
                     $data['dateRegistered'] = date("Y-m-d");
                     $data['year']=$spreadsheet->getActiveSheet()->getCell('K' . $i)->getValue();
                     $this->db->insert('student',$data);
+                    $records +=  $this->db->affected_rows(); 
                 }
                 $r = $this->db->query("SELECT COUNT(id) numberOfRecords FROM student");
                 foreach ($r->result() as $value) {
                     $value = $value->numberOfRecords;
                     if(isset($value)){
-                        $message = "<p> ".$value." Records upload is succcessful</p>";
+                        $message = "<p> ".$records." Records upload is succcessful</p>";
                     }
                 }
                 echo $message;
