@@ -1,5 +1,5 @@
 <?php
-// error_reporting(0);
+ error_reporting(0);
 
 class Student extends CI_Controller {
 
@@ -135,6 +135,7 @@ class Student extends CI_Controller {
         $this->load->model('student_modal');
         $this->student_modal->getStudents($data);
     }
+    
 
     public function edit() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -183,6 +184,10 @@ class Student extends CI_Controller {
 
             <?php
         }
+    }
+    public function scoreTemplate(){
+        $data['content'] = 'student/scoreTemplate';
+        $this->load->view('main',$data);
     }
 
     public function validateHumanName($name) {

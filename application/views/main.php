@@ -21,6 +21,7 @@
                     <li><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
                     <li><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
                     <li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>
+                    <li><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
                 </ul> 
             </div>
             <div class="col-lg-4  col-md-8 col-sm-12 margin-control">
