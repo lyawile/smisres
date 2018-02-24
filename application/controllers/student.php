@@ -1,5 +1,5 @@
 <?php
- error_reporting(0);
+error_reporting(0);
 
 class Student extends CI_Controller {
 
@@ -17,11 +17,15 @@ class Student extends CI_Controller {
         $this->load->view('main', $file);
     }
 
-    public function searchStudent($studentIdFromEdit) {
+    public function searchStudent($studentIdFromEdit = null) {
+//        if(null === $studentIdFromEdit){
+//            $studentIdFromEdit = 1;
+//        }
 //        $data = $this->db->get('student', array(766));
-        $studentId = $this->input->post('studentId');
-        if ($studentIdFromEdit != "") {
+        if ($studentIdFromEdit <> null) {
             $studentId = $studentIdFromEdit;
+        } else {
+            $studentId = $this->input->post('studentId');
         }
         $data = $this->db->query("SELECT * FROM student WHERE id = '$studentId'");
         foreach ($data->result() as $arr) {
@@ -135,7 +139,6 @@ class Student extends CI_Controller {
         $this->load->model('student_modal');
         $this->student_modal->getStudents($data);
     }
-    
 
     public function edit() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -179,15 +182,16 @@ class Student extends CI_Controller {
             $this->load->view('main', $editData);
             ?>
             <pre>
-                <?php // print_r($editData); ?>
+                <?php // print_r($editData);  ?>
             </pre>
 
             <?php
         }
     }
-    public function scoreTemplate(){
+
+    public function scoreTemplate() {
         $data['content'] = 'student/scoreTemplate';
-        $this->load->view('main',$data);
+        $this->load->view('main', $data);
     }
 
     public function validateHumanName($name) {

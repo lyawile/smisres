@@ -5,9 +5,15 @@
         <group>
             <file>file:/C:/xampp/htdocs/smis/application/libraries/ExcelLib.php</file>
             <file>file:/C:/xampp/htdocs/smis/application/libraries/Pdf.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/views/main.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/config/config.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/views/student/viewStudents.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/models/student_modal.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/views/student/searchResults.php</file>
             <file>file:/C:/xampp/htdocs/smis/application/controllers/student.php</file>
             <file>file:/C:/xampp/htdocs/smis/application/views/student/load.php</file>
             <file>file:/C:/xampp/htdocs/smis/application/controllers/Excel.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/config/routes.php</file>
             <file>file:/C:/xampp/htdocs/smis/application/controllers/HandlePdf.php</file>
         </group>
     </open-files>
