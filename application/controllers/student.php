@@ -191,6 +191,7 @@ class Student extends CI_Controller {
 
     public function scoreTemplate() {
         $data['content'] = 'student/scoreTemplate';
+        $data['result'] = $this->db->get('subject');
         $this->load->view('main', $data);
     }
 

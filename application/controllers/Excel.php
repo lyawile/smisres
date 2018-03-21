@@ -7,10 +7,10 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 Class Excel extends CI_Controller {
 
-    public function getExcel() {
+    public function getExcel($stream, $subjectId) {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $data = $this->db->get('student');
+        $data = $this->db->query("SELECT  s.id,firstname, middlename, surname, gender FROM student s inner join stream st on st.id = s.classId where st.id = $stream");
         $sheet->setCellValue('A1', "STUDENT NUMBER");
         $sheet->setCellValue('B1', "FIRST NAME");
         $sheet->setCellValue('C1', "MIDDLE NAME");
@@ -25,7 +25,7 @@ Class Excel extends CI_Controller {
             $sheet->setCellValue('C' . $counter, strtoupper($item->middlename));
             $sheet->setCellValue('D' . $counter, strtoupper($item->surname));
             $sheet->setCellValue('E' . $counter, strtoupper($item->gender));
-            $sheet->setCellValue('F' . $counter, 'GEOGRAPHY');
+            $sheet->setCellValue('F' . $counter, $subjectId);
             $sheet->setCellValue('G' . $counter, '');
             $counter++;
         }

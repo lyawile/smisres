@@ -3,23 +3,23 @@
         <div class="form-group">
             <label for="stream">Select class</label>
             <select class="form-control" id="stream">
-                <option>Form 1</option>
-                <option>Form 2</option>
-                <option>Form 3</option>
-                <option>Form 4</option>
+                <option value="1">Form 1</option>
+                <option value="2">Form 2</option>
+                <option value="3">Form 3</option>
+                <option value="4">Form 4</option>
             </select>
         </div>
     </div>
     <div class="col-md-6">
         <label for="subjects">Select Subjects</label>
-        <select class="form-control">
-            <option>Mathematics</option>
-            <option>Geography</optio>
-            <option>Islamic Knowledge</option>
-            <option>Arabic Language</option>
-            <option>Kiswahili</option>
-        </select>
-        </select>
+        <select id="subject" class="form-control">
+        <?php foreach ($result->result() as $dt ){ ?>
+            <option value="<?php echo $dt->subjectID ?>"><?php echo $dt->subjectName ?></option>
+        <?php } ?>
+            </select>
+    </div>
+    <div class="col-md-12">
+           <button id="getTemp" class="btn btn-primary">Get template</button>
     </div>
 </div>
 

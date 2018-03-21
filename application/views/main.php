@@ -15,7 +15,7 @@
         </div>
         <div class="col-lg-12 wrapper">
             <div class="col-lg-2 col-lg-offset-3 col-md-4 col-sm-12 margin-control">
-                <ul><?php $data=array('target'=>'_blank') ?>
+                <ul><?php $data = array('target' => '_blank') ?>
                     <li><?php echo anchor('student/register', 'Register student'); ?></li>
                     <li><?php echo anchor('student/load', 'Load students') ?></li>
                     <li><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
@@ -79,6 +79,21 @@
                 }
                 return false;
             }
+            $('#getTemp').click(function () {
+                var subjectId = $('#subject').val();
+                var stream = $("#stream").val();
+               // alert("Selected stream is: "+ stream + " and the subject is: "+ subject);
+               $.ajax({
+                  url: "<?= base_url(); ?>" + "index.php/excel/getexcel/"+stream+"/"+subjectId,
+                   success: function (data, textStatus, jqXHR) {
+                        alert("done");
+                    },
+                    beforeSend: function (xhr) {
+                        
+                    }
+                   
+               });
+            });
         </script>
     </body>
 </html>
