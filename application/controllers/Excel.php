@@ -8,6 +8,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 Class Excel extends CI_Controller {
 
     public function getExcel($stream, $subjectId) {
+        sleep(2);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $data = $this->db->query("SELECT  s.id,firstname, middlename, surname, gender FROM student s inner join stream st on st.id = s.classId where st.id = $stream");
@@ -33,12 +34,12 @@ Class Excel extends CI_Controller {
         $writer->save('hello world.xlsx');
     }
 
-    public function readExcel() {
-        $query = $this->db->query("select count(id) as idadi from student");
-        foreach ($query->result() as $value) {
-            $numberOfCands = $value->idadi;
-        }
-    }
+//    public function readExcel() {
+//        $query = $this->db->query("select count(id) as idadi from student");
+//        foreach ($query->result() as $value) {
+//            $numberOfCands = $value->idadi;
+//        }
+//    }
 
     public function loadData() {
 

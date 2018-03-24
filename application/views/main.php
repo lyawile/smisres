@@ -79,20 +79,28 @@
                 }
                 return false;
             }
-            $('#getTemp').click(function () {
+            $('#getTemp').on("click", function () {
+                if ($(".sTemplate a").length !== 0) {
+                    $(".sTemplate a").remove();
+                }
                 var subjectId = $('#subject').val();
                 var stream = $("#stream").val();
-               // alert("Selected stream is: "+ stream + " and the subject is: "+ subject);
-               $.ajax({
-                  url: "<?= base_url(); ?>" + "index.php/excel/getexcel/"+stream+"/"+subjectId,
-                   success: function (data, textStatus, jqXHR) {
-                        alert("done");
+                // alert("Selected stream is: "+ stream + " and the subject is: "+ subject);
+                $.ajax({
+                    url: "<?= base_url(); ?>" + "index.php/excel/getexcel/" + stream + "/" + subjectId,
+                    success: function (data, textStatus, jqXHR) {
+                        if ($(".sTemplate a").length !== 0) {
+                            $(".sTemplate a").remove();
+                        } else {
+                            var link = '<a href="<?= base_url(); ?>hello world.xlsx">Download Score Template</a>';
+                            $(".sTemplate").append(link);
+                            $(".sTemplate span").remove()
+                        }
                     },
                     beforeSend: function (xhr) {
-                        
+                        $(".sTemplate").append("<span>Generating...</span>")
                     }
-                   
-               });
+                });
             });
         </script>
     </body>

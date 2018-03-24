@@ -18,7 +18,7 @@
         <?php } ?>
             </select>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 sTemplate">
            <button id="getTemp" class="btn btn-primary">Get template</button>
     </div>
 </div>
