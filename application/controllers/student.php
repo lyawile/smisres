@@ -120,19 +120,7 @@ class Student extends CI_Controller {
 
 
     function path() {
-        echo APPPATH;
-    }
-
-    function mypdf() {
-        unlink('jioajsja.pdf');
-        $datec = date("h:m:i");
-        $this->load->library('pdf');
-        $this->pdf->load_view('student/mypdf');
-        $this->pdf->render();
-        $output = $this->pdf->output(); // added 
-        file_put_contents("jioajsja.pdf", $output);
-        //$this->pdf->stream("welcome.pdf",array("Attachment" => false));
-        //exit(0);
+        echo APPPATH.'other part of url';
     }
 
     public function listStudent($data) {

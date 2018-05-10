@@ -35,7 +35,8 @@ class Student_modal extends CI_Model {
     }
 
     public function getStudents($id) {
-        $query = $this->db->get('student');
+        // $query = $this->db->get('student');
+        $query = $this->db->query("select * from mtiss_db.student where `classId` = $id");
         foreach ($query->result() as $data) {
             $t['id'] = $data->id;
             $t['firstname'] = $data->firstname;
@@ -46,18 +47,33 @@ class Student_modal extends CI_Model {
             $t['gender'] = $data->gender;
             $t['birthDate'] = $data->birthDate;
             $mdobaji[] = $t;
-            
         }
 
 //        $mdobaji = array();
 //        sleep(5);
-        echo json_encode($mdobaji);
-        
-        
+        //  echo json_encode($mdobaji);
+//      var_dump($mdobaji);
+        foreach ($mdobaji as $key => $value) {
+//            echo $value['firstname'];
+            $student_data = '';
+            ?>
+            <?php
+
+            $student_data .= '<tr id="dataIn">';
+            $student_data .= '<td>' . $value['id'] . '</td>';
+            $student_data .= '<td>' . $value['firstname'] . ' ' . $value['middlename'] . ' ' . $value['surname'] . ' (' . $value['gender'] . ')' . '</td>';
+            $student_data .= '<td><a  href="searchStudent/' . $value['id'] . '">Edit</a> |<a id="delete" onclick="return deleteStudent(this)"  href="delete/' . $value['id'] . '"> Delete</a></td>';
+            $student_data .= '</tr>';
+            echo $student_data;
+            ?>
+            <?php
+
+        }
     }
-    public function delete($id){
-        $msg = $this->db->delete('student', array('id'=>$id));
-        if($msg == 1){
+
+    public function delete($id) {
+        $msg = $this->db->delete('student', array('id' => $id));
+        if ($msg == 1) {
             echo "Student number: $id is successfully deleted";
         }
     }

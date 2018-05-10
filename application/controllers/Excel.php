@@ -1,33 +1,33 @@
 <?php
 
 require (APPPATH . 'vendor/autoload.php');
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
 Class Excel extends CI_Controller {
 
     public function getExcel($stream, $subjectId) {
         sleep(2);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', "STREAM ID");
+        $sheet->setCellValue('B1', $stream);
+        $sheet->setCellValue('A2', "SUBJECT ID");
+        $sheet->setCellValue('B2', $subjectId);
         $data = $this->db->query("SELECT  s.id,firstname, middlename, surname, gender FROM student s inner join stream st on st.id = s.classId where st.id = $stream");
-        $sheet->setCellValue('A1', "STUDENT NUMBER");
-        $sheet->setCellValue('B1', "FIRST NAME");
-        $sheet->setCellValue('C1', "MIDDLE NAME");
-        $sheet->setCellValue('D1', "SURNAME");
-        $sheet->setCellValue('E1', "GENDER");
-        $sheet->setCellValue('F1', "SUBJECT");
-        $sheet->setCellValue('G1', "SCORE");
-        $counter = 2;
+        $sheet->setCellValue('A3', "STUDENT NUMBER");
+        $sheet->setCellValue('B3', "FIRST NAME");
+        $sheet->setCellValue('C3', "MIDDLE NAME");
+        $sheet->setCellValue('D3', "SURNAME");
+        $sheet->setCellValue('E3', "GENDER");
+        $sheet->setCellValue('F3', "SCORE");
+        $counter = 4;
         foreach ($data->result() as $item) {
             $sheet->setCellValue('A' . $counter, $item->id);
             $sheet->setCellValue('B' . $counter, strtoupper($item->firstname));
             $sheet->setCellValue('C' . $counter, strtoupper($item->middlename));
             $sheet->setCellValue('D' . $counter, strtoupper($item->surname));
             $sheet->setCellValue('E' . $counter, strtoupper($item->gender));
-            $sheet->setCellValue('F' . $counter, $subjectId);
-            $sheet->setCellValue('G' . $counter, '');
+            $sheet->setCellValue('F' . $counter, '');
             $counter++;
         }
         $writer = new Xlsx($spreadsheet);
@@ -78,7 +78,7 @@ Class Excel extends CI_Controller {
                     $data['birthDate'] = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
                     $data['address'] = $spreadsheet->getActiveSheet()->getCell('G' . $i)->getValue();
                     $data['phoneNumber'] = $spreadsheet->getActiveSheet()->getCell('H' . $i)->getValue();
-                    $data['standardSeven'] = $spreadsheet->getActiveSheet()->getCell('I' . $i)->getValue() . '</td>';
+                    $data['standardSeven'] = $spreadsheet->getActiveSheet()->getCell('I' . $i)->getValue();
                     $data['medium'] = $spreadsheet->getActiveSheet()->getCell('J' . $i)->getValue();
                     $data['dateRegistered'] = date("Y-m-d");
                     $data['year']=$spreadsheet->getActiveSheet()->getCell('K' . $i)->getValue();

@@ -36,24 +36,30 @@
                 $('#classId').change(function () {
                     var classId = $('#classId').val();
                     $.ajax({
-                        dataType: 'json',
+                        //dataType: 'json',
                         type: 'POST',
                         data: {classId: classId},
                         url: "<?= base_url(); ?>" + "student/listStudent/" + classId,
                         success: function (data) {
                             console.log(data);
+                            //$('#dataIn').load(document.URL + ' #dataIn');
+                            //console.log(classId);
                             // var parsed = JSON.parse(data);
 //                                    console.log(parsed[0].firstname);
-                            var student_data = '';
-                            var parsed = data;
-                            $(parsed).each(function (i, k) {
-                                student_data += '<tr>';
-                                student_data += '<td>' + parsed[i].id + '</td>'
-                                student_data += '<td>' + parsed[i].firstname + ' ' + parsed[i].middlename + ' ' + parsed[i].surname + ' (' + parsed[i].gender + ')' + '</td>';
-                                student_data += '<td><a  href="searchStudent/' + parsed[i].id + '">Edit</a> |<a id="delete" onclick="return deleteStudent(this)"  href="delete/' + parsed[i].id + '"> Delete</a></td>';
-                                student_data += '<tr>';
-                            });
-                            $('p').replaceWith(student_data);
+//                            var student_data = '';
+//                            var parsed = data;
+//                            $(parsed).each(function (i, k) {
+//                                student_data += '<tr id="dataIn">';
+//                                student_data += '<td>' + parsed[i].id + '</td>'
+//                                student_data += '<td>' + parsed[i].firstname + ' ' + parsed[i].middlename + ' ' + parsed[i].surname + ' (' + parsed[i].gender + ')' + '</td>';
+//                                student_data += '<td><a  href="searchStudent/' + parsed[i].id + '">Edit</a> |<a id="delete" onclick="return deleteStudent(this)"  href="delete/' + parsed[i].id + '"> Delete</a></td>';
+//                                student_data += '<tr>';
+//                            });
+                            $('p').replaceWith(data);
+                            if($('p').length === 0){
+                                $('tr#dataIn').remove();
+                                $('table').append(data);
+                            }
                         },
                         beforeSend: function (xhr) {
                             $('tr.removeit').replaceWith('<p>Loading data ...</p>');

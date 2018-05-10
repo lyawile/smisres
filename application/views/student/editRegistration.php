@@ -64,10 +64,10 @@ echo form_open_multipart('student/edit', '', $id)
 <div class="form-group">
     <label>Gender</label>
     <div class="radio">
-        <label><input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender !== "" && $gender === "male") echo "checked" ?> class=""> Male</label>   
+        <label><input type="radio" name="gender <?php echo $gender; ?>" value="male" <?php if ($gender === "1") echo "checked"; ?> class=""> Male</label>   
     </div>
     <div class="radio">
-        <label><input type="radio" name="gender" value="female" <?php if (isset($gender) && $gender !== "" && $gender === "female") echo "checked" ?> class=""> Female</label>   
+        <label><input type="radio" name="gender" value="female" <?php if ($gender === "2") echo "checked"; ?> class=""> Female</label>   
     </div>
 </div>
 
@@ -153,8 +153,8 @@ echo form_open_multipart('student/edit', '', $id)
     <span class="error-message" ><?php echo form_error('medium') ?></span>
     <label for="medium">Standard Seven Medium</label>
     <select class="form-control" id="medium" name="medium">
-        <option value="English" <?php if($medium =='English') echo "selected";  ?>>English</option>
-        <option value ="Swahili" <?php if($medium == 'Swahili') echo "selected";  ?>>Swahili</option>
+        <option value="English" <?php if ($medium == 'English') echo "selected"; ?>>English</option>
+        <option value ="Swahili" <?php if ($medium == 'Swahili') echo "selected"; ?>>Swahili</option>
     </select>
 </div>
 
