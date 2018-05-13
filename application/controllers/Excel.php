@@ -1,11 +1,22 @@
 <?php
 
 require (APPPATH . 'vendor/autoload.php');
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 Class Excel extends CI_Controller {
 
     public function getExcel($stream, $subjectId) {
+//        echo $dateTimeNow = date("Y-m-d");
+//        echo $dateTimeNow = "1986/04/04";
+//        echo "<br/>";
+       // echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel($dateTimeNow);
+//        echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp(31506);
+//        echo "<br/> the real date using date function". date("d/m/Y", $excelDateValue);
+//        echo "<br/>";
+        //echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(3150);
+//        exit();
         sleep(2);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -64,32 +75,35 @@ Class Excel extends CI_Controller {
                 $spreadsheet = $reader->load($filepath);
                 echo $classId = $spreadsheet->getActiveSheet()->getCell('B4')->getValue();
                 echo '<table border="1">';
-                $records='';
+                $records = '';
                 for ($i = 11; $i > 0; $i++) { // made an endless loop, and break inside in case it finds empty cell
                     $firstName = $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue();
                     if ($firstName == "")
                         break;
-                    $data['classId']=$classId;
+                    $data['classId'] = $classId;
                     $data['firstname'] = $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue();
                     $data['middlename'] = $spreadsheet->getActiveSheet()->getCell('B' . $i)->getValue();
                     $data['surname'] = $spreadsheet->getActiveSheet()->getCell('C' . $i)->getValue();
                     $data['vision'] = $spreadsheet->getActiveSheet()->getCell('D' . $i)->getValue();
                     $data['gender'] = $spreadsheet->getActiveSheet()->getCell('E' . $i)->getValue();
-                    $data['birthDate'] = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
+                    //$data['birthDate'] = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
+                    $excelDateValue = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
+                    $timeStamp = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($excelDateValue);
+                    $data['birthDate'] = date("Y-m-d", $timeStamp);
                     $data['address'] = $spreadsheet->getActiveSheet()->getCell('G' . $i)->getValue();
                     $data['phoneNumber'] = $spreadsheet->getActiveSheet()->getCell('H' . $i)->getValue();
                     $data['standardSeven'] = $spreadsheet->getActiveSheet()->getCell('I' . $i)->getValue();
                     $data['medium'] = $spreadsheet->getActiveSheet()->getCell('J' . $i)->getValue();
                     $data['dateRegistered'] = date("Y-m-d");
-                    $data['year']=$spreadsheet->getActiveSheet()->getCell('K' . $i)->getValue();
-                    $this->db->insert('student',$data);
-                    $records +=  $this->db->affected_rows(); 
+                    $data['year'] = $spreadsheet->getActiveSheet()->getCell('K' . $i)->getValue();
+                    $this->db->insert('student', $data);
+                    $records += $this->db->affected_rows();
                 }
                 $r = $this->db->query("SELECT COUNT(id) numberOfRecords FROM student");
                 foreach ($r->result() as $value) {
                     $value = $value->numberOfRecords;
-                    if(isset($value)){
-                        $message = "<p> ".$records." Records upload is succcessful</p>";
+                    if (isset($value)) {
+                        $message = "<p> " . $records . " Records upload is succcessful</p>";
                     }
                 }
                 echo $message;
