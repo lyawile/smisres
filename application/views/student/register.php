@@ -47,8 +47,19 @@
 
 </div>
 <div class="form-group">
+    <span class="error-message" ><?php echo form_error('class') ?></span>
+    <label for="class">Choose Class</label>
+    <select class="form-control" name="classId">
+        <option value="1">Form 1</option>
+        <option value="2">Form 2</option>
+        <option value="3">Form 3</option>
+        <option value="4">Form 4</option>
+    </select>
+
+</div>
+<div class="form-group">
     <span class="error-message" ><?php echo form_error('vision') ?></span>
-    <label for="impairment">Disability information</label>
+    <label for="impairment">Choose Vision</label>
     <select class="form-control" name="vision">
         <option value="1">Blind</option>
         <option value="2">Low vision</option>
@@ -63,7 +74,7 @@
         $data = array(
             'name' => 'gender',
             'class' => '',
-            'value' => 'male',
+            'value' => 1,
             'checked' => TRUE
         );
         echo '<label>' . form_radio($data) . ' Male</label>';
@@ -74,7 +85,7 @@
         $data = array(
             'name' => 'gender',
             'class' => '',
-            'value' => 'female',
+            'value' => 2,
             'checked' => TRUE
         );
         echo '<label>' . form_radio($data) . 'Female</label>';

@@ -58,7 +58,7 @@ class Student extends CI_Controller {
         $editData['address'] = $address;
         $editData['studentId'] = $studentId;
         $editData['content'] = 'student/editRegistration';
-        var_dump($editData); // for debugging 
+      //  var_dump($editData); // for debugging 
         $this->load->view('main', $editData);
     }
 
@@ -131,7 +131,6 @@ class Student extends CI_Controller {
     public function edit() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $this->input->post();
-
             if (!empty($_FILES['picUrl']['name'])) {
                 $config['upload_path'] = './files/';
                 $config['allowed_types'] = 'gif|jpg|png';
@@ -181,6 +180,14 @@ class Student extends CI_Controller {
         $data['content'] = 'student/scoreTemplate';
         $data['result'] = $this->db->get('subject');
         $this->load->view('main', $data);
+    }
+    public function listStudentSubjects(){
+       // $data['content'] = 'student/liststudentsubjects';
+//        $data['result'] = $this->db->get('subject');
+         $this->load->model('student_modal');
+         $this->student_modal->insertData();
+               
+        //$this->load->view('main', $data);
     }
 
     public function validateHumanName($name) {

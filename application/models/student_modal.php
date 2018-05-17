@@ -18,9 +18,18 @@ class Student_modal extends CI_Model {
             'standardSeven' => $this->input->post('stdSeven'),
             'year' => $this->input->post('stdSevenYear'),
             'medium' => $this->input->post('medium'),
-            'address' => $this->input->post('address')
+            'address' => $this->input->post('address'),
+            'classId' => $this->input->post('classId') // assumed, remove it later.
         );
         $results = $this->db->insert('student', $data);
+        /* get the id of the currently inserted student and use it 
+          to insert the subjects into student_takes_subjects table */
+        $rdata = $this->db->query("select id  from mtiss_db.student ORDER BY `dateRegistered` desc limit 1;");
+        foreach ($rdata->result() as $idData) {
+            $studentId = $idData->id;
+        }
+        // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table 
+        $this->db->query("INSERT INTO mtiss_db.student_takes_subjects SELECT NULL, $studentId, id, NULL FROM mtiss_db.subject;");
         if (isset($results)) {
             $data['successMessage'] = '<div class="success">data successfully saved</div>';
             $data['error'] = "";
@@ -56,7 +65,7 @@ class Student_modal extends CI_Model {
         foreach ($mdobaji as $key => $value) {
 //            echo $value['firstname'];
             $student_data = '';
-            ?>
+?>
             <?php
 
             $student_data .= '<tr id="dataIn">';
@@ -69,6 +78,10 @@ class Student_modal extends CI_Model {
             <?php
 
         }
+    }
+
+    public function listStudentSubjects() {
+        
     }
 
     public function delete($id) {

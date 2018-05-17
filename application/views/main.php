@@ -13,18 +13,19 @@
         <div class="menu col-lg-12 col-md-12 col-sm-12">
 
         </div>
-        <div class="col-lg-12 wrapper">
-            <div class="col-lg-2 col-lg-offset-3 col-md-4 col-sm-12 margin-control">
+        <div class="col-md-12 wrapper">
+            <div class=" col-md-3 margin-control">
                 <ul><?php $data = array('target' => '_blank') ?>
                     <li><?php echo anchor('student/register', 'Register student'); ?></li>
                     <li><?php echo anchor('student/load', 'Load students') ?></li>
                     <li><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
                     <li><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
+                    <li><?php echo anchor('student/liststudentsubjects', 'students subjects'); ?> </li>
                     <li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>
                     <li><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
                 </ul> 
             </div>
-            <div class="col-lg-4  col-md-8 col-sm-12 margin-control">
+            <div class="col-md-9 margin-control">
                 <?php if (isset($msg)) echo $msg; ?>
 
                 <?php $this->load->view($content) ?>
@@ -56,7 +57,7 @@
 //                                student_data += '<tr>';
 //                            });
                             $('p').replaceWith(data);
-                            if($('p').length === 0){
+                            if ($('p').length === 0) {
                                 $('tr#dataIn').remove();
                                 $('table').append(data);
                             }
@@ -107,6 +108,13 @@
                         $(".sTemplate").append("<span>Generating...</span>")
                     }
                 });
+            });
+            $('li.classCode').click(function (e) {
+                    e.preventDefault();
+                    $('li.active').removeClass('active');
+                    $(this).addClass('active');
+                    $('div.mylist').html("");
+                    $('div.mylist').html("This is new content added dynamically and replace the current one");
             });
         </script>
     </body>

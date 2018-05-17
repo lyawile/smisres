@@ -64,10 +64,10 @@ echo form_open_multipart('student/edit', '', $id)
 <div class="form-group">
     <label>Gender</label>
     <div class="radio">
-        <label><input type="radio" name="gender <?php echo $gender; ?>" value="male" <?php if ($gender === "1") echo "checked"; ?> class=""> Male</label>   
+        <label><input type="radio" name="gender" value="1" <?php if ($gender === "1") echo "checked"; ?> class=""> Male</label>   
     </div>
     <div class="radio">
-        <label><input type="radio" name="gender" value="female" <?php if ($gender === "2") echo "checked"; ?> class=""> Female</label>   
+        <label><input type="radio" name="gender" value="2" <?php if ($gender === "2") echo "checked"; ?> class=""> Female</label>   
     </div>
 </div>
 
