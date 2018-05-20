@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2018 at 08:24 PM
+-- Generation Time: May 20, 2018 at 10:14 PM
 -- Server version: 5.7.18-log
 -- PHP Version: 5.6.30
 
@@ -33,26 +33,6 @@ CREATE TABLE `cand_result` (
   `score` int(11) NOT NULL,
   `dateInserted` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `cand_result`
---
-
-INSERT INTO `cand_result` (`studentId`, `candidateNumber`, `subjectCode`, `score`, `dateInserted`) VALUES
-(2, 'S0139-18-0001', '101', 45, '2018-02-08 00:00:00'),
-(3, 'S0139-18-0001', '102', 40, '2018-02-08 00:00:00'),
-(4, 'S0139-18-0001', '103', 60, '2018-02-08 00:00:00'),
-(5, 'S0139-18-0001', '104', 60, '2018-02-08 00:00:00'),
-(6, 'S0139-18-0002', '101', 48, '2018-02-08 00:00:00'),
-(7, 'S0139-18-0002', '102', 85, '2018-02-08 00:00:00'),
-(8, 'S0139-18-0002', '103', 60, '2018-02-08 00:00:00'),
-(9, 'S0139-18-0002', '104', 90, '2018-02-08 00:00:00'),
-(10, 'S0139-18-0003', '101', 56, '2018-02-08 00:00:00'),
-(11, 'S0139-18-0003', '102', 45, '2018-02-08 00:00:00'),
-(12, 'S0139-18-0003', '103', 59, '2018-02-08 00:00:00'),
-(13, 'S0139-18-0004', '101', 87, '2018-02-08 00:00:00'),
-(14, 'S0139-18-0004', '102', 78, '2018-02-08 00:00:00'),
-(15, 'S0139-18-0004', '103', 89, '2018-02-08 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -100,23 +80,6 @@ CREATE TABLE `score` (
   `september` int(3) DEFAULT NULL,
   `december` int(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `score`
---
-
-INSERT INTO `score` (`id`, `studId`, `marks`, `examYear`, `streamId`, `subjectID`, `march`, `june`, `september`, `december`) VALUES
-(1, 79, 85, 2015, 1, 6, 100, 95, 89, 100),
-(2, 80, 98, 2015, 1, 6, 0, 0, 0, 0),
-(3, 81, 100, 2015, 1, 6, 0, 0, 0, 0),
-(4, 82, 98, 2015, 1, 6, 0, 0, 0, 0),
-(5, 83, 85, 2015, 1, 6, 0, 0, 0, 0),
-(6, 79, 85, 2015, 1, 2, 78, 0, 0, 0),
-(7, 80, 100, 2015, 1, 2, 0, 0, 0, 0),
-(8, 81, 100, 2015, 1, 2, 0, 0, 0, 0),
-(9, 82, 98, 2015, 1, 2, 0, 0, 0, 0),
-(10, 83, 89, 2015, 1, 2, 0, 0, 0, 0),
-(11, 89, 6, 2, 25, 1, 22, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -166,8 +129,8 @@ CREATE TABLE `student` (
   `surname` varchar(20) NOT NULL,
   `dateRegistered` datetime NOT NULL,
   `phoneNumber` varchar(10) NOT NULL,
-  `gender` varchar(6) NOT NULL,
-  `birthDate` int(11) NOT NULL,
+  `gender` tinyint(1) NOT NULL,
+  `birthDate` date NOT NULL,
   `picUrl` varchar(255) DEFAULT NULL,
   `vision` tinyint(4) NOT NULL COMMENT '0 normal, 1 Blind, 2 Low vision',
   `standardSeven` varchar(50) NOT NULL,
@@ -181,44 +144,56 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id`, `classId`, `candidateNumber`, `firstname`, `middlename`, `surname`, `dateRegistered`, `phoneNumber`, `gender`, `birthDate`, `picUrl`, `vision`, `standardSeven`, `year`, `medium`, `address`) VALUES
-(3, 2, NULL, 'Yusuf ', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026390', '1', 31508, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(4, 2, NULL, 'Yaaqub', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026391', '1', 31509, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(5, 2, NULL, 'Twalib', 'Rashid', 'Amir', '2018-02-23 00:00:00', '0688026392', '1', 31510, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(6, 2, NULL, 'Hassan ', 'Ally ', 'Lyawile', '2018-02-23 00:00:00', '0688026388', '1', 31506, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(7, 2, NULL, 'Khadija', 'Yusuph', 'Saibu', '2018-02-23 00:00:00', '0688026389', '2', 31507, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(8, 2, NULL, 'Yusuf ', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026390', '1', 31508, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(9, 2, NULL, 'Yaaqub', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026391', '1', 31509, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(10, 2, NULL, 'Twalib', 'Rashid', 'Amir', '2018-02-23 00:00:00', '0688026392', '1', 31510, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(11, 2, NULL, 'Hassan ', 'Ally ', 'Lyawile', '2018-02-23 00:00:00', '0688026388', '1', 31506, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(12, 2, NULL, 'Khadija', 'Yusuph', 'Saibu', '2018-02-23 00:00:00', '0688026389', '2', 31507, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(13, 2, NULL, 'Yusuf ', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026390', '1', 31508, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(14, 2, NULL, 'Yaaqub', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026391', '1', 31509, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(15, 2, NULL, 'Twalib', 'Rashid', 'Amir', '2018-02-23 00:00:00', '0688026392', '1', 31510, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(16, 2, NULL, 'Hassan ', 'Ally ', 'Lyawile', '2018-02-23 00:00:00', '0688026388', '1', 31506, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(17, 2, NULL, 'Khadija', 'Yusuph', 'Saibu', '2018-02-23 00:00:00', '0688026389', '2', 31507, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(18, 2, NULL, 'Yusuf ', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026390', '1', 31508, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(19, 2, NULL, 'Yaaqub', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026391', '1', 31509, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(20, 2, NULL, 'Twalib', 'Rashid', 'Amir', '2018-02-23 00:00:00', '0688026392', '1', 31510, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(21, 2, NULL, 'Hassan ', 'Ally ', 'Lyawile', '2018-02-23 00:00:00', '0688026388', '1', 31506, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(22, 2, NULL, 'Khadija', 'Yusuph', 'Saibu', '2018-02-23 00:00:00', '0688026389', '2', 31507, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(23, 2, NULL, 'Yusuf ', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026390', '1', 31508, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(24, 2, NULL, 'Yaaqub', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026391', '1', 31509, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(25, 1, NULL, 'Twalib', 'Rashid', 'Amir', '2018-02-23 00:00:00', '0688026392', '1', 31510, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(26, 1, NULL, 'Hassan ', 'Ally ', 'Lyawile', '2018-02-23 00:00:00', '0688026388', '1', 31506, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(27, 1, NULL, 'Khadija', 'Yusuph', 'Saibu', '2018-02-23 00:00:00', '0688026389', '2', 31507, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(28, 2, NULL, 'Yusuf ', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026390', '1', 31508, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(29, 2, NULL, 'Yaaqub', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026391', '1', 31509, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(30, 2, NULL, 'Twalib', 'Rashid', 'Amir', '2018-02-23 00:00:00', '0688026392', '1', 31510, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(31, 2, NULL, 'Hassan ', 'Ally ', 'Lyawile', '2018-02-23 00:00:00', '0688026388', '1', 31506, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(32, 2, NULL, 'Khadija', 'Yusuph', 'Saibu', '2018-02-23 00:00:00', '0688026389', '2', 31507, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(33, 2, NULL, 'Yusuf ', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026390', '1', 31508, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(34, 2, NULL, 'Yaaqub', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026391', '1', 31509, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(35, 2, NULL, 'Twalib', 'Rashid', 'Amir', '2018-02-23 00:00:00', '0688026392', '1', 31510, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(36, 2, NULL, 'Hassan ', 'Ally ', 'Lyawile', '2018-02-23 00:00:00', '0688026388', '1', 31506, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(37, 2, NULL, 'Khadija', 'Yusuph', 'Saibu', '2018-02-23 00:00:00', '0688026389', '2', 31507, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(38, 2, NULL, 'Yusuf ', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026390', '1', 31508, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(39, 2, NULL, 'Yaaqub', 'Hassan', 'Lyawile', '2018-02-23 00:00:00', '0688026391', '1', 31509, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA'),
-(40, 2, NULL, 'Twalib', 'Rashid', 'Amir', '2018-02-23 00:00:00', '0688026392', '1', 31510, NULL, 1, 'MAJENGO PRIMARY SCHOOL</td>', 2015, '1', 'MTWARA');
+(44, 4, NULL, 'SAIDI', 'SEIF', 'NGONGO', '2018-05-13 00:00:00', '0652445145', 1, '1986-04-04', 'PS0706001-001-_AMANI_NYARI_CHAUKA.JPG', 1, 'LIKONDE PRIMARY SCHOOL', 2001, 'English', 'MTWARA'),
+(45, 4, NULL, 'SALMA', 'SEIF', 'NGONGO', '2018-05-13 00:00:00', '0652445145', 2, '1986-04-04', NULL, 1, 'LIKONDE PRIMARY SCHOOL', 2001, '1', 'MTWARA'),
+(47, 1, NULL, 'Selemani', 'Ally', 'Juma', '2018-05-17 14:13:26', '0658121245', 1, '2018-05-16', '', 0, 'Tandika', 2019, 'Swahili', 'Mtwara'),
+(48, 0, NULL, 'Rashid', 'Ramadhani', 'Duru', '2018-05-17 17:27:55', '0652454541', 1, '2002-02-05', '', 0, 'Bereko Primary School', 2019, 'English', 'Kondoa'),
+(49, 1, NULL, 'Bahati', 'Rashid', 'Amiri', '2018-05-17 17:35:57', '0654845412', 2, '1995-01-10', '', 0, 'Ligula Primary School', 2007, 'Swahili', 'Mtwara Municipality'),
+(50, 3, NULL, 'Mwajuma', 'Hamis', 'Hamis', '2018-05-20 03:10:42', '0685121245', 2, '1990-06-12', '', 0, 'Ligula Primary School', 2003, 'Swahili', 'Mtwara'),
+(51, 3, NULL, 'Mwajuma', 'Hamis', 'Hamis', '2018-05-20 03:10:42', '0685121245', 2, '1990-06-12', '', 0, 'Ligula Primary School', 2003, 'Swahili', 'Mtwara'),
+(52, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(53, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(54, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(55, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(56, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(57, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(58, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(59, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(60, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(61, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(62, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(63, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(64, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
+(65, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students_masomo`
+--
+
+CREATE TABLE `students_masomo` (
+  `id` int(11) NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `subject1` int(1) DEFAULT NULL,
+  `subject2` int(1) DEFAULT NULL,
+  `subject3` int(1) DEFAULT NULL,
+  `subject4` int(1) DEFAULT NULL,
+  `subject5` int(1) DEFAULT NULL,
+  `subject6` int(1) DEFAULT NULL,
+  `subject7` int(1) DEFAULT NULL,
+  `subject8` int(1) DEFAULT NULL,
+  `subject9` int(1) DEFAULT NULL,
+  `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `students_masomo`
+--
+
+INSERT INTO `students_masomo` (`id`, `studentId`, `subject1`, `subject2`, `subject3`, `subject4`, `subject5`, `subject6`, `subject7`, `subject8`, `subject9`, `dateInserted`) VALUES
+(58, 64, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-20 07:55:25'),
+(59, 65, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-20 07:56:13');
 
 -- --------------------------------------------------------
 
@@ -234,20 +209,6 @@ CREATE TABLE `student_in_stream` (
   `timeRegistered` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `student_in_stream`
---
-
-INSERT INTO `student_in_stream` (`id`, `studentId`, `streamId`, `yearRegistered`, `timeRegistered`) VALUES
-(57, 764, 1, 0, ''),
-(58, 765, 1, 0, ''),
-(59, 766, 1, 0, ''),
-(60, 767, 1, 0, ''),
-(61, 768, 1, 0, ''),
-(62, 769, 2, 0, ''),
-(63, 770, 2, 0, ''),
-(64, 771, 2, 0, '');
-
 -- --------------------------------------------------------
 
 --
@@ -258,61 +219,69 @@ CREATE TABLE `student_takes_subjects` (
   `id` int(4) NOT NULL,
   `studentId` int(4) NOT NULL,
   `subjectId` int(4) NOT NULL,
-  `isForAll` int(1) NOT NULL
+  `takes_this_subject` tinyint(4) NOT NULL COMMENT '1=yes, 0=no',
+  `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `student_takes_subjects`
 --
 
-INSERT INTO `student_takes_subjects` (`id`, `studentId`, `subjectId`, `isForAll`) VALUES
-(135, 79, 6, 1),
-(136, 79, 13, 1),
-(137, 79, 7, 1),
-(138, 79, 2, 1),
-(139, 80, 6, 1),
-(140, 80, 13, 1),
-(141, 80, 7, 1),
-(142, 80, 2, 1),
-(143, 81, 6, 1),
-(144, 81, 13, 1),
-(145, 81, 7, 1),
-(146, 81, 2, 1),
-(147, 82, 6, 1),
-(148, 82, 13, 1),
-(149, 82, 7, 1),
-(150, 82, 2, 1),
-(151, 83, 6, 1),
-(152, 83, 13, 1),
-(153, 83, 7, 1),
-(154, 83, 2, 1),
-(155, 79, 10, 1),
-(156, 80, 10, 1),
-(157, 81, 10, 1),
-(158, 82, 10, 1),
-(159, 83, 10, 1),
-(160, 79, 9, 1),
-(161, 80, 9, 1),
-(162, 81, 9, 1),
-(163, 82, 9, 1),
-(164, 83, 9, 1),
-(165, 79, 5, 0),
-(166, 79, 3, 1),
-(167, 80, 3, 1),
-(168, 81, 3, 1),
-(169, 82, 3, 1),
-(170, 83, 3, 1),
-(171, 81, 8, 0),
-(172, 80, 1, 0),
-(173, 51, 1, 0),
-(174, 51, 2, 0),
-(175, 51, 9, 0),
-(176, 47, 1, 0),
-(177, 47, 2, 0),
-(178, 47, 3, 0),
-(179, 768, 1, 0),
-(180, 768, 2, 0),
-(181, 768, 3, 0);
+INSERT INTO `student_takes_subjects` (`id`, `studentId`, `subjectId`, `takes_this_subject`, `dateInserted`) VALUES
+(242, 44, 1, 1, '2018-05-20 00:18:59'),
+(243, 44, 2, 1, '2018-05-20 00:18:59'),
+(244, 44, 3, 1, '2018-05-20 00:18:59'),
+(245, 44, 4, 1, '2018-05-20 00:18:59'),
+(246, 44, 5, 1, '2018-05-20 00:18:59'),
+(247, 44, 6, 1, '2018-05-20 00:18:59'),
+(248, 44, 7, 1, '2018-05-20 00:18:59'),
+(249, 44, 8, 1, '2018-05-20 00:18:59'),
+(250, 44, 9, 1, '2018-05-20 00:18:59'),
+(257, 44, 1, 1, '2018-05-20 00:18:59'),
+(258, 44, 2, 1, '2018-05-20 00:18:59'),
+(259, 44, 3, 1, '2018-05-20 00:18:59'),
+(260, 44, 4, 1, '2018-05-20 00:18:59'),
+(261, 44, 5, 1, '2018-05-20 00:18:59'),
+(262, 44, 6, 1, '2018-05-20 00:18:59'),
+(263, 44, 7, 1, '2018-05-20 00:18:59'),
+(264, 44, 8, 1, '2018-05-20 00:18:59'),
+(265, 44, 9, 1, '2018-05-20 00:18:59'),
+(272, 47, 1, 1, '2018-05-20 00:18:59'),
+(273, 47, 2, 1, '2018-05-20 00:18:59'),
+(274, 47, 3, 1, '2018-05-20 00:18:59'),
+(275, 47, 4, 1, '2018-05-20 00:18:59'),
+(276, 47, 5, 1, '2018-05-20 00:18:59'),
+(277, 47, 6, 1, '2018-05-20 00:18:59'),
+(278, 47, 7, 1, '2018-05-20 00:18:59'),
+(279, 47, 8, 1, '2018-05-20 00:18:59'),
+(280, 47, 9, 1, '2018-05-20 00:18:59'),
+(287, 48, 1, 1, '2018-05-20 00:18:59'),
+(288, 48, 2, 1, '2018-05-20 00:18:59'),
+(289, 48, 3, 1, '2018-05-20 00:18:59'),
+(290, 48, 4, 1, '2018-05-20 00:18:59'),
+(291, 48, 5, 1, '2018-05-20 00:18:59'),
+(292, 48, 6, 1, '2018-05-20 00:18:59'),
+(293, 48, 7, 1, '2018-05-20 00:18:59'),
+(294, 48, 8, 1, '2018-05-20 00:18:59'),
+(295, 48, 9, 1, '2018-05-20 00:18:59'),
+(302, 49, 1, 1, '2018-05-20 00:18:59'),
+(303, 49, 2, 1, '2018-05-20 00:18:59'),
+(304, 49, 3, 1, '2018-05-20 00:18:59'),
+(305, 49, 4, 1, '2018-05-20 00:18:59'),
+(306, 49, 5, 1, '2018-05-20 00:18:59'),
+(307, 49, 6, 1, '2018-05-20 00:18:59'),
+(308, 49, 7, 1, '2018-05-20 00:18:59'),
+(309, 49, 8, 1, '2018-05-20 00:18:59'),
+(310, 49, 9, 1, '2018-05-20 00:18:59'),
+(317, 50, 1, 1, '2018-05-20 00:12:04'),
+(318, 50, 2, 1, '2018-05-20 00:12:04'),
+(319, 50, 3, 1, '2018-05-20 00:12:04'),
+(320, 50, 4, 1, '2018-05-20 00:12:04'),
+(321, 50, 5, 1, '2018-05-20 00:12:04'),
+(322, 50, 6, 1, '2018-05-20 00:12:04'),
+(323, 50, 7, 1, '2018-05-20 00:12:04'),
+(324, 50, 8, 1, '2018-05-20 00:12:04'),
+(325, 50, 9, 1, '2018-05-20 00:12:04');
 
 -- --------------------------------------------------------
 
@@ -321,7 +290,7 @@ INSERT INTO `student_takes_subjects` (`id`, `studentId`, `subjectId`, `isForAll`
 --
 
 CREATE TABLE `subject` (
-  `subjectID` int(4) NOT NULL,
+  `id` int(4) NOT NULL,
   `subjectName` varchar(20) NOT NULL,
   `subjectCode` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -330,7 +299,7 @@ CREATE TABLE `subject` (
 -- Dumping data for table `subject`
 --
 
-INSERT INTO `subject` (`subjectID`, `subjectName`, `subjectCode`) VALUES
+INSERT INTO `subject` (`id`, `subjectName`, `subjectCode`) VALUES
 (1, 'Chemistry', '101'),
 (2, 'Physics', '102'),
 (3, 'Mathematics', '103'),
@@ -532,6 +501,12 @@ ALTER TABLE `student`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `students_masomo`
+--
+ALTER TABLE `students_masomo`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `student_in_stream`
 --
 ALTER TABLE `student_in_stream`
@@ -547,7 +522,7 @@ ALTER TABLE `student_takes_subjects`
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
-  ADD PRIMARY KEY (`subjectID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `teacher`
@@ -612,7 +587,12 @@ ALTER TABLE `stream`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+--
+-- AUTO_INCREMENT for table `students_masomo`
+--
+ALTER TABLE `students_masomo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 --
 -- AUTO_INCREMENT for table `student_in_stream`
 --
@@ -622,12 +602,12 @@ ALTER TABLE `student_in_stream`
 -- AUTO_INCREMENT for table `student_takes_subjects`
 --
 ALTER TABLE `student_takes_subjects`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=332;
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subjectID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `teacher`
 --

@@ -19,7 +19,7 @@ class Student_modal extends CI_Model {
             'year' => $this->input->post('stdSevenYear'),
             'medium' => $this->input->post('medium'),
             'address' => $this->input->post('address'),
-            'classId' => $this->input->post('classId') // assumed, remove it later.
+            'classId' => $this->input->post('classId')
         );
         $results = $this->db->insert('student', $data);
         /* get the id of the currently inserted student and use it 
@@ -28,8 +28,25 @@ class Student_modal extends CI_Model {
         foreach ($rdata->result() as $idData) {
             $studentId = $idData->id;
         }
-        // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table 
-        $this->db->query("INSERT INTO mtiss_db.student_takes_subjects SELECT NULL, $studentId, id, NULL FROM mtiss_db.subject;");
+        // check if the student exists in the students_masomo table 
+
+
+        $querySubjectId = $this->db->query("SELECT id FROM subject");
+        foreach ($querySubjectId->result() as $subArray) {
+            $queryStud = $this->db->query("SELECT COUNT(studentId) studNo from students_masomo where `studentId` = $studentId;");
+            foreach ($queryStud->result() as $v) {
+                "Number of students:" . $studNo = $v->studNo;
+            }
+            if ($studNo == 0) {
+                // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table 
+                $this->db->query("INSERT INTO mtiss_db.students_masomo VALUES( NULL, $studentId, 1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, NULL) ;");
+            } else {
+                $status = 'subject' . $subArray->id;
+                var_dump($v);
+                $this->db->query("UPDATE mtiss_db.students_masomo SET $status = 1 where `studentId` = $studentId");
+            }
+        }
+
         if (isset($results)) {
             $data['successMessage'] = '<div class="success">data successfully saved</div>';
             $data['error'] = "";
