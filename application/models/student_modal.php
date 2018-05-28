@@ -41,6 +41,7 @@ class Student_modal extends CI_Model {
                 // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table 
                 $this->db->query("INSERT INTO mtiss_db.students_masomo VALUES( NULL, $studentId, 1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, NULL) ;");
             } else {
+                // if student exists, update subjects records. It is assumed that initially all students takes all subjects
                 $status = 'subject' . $subArray->id;
                 var_dump($v);
                 $this->db->query("UPDATE mtiss_db.students_masomo SET $status = 1 where `studentId` = $studentId");
@@ -74,6 +75,7 @@ class Student_modal extends CI_Model {
             $t['birthDate'] = $data->birthDate;
             $mdobaji[] = $t;
         }
+        
 
 //        $mdobaji = array();
 //        sleep(5);
@@ -97,8 +99,11 @@ class Student_modal extends CI_Model {
         }
     }
 
-    public function listStudentSubjects() {
-        
+    public function listStudentSubjects($classId) {
+        $result = $this->db->query("select s.firstname, s.surname, subject1, subject2, subject3, subject4, subject5, subject6,subject7, subject8, subject9 "
+                . "from student s, students_masomo sm "
+                . "where s.id = sm.`studentId`  and s.`classId` = $classId");
+        return $result;
     }
 
     public function delete($id) {

@@ -20,7 +20,7 @@
                     <li><?php echo anchor('student/load', 'Load students') ?></li>
                     <li><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
                     <li><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
-                    <li><?php echo anchor('student/liststudentsubjects', 'students subjects'); ?> </li>
+                    <li><?php echo anchor('student/loadListView', 'students subjects'); ?> </li>
                     <li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>
                     <li><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
                 </ul> 
@@ -110,11 +110,23 @@
                 });
             });
             $('li.classCode').click(function (e) {
-                    e.preventDefault();
-                    $('li.active').removeClass('active');
-                    $(this).addClass('active');
-                    $('div.mylist').html("");
-                    $('div.mylist').html("This is new content added dynamically and replace the current one");
+                e.preventDefault();
+                var classId = $(this).attr('id');
+//                alert(classId); // for deburgging 
+                $('li.active').removeClass('active');
+                $(this).addClass('active');
+                $('div.mylist').html("");
+                $.ajax({
+                    url: "<?= base_url(); ?>" + "student/listStudentSubjects/" + classId,
+                    success: function (data, textStatus, jqXHR) {
+                        $('div.mylist').html(data);
+                    },
+                    beforeSend: function (xhr) {
+                        $('div.mylist').html("Generating the list");
+                    }
+
+                });
+
             });
         </script>
     </body>

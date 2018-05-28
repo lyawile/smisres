@@ -1,6 +1,5 @@
 <?php
 error_reporting(0);
-
 class Student extends CI_Controller {
 
     public function register() {
@@ -58,7 +57,7 @@ class Student extends CI_Controller {
         $editData['address'] = $address;
         $editData['studentId'] = $studentId;
         $editData['content'] = 'student/editRegistration';
-      //  var_dump($editData); // for debugging 
+        //  var_dump($editData); // for debugging 
         $this->load->view('main', $editData);
     }
 
@@ -120,7 +119,7 @@ class Student extends CI_Controller {
 
 
     function path() {
-        echo APPPATH.'other part of url';
+        echo APPPATH . 'other part of url';
     }
 
     public function listStudent($data) {
@@ -181,13 +180,58 @@ class Student extends CI_Controller {
         $data['result'] = $this->db->get('subject');
         $this->load->view('main', $data);
     }
-    public function listStudentSubjects(){
-       // $data['content'] = 'student/liststudentsubjects';
+
+    public function loadListView() {
+        $data['content'] = 'student/liststudentsubjects';
+        $this->load->view('main', $data);
+    }
+
+    public function listStudentSubjects($classId = 2) {
+//        $data['content'] = 'student/liststudentsubjects';
 //        $data['result'] = $this->db->get('subject');
-         $this->load->model('student_modal');
-         $this->student_modal->insertData();
-               
-        //$this->load->view('main', $data);
+        $this->load->model('student_modal');
+        $t = $this->student_modal->listStudentSubjects($classId);
+        // $this->load->view('main', $data);
+//       var_dump($t);
+        ?>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Names</th>
+                    <th scope="col">Subject 1</th>
+                    <th scope="col">Subject 2</th>
+                    <th scope="col">Subject 3</th>
+                    <th scope="col">Subject 4</th>
+                    <th scope="col">Subject 5</th>
+                    <th scope="col">Subject 6</th>
+                    <th scope="col">Subject 7</th>
+                    <th scope="col">Subject 8</th>
+                    <th scope="col">Subject 9</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($t->result() as $data) {
+                    ?>
+                    <tr>
+                        <td scope="row"><?php echo $data->firstname . " " . $data->surname; ?></td>
+                        <td><?php echo $data->subject1 ?></td>
+                        <td><?php echo $data->subject2 ?></td>
+                        <td><?php echo $data->subject3 ?></td>
+                        <td><?php echo $data->subject4 ?></td>
+                        <td><?php echo $data->subject5 ?></td>
+                        <td><?php echo $data->subject6 ?></td>
+                        <td><?php echo $data->subject7 ?></td>
+                        <td><?php echo $data->subject8 ?></td>
+                        <td><?php echo $data->subject9 ?></td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </tbody>
+        </table>
+        <?php
     }
 
     public function validateHumanName($name) {
