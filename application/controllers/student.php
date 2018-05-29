@@ -198,16 +198,15 @@ class Student extends CI_Controller {
             <thead>
                 <tr>
                     <th scope="col">Names</th>
-                    <th scope="col">Subject 1</th>
-                    <th scope="col">Subject 2</th>
-                    <th scope="col">Subject 3</th>
-                    <th scope="col">Subject 4</th>
-                    <th scope="col">Subject 5</th>
-                    <th scope="col">Subject 6</th>
-                    <th scope="col">Subject 7</th>
-                    <th scope="col">Subject 8</th>
-                    <th scope="col">Subject 9</th>
-
+                    <th scope="col">Chemistry</th>
+                    <th scope="col">Physics</th>
+                    <th scope="col">Mathematics</th>
+                    <th scope="col">Civics</th>
+                    <th scope="col">Geography 5</th>
+                    <th scope="col">Islamic Knowledge</th> <!-- In the  database Islamic_Knowledge-->
+                    <th scope="col">Quran</th>
+                    <th scope="col">Kiswahili</th>
+                    <th scope="col">English</th>
                 </tr>
             </thead>
             <tbody>
@@ -216,15 +215,15 @@ class Student extends CI_Controller {
                     ?>
                     <tr>
                         <td scope="row"><?php echo $data->firstname . " " . $data->surname; ?></td>
-                        <td><?php echo $data->subject1 ?></td>
-                        <td><?php echo $data->subject2 ?></td>
-                        <td><?php echo $data->subject3 ?></td>
-                        <td><?php echo $data->subject4 ?></td>
-                        <td><?php echo $data->subject5 ?></td>
-                        <td><?php echo $data->subject6 ?></td>
-                        <td><?php echo $data->subject7 ?></td>
-                        <td><?php echo $data->subject8 ?></td>
-                        <td><?php echo $data->subject9 ?></td>
+                        <td><?php echo $data->Chemistry ?></td>
+                        <td><?php echo $data->Physics ?></td>
+                        <td><?php echo $data->Mathematics ?></td>
+                        <td><?php echo $data->Civics ?></td>
+                        <td><?php echo $data->Geography ?></td>
+                        <td><?php echo $data->Islamic_Knowledge ?></td>
+                        <td><?php echo $data->Quran ?></td>
+                        <td><?php echo $data->Kiswahili ?></td>
+                        <td><?php echo $data->English ?></td>
                     </tr>
                     <?php
                 }
