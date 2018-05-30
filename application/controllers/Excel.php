@@ -1,5 +1,4 @@
 <?php
-
 require (APPPATH . 'vendor/autoload.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+
 class Student extends CI_Controller {
 
     public function register() {
@@ -168,7 +169,7 @@ class Student extends CI_Controller {
             $this->load->view('main', $editData);
             ?>
             <pre>
-                <?php // print_r($editData);  ?>
+                <?php // print_r($editData);   ?>
             </pre>
 
             <?php
@@ -202,11 +203,12 @@ class Student extends CI_Controller {
                     <th scope="col">Physics</th>
                     <th scope="col">Mathematics</th>
                     <th scope="col">Civics</th>
-                    <th scope="col">Geography 5</th>
+                    <th scope="col">Geography</th>
                     <th scope="col">Islamic Knowledge</th> <!-- In the  database Islamic_Knowledge-->
                     <th scope="col">Quran</th>
                     <th scope="col">Kiswahili</th>
                     <th scope="col">English</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -215,15 +217,54 @@ class Student extends CI_Controller {
                     ?>
                     <tr>
                         <td scope="row"><?php echo $data->firstname . " " . $data->surname; ?></td>
-                        <td><?php echo $data->Chemistry ?></td>
-                        <td><?php echo $data->Physics ?></td>
-                        <td><?php echo $data->Mathematics ?></td>
-                        <td><?php echo $data->Civics ?></td>
-                        <td><?php echo $data->Geography ?></td>
-                        <td><?php echo $data->Islamic_Knowledge ?></td>
-                        <td><?php echo $data->Quran ?></td>
-                        <td><?php echo $data->Kiswahili ?></td>
-                        <td><?php echo $data->English ?></td>
+                        <td>
+                            <div >
+                                <label><input id="Chemistry" type="checkbox" <?php if ($data->Chemistry == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="Physics" type="checkbox" <?php if ($data->Physics == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="Mathematics" type="checkbox" <?php if ($data->Mathematics == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="Civics" type="checkbox" <?php if ($data->Civics == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="Geography" type="checkbox" <?php if ($data->Geography == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="Islamic_Knowledge" type="checkbox" <?php if ($data->Islamic_Knowledge == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="Quran" type="checkbox" <?php if ($data->Quran == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="Kiswahili" type="checkbox" <?php if ($data->Kiswahili == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="English" type="checkbox" <?php if ($data->English == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="" id="<?php echo $data->studId ?>"  class="changeSub">Change</a>
+                        </td>
                     </tr>
                     <?php
                 }
@@ -231,6 +272,11 @@ class Student extends CI_Controller {
             </tbody>
         </table>
         <?php
+    }
+
+    public function changeSub($studentId, $subject, $selectedSubject) {
+        $this->load->model('student_modal');
+        $this->student_modal->changeSubject($studentId, $subject, $selectedSubject);
     }
 
     public function validateHumanName($name) {

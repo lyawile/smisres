@@ -33,6 +33,7 @@
         </div>
         <script src="<?= base_url(); ?>public/js/jquery-3.1.1.js"></script>
         <script>
+
             $(document).ready(function () {
                 $('#classId').change(function () {
                     var classId = $('#classId').val();
@@ -128,6 +129,37 @@
                 });
 
             });
+            $(document).ready(function () {
+                $(document).on('click', '.table a.changeSub', function (event) {
+                    event.preventDefault();
+                    var studentId = $(this).attr('id');
+                    var ids = $(".table input[id]");
+                    //console.log(ids);
+                    $.each(ids, function (i, v) {
+                        var subject = $(v).attr('id');
+
+                        if ($(v).is("input:checked")) {
+                            var selectedSubject = v.val = 1;
+                        } else {
+                            selectedSubject = 0;
+                        }
+                        var subject = subject;
+                        var selectedSubject = selectedSubject;
+                        console.log(subject + "-" + studentId + " - "+ selectedSubject);
+                        $.ajax({
+                            url: "<?= base_url(); ?>" + "student/changeSub/" + studentId +'/'+ subject+'/'+selectedSubject ,
+                            success: function (data, textStatus, jqXHR) {
+                                console.log(data);
+                            },
+                            beforeSend: function (xhr) {
+                                    
+                            }
+                        });
+                    });
+
+                });
+            });
+
         </script>
     </body>
 </html>
