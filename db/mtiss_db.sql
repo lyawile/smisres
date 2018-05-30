@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2018 at 10:14 PM
--- Server version: 5.7.18-log
--- PHP Version: 5.6.30
+-- Generation Time: May 30, 2018 at 07:22 PM
+-- Server version: 5.7.16-log
+-- PHP Version: 5.6.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -60,6 +62,8 @@ INSERT INTO `examterm` (`id`, `muhula`) VALUES
 -- (See below for the actual view)
 --
 CREATE TABLE `results` (
+`studId` int(4)
+,`total` decimal(32,0)
 );
 
 -- --------------------------------------------------------
@@ -144,27 +148,9 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id`, `classId`, `candidateNumber`, `firstname`, `middlename`, `surname`, `dateRegistered`, `phoneNumber`, `gender`, `birthDate`, `picUrl`, `vision`, `standardSeven`, `year`, `medium`, `address`) VALUES
-(44, 4, NULL, 'SAIDI', 'SEIF', 'NGONGO', '2018-05-13 00:00:00', '0652445145', 1, '1986-04-04', 'PS0706001-001-_AMANI_NYARI_CHAUKA.JPG', 1, 'LIKONDE PRIMARY SCHOOL', 2001, 'English', 'MTWARA'),
-(45, 4, NULL, 'SALMA', 'SEIF', 'NGONGO', '2018-05-13 00:00:00', '0652445145', 2, '1986-04-04', NULL, 1, 'LIKONDE PRIMARY SCHOOL', 2001, '1', 'MTWARA'),
-(47, 1, NULL, 'Selemani', 'Ally', 'Juma', '2018-05-17 14:13:26', '0658121245', 1, '2018-05-16', '', 0, 'Tandika', 2019, 'Swahili', 'Mtwara'),
-(48, 0, NULL, 'Rashid', 'Ramadhani', 'Duru', '2018-05-17 17:27:55', '0652454541', 1, '2002-02-05', '', 0, 'Bereko Primary School', 2019, 'English', 'Kondoa'),
-(49, 1, NULL, 'Bahati', 'Rashid', 'Amiri', '2018-05-17 17:35:57', '0654845412', 2, '1995-01-10', '', 0, 'Ligula Primary School', 2007, 'Swahili', 'Mtwara Municipality'),
-(50, 3, NULL, 'Mwajuma', 'Hamis', 'Hamis', '2018-05-20 03:10:42', '0685121245', 2, '1990-06-12', '', 0, 'Ligula Primary School', 2003, 'Swahili', 'Mtwara'),
-(51, 3, NULL, 'Mwajuma', 'Hamis', 'Hamis', '2018-05-20 03:10:42', '0685121245', 2, '1990-06-12', '', 0, 'Ligula Primary School', 2003, 'Swahili', 'Mtwara'),
-(52, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(53, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(54, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(55, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(56, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(57, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(58, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(59, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(60, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(61, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(62, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(63, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(64, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora'),
-(65, 1, NULL, 'Fadhili', 'Rashid', 'Rashid', '2018-05-20 10:33:33', '0688026388', 1, '1993-07-14', '', 0, 'Uyui Primary School', 2006, 'Swahili', 'Urambo, Tabora');
+(74, 1, NULL, 'HASSAN', 'Ramadhani', 'Amiri', '2018-05-29 20:54:53', '0654845412', 1, '2007-02-01', '', 0, 'Uyui Primary School', 2016, 'Swahili', 'Urambo, Tabora'),
+(75, 1, NULL, 'Selemani', 'Ching\'oro', 'Mafuru', '2018-05-30 14:54:56', '0654845412', 1, '2004-02-04', '', 0, 'Bereko Primary School', 2007, 'English', 'Musoma'),
+(78, 3, NULL, 'Mwajuma', 'Hamis', 'Amiri', '2018-05-30 16:22:54', '0688026388', 1, '1998-05-13', '', 0, 'Bereko Primary School', 2003, 'Swahili', 'Mtwara Municipality');
 
 -- --------------------------------------------------------
 
@@ -175,15 +161,15 @@ INSERT INTO `student` (`id`, `classId`, `candidateNumber`, `firstname`, `middlen
 CREATE TABLE `students_masomo` (
   `id` int(11) NOT NULL,
   `studentId` int(11) NOT NULL,
-  `subject1` int(1) DEFAULT NULL,
-  `subject2` int(1) DEFAULT NULL,
-  `subject3` int(1) DEFAULT NULL,
-  `subject4` int(1) DEFAULT NULL,
-  `subject5` int(1) DEFAULT NULL,
-  `subject6` int(1) DEFAULT NULL,
-  `subject7` int(1) DEFAULT NULL,
-  `subject8` int(1) DEFAULT NULL,
-  `subject9` int(1) DEFAULT NULL,
+  `Chemistry` int(1) DEFAULT NULL,
+  `Physics` int(1) DEFAULT NULL,
+  `Mathematics` int(1) DEFAULT NULL,
+  `Civics` int(1) DEFAULT NULL,
+  `Geography` int(1) DEFAULT NULL,
+  `Islamic_Knowledge` int(1) DEFAULT NULL,
+  `Quran` int(1) DEFAULT NULL,
+  `Kiswahili` int(1) DEFAULT NULL,
+  `English` int(1) DEFAULT NULL,
   `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -191,9 +177,10 @@ CREATE TABLE `students_masomo` (
 -- Dumping data for table `students_masomo`
 --
 
-INSERT INTO `students_masomo` (`id`, `studentId`, `subject1`, `subject2`, `subject3`, `subject4`, `subject5`, `subject6`, `subject7`, `subject8`, `subject9`, `dateInserted`) VALUES
-(58, 64, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-20 07:55:25'),
-(59, 65, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-20 07:56:13');
+INSERT INTO `students_masomo` (`id`, `studentId`, `Chemistry`, `Physics`, `Mathematics`, `Civics`, `Geography`, `Islamic_Knowledge`, `Quran`, `Kiswahili`, `English`, `dateInserted`) VALUES
+(67, 74, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-30 10:57:08'),
+(68, 75, 0, 1, 0, 1, 1, 0, 1, 1, 1, '2018-05-30 17:05:43'),
+(69, 78, 0, 0, 1, 1, 1, 1, 1, 1, 1, '2018-05-30 17:10:14');
 
 -- --------------------------------------------------------
 
@@ -223,66 +210,6 @@ CREATE TABLE `student_takes_subjects` (
   `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `student_takes_subjects`
---
-
-INSERT INTO `student_takes_subjects` (`id`, `studentId`, `subjectId`, `takes_this_subject`, `dateInserted`) VALUES
-(242, 44, 1, 1, '2018-05-20 00:18:59'),
-(243, 44, 2, 1, '2018-05-20 00:18:59'),
-(244, 44, 3, 1, '2018-05-20 00:18:59'),
-(245, 44, 4, 1, '2018-05-20 00:18:59'),
-(246, 44, 5, 1, '2018-05-20 00:18:59'),
-(247, 44, 6, 1, '2018-05-20 00:18:59'),
-(248, 44, 7, 1, '2018-05-20 00:18:59'),
-(249, 44, 8, 1, '2018-05-20 00:18:59'),
-(250, 44, 9, 1, '2018-05-20 00:18:59'),
-(257, 44, 1, 1, '2018-05-20 00:18:59'),
-(258, 44, 2, 1, '2018-05-20 00:18:59'),
-(259, 44, 3, 1, '2018-05-20 00:18:59'),
-(260, 44, 4, 1, '2018-05-20 00:18:59'),
-(261, 44, 5, 1, '2018-05-20 00:18:59'),
-(262, 44, 6, 1, '2018-05-20 00:18:59'),
-(263, 44, 7, 1, '2018-05-20 00:18:59'),
-(264, 44, 8, 1, '2018-05-20 00:18:59'),
-(265, 44, 9, 1, '2018-05-20 00:18:59'),
-(272, 47, 1, 1, '2018-05-20 00:18:59'),
-(273, 47, 2, 1, '2018-05-20 00:18:59'),
-(274, 47, 3, 1, '2018-05-20 00:18:59'),
-(275, 47, 4, 1, '2018-05-20 00:18:59'),
-(276, 47, 5, 1, '2018-05-20 00:18:59'),
-(277, 47, 6, 1, '2018-05-20 00:18:59'),
-(278, 47, 7, 1, '2018-05-20 00:18:59'),
-(279, 47, 8, 1, '2018-05-20 00:18:59'),
-(280, 47, 9, 1, '2018-05-20 00:18:59'),
-(287, 48, 1, 1, '2018-05-20 00:18:59'),
-(288, 48, 2, 1, '2018-05-20 00:18:59'),
-(289, 48, 3, 1, '2018-05-20 00:18:59'),
-(290, 48, 4, 1, '2018-05-20 00:18:59'),
-(291, 48, 5, 1, '2018-05-20 00:18:59'),
-(292, 48, 6, 1, '2018-05-20 00:18:59'),
-(293, 48, 7, 1, '2018-05-20 00:18:59'),
-(294, 48, 8, 1, '2018-05-20 00:18:59'),
-(295, 48, 9, 1, '2018-05-20 00:18:59'),
-(302, 49, 1, 1, '2018-05-20 00:18:59'),
-(303, 49, 2, 1, '2018-05-20 00:18:59'),
-(304, 49, 3, 1, '2018-05-20 00:18:59'),
-(305, 49, 4, 1, '2018-05-20 00:18:59'),
-(306, 49, 5, 1, '2018-05-20 00:18:59'),
-(307, 49, 6, 1, '2018-05-20 00:18:59'),
-(308, 49, 7, 1, '2018-05-20 00:18:59'),
-(309, 49, 8, 1, '2018-05-20 00:18:59'),
-(310, 49, 9, 1, '2018-05-20 00:18:59'),
-(317, 50, 1, 1, '2018-05-20 00:12:04'),
-(318, 50, 2, 1, '2018-05-20 00:12:04'),
-(319, 50, 3, 1, '2018-05-20 00:12:04'),
-(320, 50, 4, 1, '2018-05-20 00:12:04'),
-(321, 50, 5, 1, '2018-05-20 00:12:04'),
-(322, 50, 6, 1, '2018-05-20 00:12:04'),
-(323, 50, 7, 1, '2018-05-20 00:12:04'),
-(324, 50, 8, 1, '2018-05-20 00:12:04'),
-(325, 50, 9, 1, '2018-05-20 00:12:04');
-
 -- --------------------------------------------------------
 
 --
@@ -305,7 +232,7 @@ INSERT INTO `subject` (`id`, `subjectName`, `subjectCode`) VALUES
 (3, 'Mathematics', '103'),
 (4, 'Civics', '104'),
 (5, 'Geography', '105'),
-(6, 'Islamic Knowledge', '106'),
+(6, 'Islamic_Knowledge', '106'),
 (7, 'Quran', '107'),
 (8, 'Kiswahili', '108'),
 (9, 'English', '109');
@@ -562,77 +489,21 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cand_result`
 --
 ALTER TABLE `cand_result`
-  MODIFY `studentId` int(13) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT for table `examterm`
---
-ALTER TABLE `examterm`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `score`
---
-ALTER TABLE `score`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `score_in_term`
---
-ALTER TABLE `score_in_term`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `stream`
---
-ALTER TABLE `stream`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `studentId` int(13) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+
 --
 -- AUTO_INCREMENT for table `students_masomo`
 --
 ALTER TABLE `students_masomo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
---
--- AUTO_INCREMENT for table `student_in_stream`
---
-ALTER TABLE `student_in_stream`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
---
--- AUTO_INCREMENT for table `student_takes_subjects`
---
-ALTER TABLE `student_takes_subjects`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=332;
---
--- AUTO_INCREMENT for table `subject`
---
-ALTER TABLE `subject`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT for table `teacher`
---
-ALTER TABLE `teacher`
-  MODIFY `teacherID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
---
--- AUTO_INCREMENT for table `teacher_has_class`
---
-ALTER TABLE `teacher_has_class`
-  MODIFY `teachID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `testing`
---
-ALTER TABLE `testing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `time`
---
-ALTER TABLE `time`
-  MODIFY `timeID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `UserID` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
