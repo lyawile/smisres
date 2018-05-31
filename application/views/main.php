@@ -78,16 +78,17 @@
                 if ($(".sTemplate a").length !== 0) {
                     $(".sTemplate a").remove();
                 }
-                var subjectId = $('#subject').val();
+                var subjectName = $('#subject').val();
                 var stream = $("#stream").val();
                 // alert("Selected stream is: "+ stream + " and the subject is: "+ subject);
                 $.ajax({
-                    url: "<?= base_url(); ?>" + "index.php/excel/getexcel/" + stream + "/" + subjectId,
+                    url: "<?= base_url(); ?>" + "index.php/excel/getexcel/" + stream + "/" + subjectName,
                     success: function (data, textStatus, jqXHR) {
+//                        alert(data);
                         if ($(".sTemplate a").length !== 0) {
                             $(".sTemplate a").remove();
                         } else {
-                            var link = '<a href="<?= base_url(); ?>hello world.xlsx">Download Score Template</a>';
+                            var link = '<a href="<?= base_url(); ?>'+data+'.xlsx">Download '+data+' Template</a>';
                             $(".sTemplate").append(link);
                             $(".sTemplate span").remove()
                         }

@@ -14,12 +14,12 @@
         <label for="subjects">Select Subjects</label>
         <select id="subject" class="form-control">
         <?php foreach ($result->result() as $dt ){ ?>
-            <option value="<?php echo $dt->subjectID ?>"><?php echo $dt->subjectName ?></option>
+            <option value="<?php echo $dt->subjectName ?>"><?php echo $dt->subjectName ?></option>
         <?php } ?>
             </select>
     </div>
     <div class="col-md-12 sTemplate">
-           <button id="getTemp" class="btn btn-primary">Get template</button>
+           <button id="getTemp" class="btn btn-primary">Generate template</button>
     </div>
 </div>
 

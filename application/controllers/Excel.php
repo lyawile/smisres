@@ -7,31 +7,26 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 Class Excel extends CI_Controller {
 
-    public function getExcel($stream, $subjectId) {
-//        echo $dateTimeNow = date("Y-m-d");
-//        echo $dateTimeNow = "1986/04/04";
-//        echo "<br/>";
-        // echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel($dateTimeNow);
-//        echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp(31506);
-//        echo "<br/> the real date using date function". date("d/m/Y", $excelDateValue);
-//        echo "<br/>";
-        //echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(3150);
-//        exit();
+    public function getExcel($stream, $subjectName) {
         sleep(2);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "STREAM ID");
-        $sheet->setCellValue('B1', $stream);
-        $sheet->setCellValue('A2', "SUBJECT ID");
-        $sheet->setCellValue('B2', $subjectId);
-        $data = $this->db->query("SELECT  s.id,firstname, middlename, surname, gender FROM student s inner join stream st on st.id = s.classId where st.id = $stream");
-        $sheet->setCellValue('A3', "STUDENT NUMBER");
-        $sheet->setCellValue('B3', "FIRST NAME");
-        $sheet->setCellValue('C3', "MIDDLE NAME");
-        $sheet->setCellValue('D3', "SURNAME");
-        $sheet->setCellValue('E3', "GENDER");
-        $sheet->setCellValue('F3', "SCORE");
-        $counter = 4;
+        $sheet->setCellValue('A1', "MTWARA ISLAMIC SECONDARY SCHOOL");
+        $sheet->setCellValue('A2', "FORM");
+        $sheet->setCellValue('B2', $stream);
+        $sheet->setCellValue('A3', "SUBJECT NAME");
+        $sheet->setCellValue('B3', $subjectName);
+        $data = $this->db->query("SELECT st.id, firstname, middlename, surname, gender,str.id classId,  `Chemistry` "
+                . "FROM student st "
+                . "INNER JOIN students_masomo stm ON st.id = stm.`studentId` "
+                . "INNER JOIN stream str ON st.`classId` = str.id WHERE $subjectName != 0 and str.id = $stream ");
+        $sheet->setCellValue('A4', "STUDENT NUMBER");
+        $sheet->setCellValue('B4', "FIRST NAME");
+        $sheet->setCellValue('C4', "MIDDLE NAME");
+        $sheet->setCellValue('D4', "SURNAME");
+        $sheet->setCellValue('E4', "GENDER");
+        $sheet->setCellValue('F4', "SCORE");
+        $counter = 5;
         foreach ($data->result() as $item) {
             $sheet->setCellValue('A' . $counter, $item->id);
             $sheet->setCellValue('B' . $counter, strtoupper($item->firstname));
@@ -41,8 +36,10 @@ Class Excel extends CI_Controller {
             $sheet->setCellValue('F' . $counter, '');
             $counter++;
         }
+        $filename = $subjectName.$stream;
         $writer = new Xlsx($spreadsheet);
-        $writer->save('hello world.xlsx');
+        $writer->save($filename. '.xlsx');
+        echo $filename;
     }
 
 //    public function readExcel() {
