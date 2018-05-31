@@ -1,4 +1,5 @@
 <?php
+
 require (APPPATH . 'vendor/autoload.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -10,7 +11,7 @@ Class Excel extends CI_Controller {
 //        echo $dateTimeNow = date("Y-m-d");
 //        echo $dateTimeNow = "1986/04/04";
 //        echo "<br/>";
-       // echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel($dateTimeNow);
+        // echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel($dateTimeNow);
 //        echo $excelDateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp(31506);
 //        echo "<br/> the real date using date function". date("d/m/Y", $excelDateValue);
 //        echo "<br/>";
@@ -96,13 +97,30 @@ Class Excel extends CI_Controller {
                     $data['dateRegistered'] = date("Y-m-d");
                     $data['year'] = $spreadsheet->getActiveSheet()->getCell('K' . $i)->getValue();
                     $this->db->insert('student', $data);
+                    $studentId = $this->db->insert_id(); // get the id of the currently inserted student
+                    $querySubjectId = $this->db->query("SELECT `subjectName` FROM subject");
+                    foreach ($querySubjectId->result() as $subArray) {
+                        $queryStud = $this->db->query("SELECT COUNT(studentId) studNo from students_masomo where `studentId` = $studentId;");
+                        foreach ($queryStud->result() as $v) {
+                            $studNo = $v->studNo;
+                        }
+                        if ($studNo == 0) {
+                            // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table 
+                            $this->db->query("INSERT INTO mtiss_db.students_masomo VALUES( NULL, $studentId, 1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, NULL) ;");
+                        } else {
+                            // if student exists, update subjects records. It is assumed that initially all students takes all subjects
+                            $status = $subArray->subjectName;
+                            var_dump($v);
+                            $this->db->query("UPDATE mtiss_db.students_masomo SET $status = 1 where `studentId` = $studentId");
+                        }
+                    }
                     $records += $this->db->affected_rows();
                 }
                 $r = $this->db->query("SELECT COUNT(id) numberOfRecords FROM student");
                 foreach ($r->result() as $value) {
                     $value = $value->numberOfRecords;
                     if (isset($value)) {
-                        $message = "<p> " . $records . " Records upload is succcessful</p>";
+                        $message = "<p> " . $records . " Records uploaded successfully</p>";
                     }
                 }
                 echo $message;
@@ -112,4 +130,5 @@ Class Excel extends CI_Controller {
             }
         }
     }
+
 }

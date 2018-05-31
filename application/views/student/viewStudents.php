@@ -9,16 +9,19 @@
         </select>
         <div>
             <table class="table">
-                <tr>
-                    <th>Registration</th>
-                    <th>Full Name</th>
-                    <th>Action</th>
-                </tr>
-                <tr class="removeit"><td></td></tr>
-            </table>
+                <thead>
+                    <tr>
+                        <th>Registration</th>
+                        <th>Full Name</th>
+                        <th>Gender</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <span class="loader"></span>
+                </tbody>
 
+            </table>
         </div>
     </div>
-
-
 </div>

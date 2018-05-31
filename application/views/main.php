@@ -44,27 +44,14 @@
                         url: "<?= base_url(); ?>" + "student/listStudent/" + classId,
                         success: function (data) {
                             console.log(data);
-                            //$('#dataIn').load(document.URL + ' #dataIn');
-                            //console.log(classId);
-                            // var parsed = JSON.parse(data);
-//                                    console.log(parsed[0].firstname);
-//                            var student_data = '';
-//                            var parsed = data;
-//                            $(parsed).each(function (i, k) {
-//                                student_data += '<tr id="dataIn">';
-//                                student_data += '<td>' + parsed[i].id + '</td>'
-//                                student_data += '<td>' + parsed[i].firstname + ' ' + parsed[i].middlename + ' ' + parsed[i].surname + ' (' + parsed[i].gender + ')' + '</td>';
-//                                student_data += '<td><a  href="searchStudent/' + parsed[i].id + '">Edit</a> |<a id="delete" onclick="return deleteStudent(this)"  href="delete/' + parsed[i].id + '"> Delete</a></td>';
-//                                student_data += '<tr>';
-//                            });
                             $('p').replaceWith(data);
                             if ($('p').length === 0) {
                                 $('tr#dataIn').remove();
-                                $('table').append(data);
+                                $('table tbody').append(data);
                             }
                         },
                         beforeSend: function (xhr) {
-                            $('tr.removeit').replaceWith('<p>Loading data ...</p>');
+                            $('span.loader').replaceWith('<p class="load">Loading data ...</p>');
                         }
 
                     });
@@ -132,8 +119,9 @@
             $(document).ready(function () {
                 $(document).on('click', '.table a.changeSub', function (event) {
                     event.preventDefault();
+                    $(this).closest('tr').addClass("clickedLink");
                     var studentId = $(this).attr('id');
-                    var ids = $(".table input[id]");
+                    var ids = $(".table tr.clickedLink input[id]");
                     //console.log(ids);
                     $.each(ids, function (i, v) {
                         var subject = $(v).attr('id');
@@ -145,14 +133,14 @@
                         }
                         var subject = subject;
                         var selectedSubject = selectedSubject;
-                        console.log(subject + "-" + studentId + " - "+ selectedSubject);
+                        console.log(subject + "-" + studentId + " - " + selectedSubject);
                         $.ajax({
-                            url: "<?= base_url(); ?>" + "student/changeSub/" + studentId +'/'+ subject+'/'+selectedSubject ,
+                            url: "<?= base_url(); ?>" + "student/changeSub/" + studentId + '/' + subject + '/' + selectedSubject,
                             success: function (data, textStatus, jqXHR) {
                                 console.log(data);
                             },
                             beforeSend: function (xhr) {
-                                    
+
                             }
                         });
                     });
