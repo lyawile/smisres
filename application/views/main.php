@@ -11,10 +11,24 @@
     </head>
     <body>
         <div class="menu col-lg-12 col-md-12 col-sm-12">
-
+            <h3 style="display: inline">
+                <a href="">SMIS</a> 
+            </h3>
+            <ul style="list-style: none ">
+                <li>Hassan Lyawile</li>
+                <li><a href=""><span class="glyphicon glyphicon-user myuser" style="color: #e5edf4;"></span></a></li>
+            </ul>
+            <div class="dropMenu">
+                <div class="arrow"></div>
+                <ul>
+                    <li><a href="">Profile</a></li>
+                    <li><a href="">Change Password</a></li>
+                    <li><a href="">Logout</a></li>
+                </ul>
+            </div>
         </div>
         <div class="col-md-12 wrapper">
-            <div class=" col-md-3 margin-control">
+            <div class=" col-md-3 margin-control navigation">
                 <ul><?php $data = array('target' => '_blank') ?>
                     <li><?php echo anchor('student/register', 'Register student'); ?></li>
                     <li><?php echo anchor('student/load', 'Load students') ?></li>
@@ -25,11 +39,12 @@
                     <li><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
                 </ul> 
             </div>
-            <div class="col-md-9 margin-control">
+            <div class="col-md-9 col-md-offset-3 margin-control">
                 <?php if (isset($msg)) echo $msg; ?>
 
                 <?php $this->load->view($content) ?>
             </div>
+
         </div>
         <script src="<?= base_url(); ?>public/js/jquery-3.1.1.js"></script>
         <script>
@@ -88,7 +103,7 @@
                         if ($(".sTemplate a").length !== 0) {
                             $(".sTemplate a").remove();
                         } else {
-                            var link = '<a href="<?= base_url(); ?>'+data+'.xlsx">Download '+data+' Template</a>';
+                            var link = '<a href="<?= base_url(); ?>' + data + '.xlsx">Download ' + data + ' Template</a>';
                             $(".sTemplate").append(link);
                             $(".sTemplate span").remove()
                         }
@@ -148,6 +163,21 @@
 
                 });
             });
+            $('.myuser').click(function (e) {
+                e.preventDefault();
+                var x = $('.dropMenu').is(':visible');
+                console.log(x);
+                if (x == true) {
+//                    console.log("ficha")
+                    $('.dropMenu').css("display", "none");
+                } else {
+//                    console.log("Onesha")
+                    $('.dropMenu').css("display", "block");
+                }
+
+
+            });
+
 
         </script>
     </body>
