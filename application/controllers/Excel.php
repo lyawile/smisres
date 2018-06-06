@@ -11,22 +11,24 @@ Class Excel extends CI_Controller {
         sleep(2);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "MTWARA ISLAMIC SECONDARY SCHOOL");
+        $sheet->setCellValue('A1', "1=March, 2=June, 3=Septembe, 4=December");
         $sheet->setCellValue('A2', "FORM");
         $sheet->setCellValue('B2', $stream);
-        $sheet->setCellValue('A3', "SUBJECT NAME");
-        $sheet->setCellValue('B3', $subjectName);
+        $sheet->setCellValue('A3', "EXAM/TEST MONTH");
+        $sheet->setCellValue('B3', "");
+        $sheet->setCellValue('A4', "SUBJECT NAME");
+        $sheet->setCellValue('B4', $subjectName);
         $data = $this->db->query("SELECT st.id, firstname, middlename, surname, gender,str.id classId,  `Chemistry` "
                 . "FROM student st "
                 . "INNER JOIN students_masomo stm ON st.id = stm.`studentId` "
                 . "INNER JOIN stream str ON st.`classId` = str.id WHERE $subjectName != 0 and str.id = $stream ");
-        $sheet->setCellValue('A4', "STUDENT NUMBER");
-        $sheet->setCellValue('B4', "FIRST NAME");
-        $sheet->setCellValue('C4', "MIDDLE NAME");
-        $sheet->setCellValue('D4', "SURNAME");
-        $sheet->setCellValue('E4', "GENDER");
-        $sheet->setCellValue('F4', "SCORE");
-        $counter = 5;
+        $sheet->setCellValue('A5', "STUDENT NUMBER");
+        $sheet->setCellValue('B5', "FIRST NAME");
+        $sheet->setCellValue('C5', "MIDDLE NAME");
+        $sheet->setCellValue('D5', "SURNAME");
+        $sheet->setCellValue('E5', "GENDER");
+        $sheet->setCellValue('F5', "SCORE");
+        $counter = 6;
         foreach ($data->result() as $item) {
             $sheet->setCellValue('A' . $counter, $item->id);
             $sheet->setCellValue('B' . $counter, strtoupper($item->firstname));

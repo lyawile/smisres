@@ -12,11 +12,11 @@
     <body>
         <div class="menu col-lg-12 col-md-12 col-sm-12">
             <h3 style="display: inline">
-                <a href="">SMIS</a> 
+                <?php echo anchor('student/register', 'SMIS') ?>
             </h3>
             <ul style="list-style: none ">
                 <li>Hassan Lyawile</li>
-                <li><a href=""><span class="glyphicon glyphicon-user myuser" style="color: #e5edf4;"></span></a></li>
+                <li><a title="Click to see operations" href=""><span class="glyphicon glyphicon-user myuser" style="color: #e5edf4;"></span></a></li>
             </ul>
             <div class="dropMenu">
                 <div class="arrow"></div>

@@ -38,6 +38,7 @@
 |
 */
 
+//$route['default_controller'] = "student/register";
 $route['default_controller'] = "student/register";
 $route['404_override'] = '';
 

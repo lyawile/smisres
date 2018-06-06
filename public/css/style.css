@@ -1,3 +1,7 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
 a {
     text-decoration: none !important;
 }
@@ -48,7 +52,7 @@ a {
     display: none;
 }
 .dropMenu ul {
-   padding: 5px;
+    padding: 5px;
 }
 .dropMenu ul li {
     display: block !important;
@@ -95,8 +99,40 @@ div ul:first-child li{
 }
 .error-message p{
     color: red;
+    margin: 0px;
+    padding: 0px;
+
+}
+span.error-message{
+    /*    display: inline-block;
+        height: 25px;
+        background-color: white;
+        width: 100%;*/
 }
 #search{
     background-color: lightslategray;
     color: #fff;
+}
+.Download-icon{
+    display:inline-block;
+    height: 30px;
+    width: 300px;
+    line-height: 30px;
+    background-color: #f7f7f7;
+}
+.login{
+    background: #fffff;
+    min-height: 300px;
+    padding-top: 50px;
+    background-color: #ffffff;
+}
+.login input[type=text], .login input[type=password]{
+    border: none;
+    border-collapse: collapse;
+    border-bottom: 2px solid black;
+    border-radius: 0px;
+    background-color:#ffffff;
+}
+.login input[type=submit]{
+    border-radius: 0px !important;
 }
