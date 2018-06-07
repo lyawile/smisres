@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2018 at 07:22 PM
+-- Generation Time: Jun 07, 2018 at 11:08 AM
 -- Server version: 5.7.16-log
 -- PHP Version: 5.6.33
 
@@ -21,20 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `mtiss_db`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cand_result`
---
-
-CREATE TABLE `cand_result` (
-  `studentId` int(13) NOT NULL,
-  `candidateNumber` varchar(13) NOT NULL,
-  `subjectCode` varchar(4) NOT NULL,
-  `score` int(11) NOT NULL,
-  `dateInserted` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -62,8 +48,6 @@ INSERT INTO `examterm` (`id`, `muhula`) VALUES
 -- (See below for the actual view)
 --
 CREATE TABLE `results` (
-`studId` int(4)
-,`total` decimal(32,0)
 );
 
 -- --------------------------------------------------------
@@ -75,26 +59,14 @@ CREATE TABLE `results` (
 CREATE TABLE `score` (
   `id` int(4) NOT NULL,
   `studId` int(4) NOT NULL,
-  `marks` int(3) NOT NULL,
   `examYear` int(4) NOT NULL,
   `streamId` int(4) NOT NULL,
   `subjectID` int(4) NOT NULL,
-  `march` int(3) DEFAULT NULL,
-  `june` int(3) DEFAULT NULL,
-  `september` int(3) DEFAULT NULL,
-  `december` int(3) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `score_in_term`
---
-
-CREATE TABLE `score_in_term` (
-  `id` int(4) NOT NULL,
-  `termId` int(4) NOT NULL,
-  `scoreId` int(4) NOT NULL
+  `march` decimal(3,0) DEFAULT NULL,
+  `june` decimal(3,0) DEFAULT NULL,
+  `september` decimal(3,0) DEFAULT NULL,
+  `december` decimal(3,0) DEFAULT NULL,
+  `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -132,7 +104,7 @@ CREATE TABLE `student` (
   `middlename` varchar(20) NOT NULL,
   `surname` varchar(20) NOT NULL,
   `dateRegistered` datetime NOT NULL,
-  `phoneNumber` varchar(10) NOT NULL,
+  `phoneNumber` varchar(20) NOT NULL,
   `gender` tinyint(1) NOT NULL,
   `birthDate` date NOT NULL,
   `picUrl` varchar(255) DEFAULT NULL,
@@ -150,7 +122,10 @@ CREATE TABLE `student` (
 INSERT INTO `student` (`id`, `classId`, `candidateNumber`, `firstname`, `middlename`, `surname`, `dateRegistered`, `phoneNumber`, `gender`, `birthDate`, `picUrl`, `vision`, `standardSeven`, `year`, `medium`, `address`) VALUES
 (74, 1, NULL, 'HASSAN', 'Ramadhani', 'Amiri', '2018-05-29 20:54:53', '0654845412', 1, '2007-02-01', '', 0, 'Uyui Primary School', 2016, 'Swahili', 'Urambo, Tabora'),
 (75, 1, NULL, 'Selemani', 'Ching\'oro', 'Mafuru', '2018-05-30 14:54:56', '0654845412', 1, '2004-02-04', '', 0, 'Bereko Primary School', 2007, 'English', 'Musoma'),
-(78, 3, NULL, 'Mwajuma', 'Hamis', 'Amiri', '2018-05-30 16:22:54', '0688026388', 1, '1998-05-13', '', 0, 'Bereko Primary School', 2003, 'Swahili', 'Mtwara Municipality');
+(78, 3, NULL, 'Mwajuma', 'Hamis', 'Amiri', '2018-05-30 16:22:54', '0688026388', 1, '1998-05-13', '', 0, 'Bereko Primary School', 2003, 'Swahili', 'Mtwara Municipality'),
+(79, 1, NULL, 'Hassan', 'Ally ', 'Lyawile', '2018-05-31 00:00:00', '06845124512', 1, '2002-01-10', NULL, 0, 'Majengo Primary School', 2017, '1', 'Mtwara'),
+(80, 1, NULL, 'Juma', 'Ally ', 'Kalenje', '2018-05-31 00:00:00', '06845121211', 1, '2000-01-25', NULL, 0, 'Majengo Primary School', 2017, '1', 'Mtwara'),
+(81, 1, NULL, 'Bahati', 'Rashid', 'Amiri', '2018-05-31 00:00:00', '06512452225', 2, '2004-01-10', NULL, 0, 'Ligula Primary School', 2017, '2', 'Mtwara');
 
 -- --------------------------------------------------------
 
@@ -178,9 +153,12 @@ CREATE TABLE `students_masomo` (
 --
 
 INSERT INTO `students_masomo` (`id`, `studentId`, `Chemistry`, `Physics`, `Mathematics`, `Civics`, `Geography`, `Islamic_Knowledge`, `Quran`, `Kiswahili`, `English`, `dateInserted`) VALUES
-(67, 74, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-30 10:57:08'),
-(68, 75, 0, 1, 0, 1, 1, 0, 1, 1, 1, '2018-05-30 17:05:43'),
-(69, 78, 0, 0, 1, 1, 1, 1, 1, 1, 1, '2018-05-30 17:10:14');
+(67, 74, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-06-01 14:42:48'),
+(68, 75, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-31 04:52:20'),
+(69, 78, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-06-01 11:16:23'),
+(70, 79, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-31 13:37:10'),
+(71, 80, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-31 13:37:10'),
+(72, 81, 1, 0, 1, 1, 1, 1, 1, 1, 1, '2018-06-03 17:18:11');
 
 -- --------------------------------------------------------
 
@@ -368,15 +346,41 @@ CREATE TABLE `user` (
   `middleName` varchar(50) NOT NULL,
   `Surname` varchar(50) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `username` varchar(20) NOT NULL
+  `username` varchar(20) NOT NULL,
+  `category` int(11) NOT NULL,
+  `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `active` tinyint(4) NOT NULL COMMENT '1=yes, 0=no',
+  `gender` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`UserID`, `firstName`, `middleName`, `Surname`, `password`, `username`) VALUES
-(1, 'Hassan', 'Ally', 'Lyawile', '0404', 'hlyawile');
+INSERT INTO `user` (`UserID`, `firstName`, `middleName`, `Surname`, `password`, `username`, `category`, `dateInserted`, `active`, `gender`) VALUES
+(16, 'Rashid', 'Ramadhan', 'Duru', 'e10adc3949ba59abbe56e057f20f883e', 'admin', 1, '2018-06-07 08:44:57', 1, 'male');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_category`
+--
+
+CREATE TABLE `user_category` (
+  `id` int(11) NOT NULL,
+  `group` varchar(10) NOT NULL,
+  `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_category`
+--
+
+INSERT INTO `user_category` (`id`, `group`, `dateInserted`) VALUES
+(1, 'Admin', '2018-06-03 13:42:13'),
+(2, 'Teacher', '2018-06-03 13:42:13'),
+(3, 'Accounts', '2018-06-03 13:42:35'),
+(4, 'Reports', '2018-06-03 13:42:35');
 
 -- --------------------------------------------------------
 
@@ -392,12 +396,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indexes for table `cand_result`
---
-ALTER TABLE `cand_result`
-  ADD PRIMARY KEY (`studentId`);
-
---
 -- Indexes for table `examterm`
 --
 ALTER TABLE `examterm`
@@ -407,12 +405,6 @@ ALTER TABLE `examterm`
 -- Indexes for table `score`
 --
 ALTER TABLE `score`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `score_in_term`
---
-ALTER TABLE `score_in_term`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -482,26 +474,38 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`UserID`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexes for table `user_category`
 --
+ALTER TABLE `user_category`
+  ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for table `cand_result`
+-- AUTO_INCREMENT for dumped tables
 --
-ALTER TABLE `cand_result`
-  MODIFY `studentId` int(13) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `students_masomo`
 --
 ALTER TABLE `students_masomo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `UserID` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `user_category`
+--
+ALTER TABLE `user_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
