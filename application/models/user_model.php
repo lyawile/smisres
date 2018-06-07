@@ -28,5 +28,8 @@ class user_model extends CI_Model {
         }
         return $this->db->query("SELECT id, `group` FROM user_category ");
     }
+    public function login($username, $password){
+        return $this->db->query("SELECT `UserID` FROM mtiss_db.`user`  WHERE username = '$username' and password = '$password'"); 
+    }
 
 }

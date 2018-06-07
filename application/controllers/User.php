@@ -10,7 +10,7 @@ class User extends CI_Controller {
             $this->form_validation->set_rules('middlename', 'Middle Name', 'trim|required|callback_validateHumanName');
             $this->form_validation->set_rules('surname', 'Surname', 'trim|required|callback_validateHumanName');
             $this->form_validation->set_rules('username', 'Username', 'trim|required');
-            $this->form_validation->set_rules('password','Password', 'trim|min_length[5]|required');
+            $this->form_validation->set_rules('password', 'Password', 'trim|min_length[5]|required');
             $this->form_validation->set_rules('cpassword', 'Password confirmation', 'trim|required|matches[password]');
             if ($this->form_validation->run() === TRUE) {
                 $data['content'] = 'user/register';
@@ -43,8 +43,32 @@ class User extends CI_Controller {
     public function changePassword() {
         
     }
-    public function login(){
-        $this->load->view('user/login');
+
+    public function login() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') { // if submit button is pressed
+            $username = $this->input->post('username');
+            $password = md5($this->input->post('password'));
+            $this->load->model('user_model');
+            $data = $this->user_model->login($username, $password);
+            $numberOfRows = $data->num_rows(); // number of rows after submitting username and password
+            if ($numberOfRows == 1) {
+                $newdata = array(
+                    'username' => $username,
+                    'email' => 'johndoe@some-site.com',
+                    'logged_in' => TRUE,
+                    'login_time' => date("Y-M-d H:i:s")
+                );
+                $this->session->set_userdata($newdata); // set session values
+                redirect('student/register');
+            }
+        } else {
+            $this->load->view('user/login');
+        }
+    }
+
+    public function logout() {
+        $this->session->sess_destroy(); // destroy the session values 
+        redirect('user/login'); // redirect to login page 
     }
 
     public function validateHumanName($name) {

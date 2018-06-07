@@ -1,3 +1,11 @@
+<?php
+$username = $this->session->userdata('username');
+if (isset($username) && !empty($username)) {
+    // stay silent for now, later will do something for our user.
+} else {
+    redirect('user/login');
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,10 +20,10 @@
     <body>
         <div class="menu col-lg-12 col-md-12 col-sm-12">
             <h3 style="display: inline">
-                <?php echo anchor('student/register', 'SMIS') ?>
+<?php echo anchor('student/register', 'SMIS') ?>
             </h3>
             <ul style="list-style: none ">
-                <li>Hassan Lyawile</li>
+                <li>Hi, <?php echo $username ?></li>
                 <li><a title="Click to see operations" href=""><span class="glyphicon glyphicon-user myuser" style="color: #e5edf4;"></span></a></li>
             </ul>
             <div class="dropMenu">
@@ -23,7 +31,7 @@
                 <ul>
                     <li><a href="">Profile</a></li>
                     <li><a href="">Change Password</a></li>
-                    <li><a href="">Logout</a></li>
+                    <li><?php echo anchor('user/logout', 'Logout'); ?></li>
                 </ul>
             </div>
         </div>
@@ -37,12 +45,13 @@
                     <li><?php echo anchor('student/loadListView', 'students subjects'); ?> </li>
                     <li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>
                     <li><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
+                    <li><?php echo anchor('user/register', 'Register Users'); ?> </li>
                 </ul> 
             </div>
             <div class="col-md-9 col-md-offset-3 margin-control">
                 <?php if (isset($msg)) echo $msg; ?>
 
-                <?php $this->load->view($content) ?>
+<?php $this->load->view($content) ?>
             </div>
 
         </div>

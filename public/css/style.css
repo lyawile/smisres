@@ -136,3 +136,8 @@ span.error-message{
 .login input[type=submit]{
     border-radius: 0px !important;
 }
+.login{
+    border-top: 10px solid #bdc3c7;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
