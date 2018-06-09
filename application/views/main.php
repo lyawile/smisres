@@ -45,6 +45,7 @@ if (isset($username) && !empty($username)) {
                     <li><?php echo anchor('student/loadListView', 'students subjects'); ?> </li>
                     <li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>
                     <li><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
+                    <li><?php echo anchor('result', 'Load Scores'); ?> </li>
                     <li><?php echo anchor('user/register', 'Register Users'); ?> </li>
                 </ul> 
             </div>

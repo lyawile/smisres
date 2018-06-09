@@ -17,11 +17,11 @@
                 <div class="form-group">
                     <span class="error-message"></span>
                     <label for="username">Username</label>
-                    <input type="text" name="username" placeholder="Enter Username" class="form-control"/>
+                    <input type="text" autocomplete="off" name="username" placeholder="Enter Username" class="form-control"/>
                 </div>
                 <div class="form-group ">
                     <span class="error-message"></span>
-                    <label for="username">Username</label>
+                    <label for="username">Password</label>
                     <input type="password" name="password"  placeholder="Enter Password"class="form-control "/>
                 </div>
                 <input type="submit" class="btn btn-primary" value="Log in"/> 

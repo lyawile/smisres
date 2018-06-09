@@ -129,7 +129,7 @@ span.error-message{
 .login input[type=text], .login input[type=password]{
     border: none;
     border-collapse: collapse;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid black;
     border-radius: 0px;
     background-color:#ffffff;
 }
