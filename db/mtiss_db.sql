@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2018 at 11:08 AM
+-- Generation Time: Jun 09, 2018 at 10:59 AM
 -- Server version: 5.7.16-log
 -- PHP Version: 5.6.33
 
@@ -21,34 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `mtiss_db`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `examterm`
---
-
-CREATE TABLE `examterm` (
-  `id` int(4) NOT NULL,
-  `muhula` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `examterm`
---
-
-INSERT INTO `examterm` (`id`, `muhula`) VALUES
-(1, 'Muhula wa Kwanza'),
-(2, 'Muhula wa Pili');
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `results`
--- (See below for the actual view)
---
-CREATE TABLE `results` (
-);
 
 -- --------------------------------------------------------
 
@@ -177,20 +149,6 @@ CREATE TABLE `student_in_stream` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_takes_subjects`
---
-
-CREATE TABLE `student_takes_subjects` (
-  `id` int(4) NOT NULL,
-  `studentId` int(4) NOT NULL,
-  `subjectId` int(4) NOT NULL,
-  `takes_this_subject` tinyint(4) NOT NULL COMMENT '1=yes, 0=no',
-  `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `subject`
 --
 
@@ -214,125 +172,6 @@ INSERT INTO `subject` (`id`, `subjectName`, `subjectCode`) VALUES
 (7, 'Quran', '107'),
 (8, 'Kiswahili', '108'),
 (9, 'English', '109');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `teacher`
---
-
-CREATE TABLE `teacher` (
-  `teacherID` int(4) NOT NULL,
-  `firstName` varchar(50) NOT NULL,
-  `middleName` varchar(50) NOT NULL,
-  `surname` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `teacher`
---
-
-INSERT INTO `teacher` (`teacherID`, `firstName`, `middleName`, `surname`) VALUES
-(4, 'Yusuf', 'Hassan', 'Lyawile'),
-(5, 'Twalib', 'Amir', 'Rashid'),
-(6, 'Jumanne', 'Hamis', 'Fundi'),
-(7, 'Juma', 'Ally', 'Fakihi'),
-(8, 'Hassan', 'Ally', 'dfbd'),
-(9, 'xxxxxxxxxxx', 'xxxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxxxx'),
-(10, 'Juma', ' v fg f', 'efee'),
-(14, 'Hassan', 'sdvsdvs', 'vsdvs'),
-(16, 'Jamali', 'Ally', 'Kingo'),
-(17, 'Hassan', 'sdvsdvs', 'Fakihi'),
-(18, 'Juma', 'sdvsdvs', 'Amir'),
-(19, 'Ramadhani', 'Rashid', 'Fakihi'),
-(20, 'efsev', 'sdvsdvs', 'Fakihi'),
-(21, 'Hassan', 'Allu', 'Lyawile'),
-(22, 'Hassan', 'Allu', 'Fakihi'),
-(23, 'Hassan', 'sdvsdvs', 'dfbd'),
-(30, 'Juma', 'sdvsdvs', 'vsdvs'),
-(31, 'Hassan', 'Allu', 'Fakihi'),
-(32, 'bf bfg', 'Allu', 'Fakihi'),
-(33, 'ghmjgh', 'Allu', 'Fakihi'),
-(34, 'Juma', 'Allu', 'Fakihi'),
-(35, 'Zainab', 'Ally', 'Lyawile'),
-(36, 'Saidi', 'Selemani', 'Likongo'),
-(37, 'Hassan', 'Ally', 'Lyawile'),
-(38, 'Dadi', 'Makororo', 'Makororo'),
-(39, 'Hassan', 'sdvsdvs', 'vsdvs'),
-(40, 'bf bfg', 'sdvsdvs', 'dfbd'),
-(41, 'efsevs', 'vvsvsvsv', 'vsvsvsv'),
-(42, 'Hassan', 'Allu', 'efee'),
-(43, '', '', ''),
-(44, '', '', ''),
-(45, '', '', ''),
-(46, 'Hassan', 'Lyawile', 'Ally'),
-(47, 'Bahati', 'Amir', 'Rashid'),
-(48, 'Juma', 'Ally', 'dfbd');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `teacher_has_class`
---
-
-CREATE TABLE `teacher_has_class` (
-  `teachID` int(4) NOT NULL,
-  `classID` int(4) NOT NULL,
-  `teacherID` int(4) NOT NULL,
-  `subID` int(4) NOT NULL,
-  `no_classes_per_week` int(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `teacher_has_class`
---
-
-INSERT INTO `teacher_has_class` (`teachID`, `classID`, `teacherID`, `subID`, `no_classes_per_week`) VALUES
-(1, 1, 1, 1, 4),
-(2, 3, 1, 1, 5);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `testing`
---
-
-CREATE TABLE `testing` (
-  `id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `salary` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `testing`
---
-
-INSERT INTO `testing` (`id`, `name`, `salary`) VALUES
-(1, 'Hassan', 150),
-(2, 'Juma', 100),
-(3, 'Shakila', 121),
-(4, 'Bahati', 120);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `time`
---
-
-CREATE TABLE `time` (
-  `timeID` int(4) NOT NULL,
-  `time` date NOT NULL,
-  `subjectID` int(4) NOT NULL,
-  `streamID` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `time`
---
-
-INSERT INTO `time` (`timeID`, `time`, `subjectID`, `streamID`) VALUES
-(1, '0000-00-00', 1, 1),
-(2, '2015-08-06', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -382,24 +221,9 @@ INSERT INTO `user_category` (`id`, `group`, `dateInserted`) VALUES
 (3, 'Accounts', '2018-06-03 13:42:35'),
 (4, 'Reports', '2018-06-03 13:42:35');
 
--- --------------------------------------------------------
-
---
--- Structure for view `results`
---
-DROP TABLE IF EXISTS `results`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `results`  AS  select `score`.`studId` AS `studId`,sum(`score`.`marks`) AS `total` from `score` group by `score`.`studId` order by `total` desc ;
-
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `examterm`
---
-ALTER TABLE `examterm`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `score`
@@ -432,40 +256,10 @@ ALTER TABLE `student_in_stream`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `student_takes_subjects`
---
-ALTER TABLE `student_takes_subjects`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `teacher`
---
-ALTER TABLE `teacher`
-  ADD PRIMARY KEY (`teacherID`);
-
---
--- Indexes for table `teacher_has_class`
---
-ALTER TABLE `teacher_has_class`
-  ADD PRIMARY KEY (`teachID`);
-
---
--- Indexes for table `testing`
---
-ALTER TABLE `testing`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `time`
---
-ALTER TABLE `time`
-  ADD PRIMARY KEY (`timeID`);
 
 --
 -- Indexes for table `user`
