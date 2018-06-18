@@ -1,4 +1,9 @@
+
 <div class="col-md-12">
+    <?php
+    if (isset($messageError))
+        echo $messageError;
+    ?>
     <?php
     echo form_open_multipart('result/index');
     ?>

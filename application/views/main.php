@@ -20,7 +20,7 @@ if (isset($username) && !empty($username)) {
     <body>
         <div class="menu col-lg-12 col-md-12 col-sm-12">
             <h3 style="display: inline">
-<?php echo anchor('student/register', 'SMIS') ?>
+                <?php echo anchor('student/register', 'SMIS') ?>
             </h3>
             <ul style="list-style: none ">
                 <li>Hi, <?php echo $username ?></li>
@@ -52,7 +52,7 @@ if (isset($username) && !empty($username)) {
             <div class="col-md-9 col-md-offset-3 margin-control">
                 <?php if (isset($msg)) echo $msg; ?>
 
-<?php $this->load->view($content) ?>
+                <?php $this->load->view($content) ?>
             </div>
 
         </div>
@@ -187,6 +187,11 @@ if (isset($username) && !empty($username)) {
 
 
             });
+            $(document).ready(function () {
+//                $('.error-mismatch').fadeOut(6000);
+            }
+            );
+
 
 
         </script>

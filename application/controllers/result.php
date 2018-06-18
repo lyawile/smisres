@@ -33,22 +33,27 @@ class Result extends CI_Controller {
             if ($subjectName == $subjectNameFromForm && $streamId == $streamIdFromForm) {
                 for ($i = 6; $i > 0; $i++) {
                     $studentId = $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue();
-//                    $firstName = $spreadsheet->getActiveSheet()->getCell('B' . $i)->getValue();
-//                    $middleName = $spreadsheet->getActiveSheet()->getCell('C' . $i)->getValue();
-//                    $surname = $spreadsheet->getActiveSheet()->getCell('D' . $i)->getValue();
-//                    $gender = $spreadsheet->getActiveSheet()->getCell('E' . $i)->getValue();
+                    $examType = $spreadsheet->getActiveSheet()->getCell('B' . 1)->getValue();
                     $score = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
-                    if ($studentId == "") {
-                        break;
+                    if(trim($score)==""){
+                        $score='NULL';
+                    }
+                    if ($studentId != "") {
+                        $this->load->model("result_model");
+                        $this->result_model->load_score($streamId, $studentId, 1, $score, $examType);
+                    } else {
+                        break; // the loop halts when in the file the studenntId starts to be empty
                     }
                 }
             } else {
-                echo "Wrong";
+                $data['messageError'] = '<div class="alert-warning error-mismatch" style="padding: 15px; margin-left: 10px; margin-bottom: 10px; margin-right: 10px;">'
+                        . 'Make sure stream and subject selection matches with tempalate'
+                        . '</div>';
             }
+
             unlink($fileAndLocation); // remove currently uploaded file from directory.
         }
-//        var_dump($_FILES['scoreFile']);
-        $this->load->view('main', $data); // display the view on index action call action call
+        $this->load->view('main', $data); // display the view on index action call
     }
 
 }
