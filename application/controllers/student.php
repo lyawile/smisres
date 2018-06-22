@@ -65,10 +65,6 @@ class Student extends CI_Controller {
     public function delete($studentId) {
         $this->load->model('student_modal');
         $result = $this->student_modal->delete($studentId);
-//         if($result <> 1){
-//            echo "student number: ".$id." is deleted successfully";
-//           
-//        }
     }
 
     public function insert() {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2018 at 10:59 AM
+-- Generation Time: Jun 22, 2018 at 04:16 PM
 -- Server version: 5.7.16-log
 -- PHP Version: 5.6.33
 
@@ -34,12 +34,24 @@ CREATE TABLE `score` (
   `examYear` int(4) NOT NULL,
   `streamId` int(4) NOT NULL,
   `subjectID` int(4) NOT NULL,
+  `attendance` varchar(1) NOT NULL COMMENT 'v=present, x=absent',
   `march` decimal(3,0) DEFAULT NULL,
   `june` decimal(3,0) DEFAULT NULL,
   `september` decimal(3,0) DEFAULT NULL,
   `december` decimal(3,0) DEFAULT NULL,
   `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `score`
+--
+
+INSERT INTO `score` (`id`, `studId`, `examYear`, `streamId`, `subjectID`, `attendance`, `march`, `june`, `september`, `december`, `dateInserted`) VALUES
+(25, 74, 2018, 1, 1, 'V', '78', NULL, NULL, NULL, '2018-06-20 12:19:29'),
+(26, 75, 2018, 1, 2, 'V', '56', NULL, NULL, NULL, '2018-06-20 12:20:43'),
+(27, 79, 2018, 1, 2, 'V', '41', NULL, NULL, NULL, '2018-06-20 12:20:43'),
+(28, 80, 2018, 1, 2, 'V', '78', NULL, NULL, NULL, '2018-06-20 12:20:43'),
+(29, 81, 2018, 1, 1, 'V', '79', NULL, NULL, NULL, '2018-06-20 12:19:29');
 
 -- --------------------------------------------------------
 
@@ -276,6 +288,12 @@ ALTER TABLE `user_category`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `score`
+--
+ALTER TABLE `score`
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `student`

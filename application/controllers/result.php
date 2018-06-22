@@ -10,9 +10,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Result extends CI_Controller {
 
     public function index() {
+        if(file_exists('problems.txt')){ // check if error file exists, if yes, remove it
+            unlink('problems.txt');
+        }
         $data['content'] = 'score/load_score';
         $data['result'] = $this->db->get('subject'); //TODO: not good practise to issue queries directly in controller, I will remove it
-        $subjectNameFromForm = $this->input->post('subjectName'); // grab subject id
+        $subjectNameFromForm = $this->input->post('subjectName'); // grab subject name
         $streamIdFromForm = $this->input->post('streamId'); // grab stream id
         if (!empty($_FILES['scoreFile']['name'])) {
             $config['upload_path'] = './files/';
@@ -34,13 +37,14 @@ class Result extends CI_Controller {
                 for ($i = 6; $i > 0; $i++) {
                     $studentId = $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue();
                     $examType = $spreadsheet->getActiveSheet()->getCell('B' . 1)->getValue();
-                    $score = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
+                    $attendance = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
+                    $score = $spreadsheet->getActiveSheet()->getCell('G' . $i)->getValue();
                     if(trim($score)==""){
                         $score='NULL';
                     }
                     if ($studentId != "") {
                         $this->load->model("result_model");
-                        $this->result_model->load_score($streamId, $studentId, 1, $score, $examType);
+                        $this->result_model->load_score($streamId, $studentId, $score, $examType, $subjectName, $attendance);
                     } else {
                         break; // the loop halts when in the file the studenntId starts to be empty
                     }

@@ -27,7 +27,8 @@ Class Excel extends CI_Controller {
         $sheet->setCellValue('C5', "MIDDLE NAME");
         $sheet->setCellValue('D5', "SURNAME");
         $sheet->setCellValue('E5', "GENDER");
-        $sheet->setCellValue('F5', "SCORE");
+        $sheet->setCellValue('F5', "ATTENDANCE");
+        $sheet->setCellValue('G5', "SCORE");
         $counter = 6;
         foreach ($data->result() as $item) {
             $sheet->setCellValue('A' . $counter, $item->id);
@@ -35,7 +36,7 @@ Class Excel extends CI_Controller {
             $sheet->setCellValue('C' . $counter, strtoupper($item->middlename));
             $sheet->setCellValue('D' . $counter, strtoupper($item->surname));
             $sheet->setCellValue('E' . $counter, strtoupper($item->gender));
-            $sheet->setCellValue('F' . $counter, '');
+            $sheet->setCellValue('F' . $counter, 'V'); // v for present and x for absent 
             $counter++;
         }
         $filename = $subjectName.$stream;
