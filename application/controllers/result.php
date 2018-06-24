@@ -59,5 +59,10 @@ class Result extends CI_Controller {
         }
         $this->load->view('main', $data); // display the view on index action call
     }
+    public function show(){
+        $data['content']='score/results';
+        $this->load->view('main',$data);
+//        echo "The results of all students per class will be shown here";
+    }
 
 }

@@ -15,18 +15,21 @@ class Result_model extends CI_Model {
                 . "WHERE `studId` = $studentId AND `streamId` = $streamId");
         $recordsNum = $result->num_rows();
         if ($score >= 0 && $score <= 100) { // check if the score is between 0 and 100 otherwise log the problem into text file
-            if ($recordsNum == 0) {
-                // insert the record for the very first time 
-                return $this->db->query("INSERT INTO `score` (`id`, `studId`, `examYear`, `streamId`, `subjectID` ,`attendance`,`$month`, `dateInserted`) "
-                                . "VALUES (NULL, '$studentId', '$year', '$streamId', '$subjectId','$attendance', $score, CURRENT_TIMESTAMP);");
-            } else {
-                // update the records if already the student has marks in the respective subject
-                $this->db->query("UPDATE score SET `streamId` = $streamId, `subjectID` = 2, $month = $score where `studId` = $studentId;");
+            if ($attendance == 'V' && !empty(trim($score))) {
+                if ($recordsNum == 0) {
+                    // insert the record for the very first time 
+                    return $this->db->query("INSERT INTO `score` (`id`, `studId`, `examYear`, `streamId`, `subjectID` ,`attendance`,`$month`, `dateInserted`) "
+                                    . "VALUES (NULL, '$studentId', '$year', '$streamId', '$subjectId','$attendance', $score, CURRENT_TIMESTAMP);");
+                } else {
+                    // update the records if already the student has marks in the respective subject
+                    $this->db->query("UPDATE score SET `streamId` = $streamId, `subjectID` = 2, $month = $score where `studId` = $studentId;");
+                }
+            }else{
+                echo "V should have marks <br/>";
             }
-        }
-        else{
+        } else {
             $handle = fopen('problems.txt', 'a');
-            fwrite($handle, "$score is out bound"."\n");
+            fwrite($handle, "$score is out bound" . "\n");
             fclose($handle);
         }
     }

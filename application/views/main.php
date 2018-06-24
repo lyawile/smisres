@@ -43,7 +43,8 @@ if (isset($username) && !empty($username)) {
                     <li><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
                     <li><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
                     <li><?php echo anchor('student/loadListView', 'students subjects'); ?> </li>
-                    <li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>
+                    <li><?php echo anchor('handlepdf/show', 'View Results'); ?> </li>
+                    <!--<li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>--> 
                     <li><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
                     <li><?php echo anchor('result', 'Load Scores'); ?> </li>
                     <li><?php echo anchor('user/register', 'Register Users'); ?> </li>
