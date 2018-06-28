@@ -36,7 +36,7 @@ class Result extends CI_Controller {
             if ($subjectName == $subjectNameFromForm && $streamId == $streamIdFromForm) {
                 for ($i = 6; $i > 0; $i++) {
                     $studentId = $spreadsheet->getActiveSheet()->getCell('A' . $i)->getValue();
-                    $examType = $spreadsheet->getActiveSheet()->getCell('B' . 1)->getValue();
+                    $examType = $spreadsheet->getActiveSheet()->getCell('C3')->getValue();
                     $attendance = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
                     $score = $spreadsheet->getActiveSheet()->getCell('G' . $i)->getValue();
                     if(trim($score)==""){

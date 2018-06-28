@@ -3,16 +3,16 @@
 class Result_model extends CI_Model {
 
     public function load_score($streamId, $studentId, $score, $examType, $subjectName, $attendance) {
-        $month = $this->getExamType($examType);
+       echo $month = $this->getExamType($examType);
         $year = date('Y');
         $this->db->select('id,subjectName');
         $out = $this->db->get_where('subject', array('subjectName' => $subjectName));
         foreach ($out->result() as $v) {
-            $subjectId = $v->id;
+            echo $subjectId = $v->id;
         }
         $result = $this->db->query("SELECT `studId` "
                 . "FROM score "
-                . "WHERE `studId` = $studentId AND `streamId` = $streamId");
+                . "WHERE `studId` = $studentId AND `streamId` = $streamId AND `subjectID` = $subjectId");
         $recordsNum = $result->num_rows();
         if ($score >= 0 && $score <= 100) { // check if the score is between 0 and 100 otherwise log the problem into text file
             if ($attendance == 'V' && !empty(trim($score))) {
@@ -22,9 +22,9 @@ class Result_model extends CI_Model {
                                     . "VALUES (NULL, '$studentId', '$year', '$streamId', '$subjectId','$attendance', $score, CURRENT_TIMESTAMP);");
                 } else {
                     // update the records if already the student has marks in the respective subject
-                    $this->db->query("UPDATE score SET `streamId` = $streamId, `subjectID` = 2, $month = $score where `studId` = $studentId;");
+                    $this->db->query("UPDATE score SET `streamId` = $streamId, `subjectID` = $subjectId, $month = $score where `studId` = $studentId  AND`streamId` = $streamId AND `subjectID` = $subjectId;");
                 }
-            }else{
+            } else {
                 echo "V should have marks <br/>";
             }
         } else {

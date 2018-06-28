@@ -93,7 +93,7 @@ class HandlePdf extends CI_Controller {
         $this->pdf->Cell('', 5, "Maoni: Aongeze juhudi ya kujifunza zaidi ", '', 1);
         $this->pdf->SetFont('Arial', 'B', 10);
         $this->pdf->Cell('', 5, '', '', 1);
-        $this->pdf->Output('files.pdf','F');
+        $this->pdf->Output("files.pdf",'F'); 
         $data['content']='score/results';
         $this->load->view('main',$data);
     }
