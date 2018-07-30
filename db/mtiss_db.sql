@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2018 at 04:16 PM
+-- Generation Time: Jul 30, 2018 at 05:05 PM
 -- Server version: 5.7.16-log
 -- PHP Version: 5.6.33
 
@@ -47,11 +47,16 @@ CREATE TABLE `score` (
 --
 
 INSERT INTO `score` (`id`, `studId`, `examYear`, `streamId`, `subjectID`, `attendance`, `march`, `june`, `september`, `december`, `dateInserted`) VALUES
-(25, 74, 2018, 1, 1, 'V', '78', NULL, NULL, NULL, '2018-06-20 12:19:29'),
-(26, 75, 2018, 1, 2, 'V', '56', NULL, NULL, NULL, '2018-06-20 12:20:43'),
-(27, 79, 2018, 1, 2, 'V', '41', NULL, NULL, NULL, '2018-06-20 12:20:43'),
-(28, 80, 2018, 1, 2, 'V', '78', NULL, NULL, NULL, '2018-06-20 12:20:43'),
-(29, 81, 2018, 1, 1, 'V', '79', NULL, NULL, NULL, '2018-06-20 12:19:29');
+(60, 74, 2018, 1, 4, 'V', NULL, NULL, '100', NULL, '2018-06-28 15:04:37'),
+(61, 75, 2018, 1, 4, 'V', NULL, NULL, '56', NULL, '2018-06-28 15:04:37'),
+(62, 79, 2018, 1, 4, 'V', NULL, NULL, '78', NULL, '2018-06-28 15:04:37'),
+(63, 80, 2018, 1, 4, 'V', NULL, NULL, '68', NULL, '2018-06-28 15:04:37'),
+(64, 81, 2018, 1, 4, 'V', NULL, NULL, '100', NULL, '2018-06-28 15:04:37'),
+(65, 74, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37'),
+(66, 75, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37'),
+(67, 79, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37'),
+(68, 80, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37'),
+(69, 81, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37');
 
 -- --------------------------------------------------------
 
@@ -109,7 +114,8 @@ INSERT INTO `student` (`id`, `classId`, `candidateNumber`, `firstname`, `middlen
 (78, 3, NULL, 'Mwajuma', 'Hamis', 'Amiri', '2018-05-30 16:22:54', '0688026388', 1, '1998-05-13', '', 0, 'Bereko Primary School', 2003, 'Swahili', 'Mtwara Municipality'),
 (79, 1, NULL, 'Hassan', 'Ally ', 'Lyawile', '2018-05-31 00:00:00', '06845124512', 1, '2002-01-10', NULL, 0, 'Majengo Primary School', 2017, '1', 'Mtwara'),
 (80, 1, NULL, 'Juma', 'Ally ', 'Kalenje', '2018-05-31 00:00:00', '06845121211', 1, '2000-01-25', NULL, 0, 'Majengo Primary School', 2017, '1', 'Mtwara'),
-(81, 1, NULL, 'Bahati', 'Rashid', 'Amiri', '2018-05-31 00:00:00', '06512452225', 2, '2004-01-10', NULL, 0, 'Ligula Primary School', 2017, '2', 'Mtwara');
+(81, 1, NULL, 'Bahati', 'Rashid', 'Amiri', '2018-05-31 00:00:00', '06512452225', 2, '2004-01-10', NULL, 0, 'Ligula Primary School', 2017, '2', 'Mtwara'),
+(82, 4, NULL, 'Yusuf', 'Hassan', 'Lyawile', '2018-06-26 00:00:00', '0685121245', 1, '2005-01-30', NULL, 1, 'Njou Islamic Primary School', 2017, '2', 'Dodoma');
 
 -- --------------------------------------------------------
 
@@ -137,26 +143,44 @@ CREATE TABLE `students_masomo` (
 --
 
 INSERT INTO `students_masomo` (`id`, `studentId`, `Chemistry`, `Physics`, `Mathematics`, `Civics`, `Geography`, `Islamic_Knowledge`, `Quran`, `Kiswahili`, `English`, `dateInserted`) VALUES
-(67, 74, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-06-01 14:42:48'),
+(67, 74, 1, 0, 1, 1, 1, 1, 1, 1, 1, '2018-07-03 08:28:05'),
 (68, 75, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-31 04:52:20'),
 (69, 78, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-06-01 11:16:23'),
 (70, 79, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-31 13:37:10'),
 (71, 80, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-05-31 13:37:10'),
-(72, 81, 1, 0, 1, 1, 1, 1, 1, 1, 1, '2018-06-03 17:18:11');
+(72, 81, 1, 0, 1, 1, 1, 1, 1, 1, 1, '2018-06-03 17:18:11'),
+(73, 82, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2018-06-26 11:43:37');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_in_stream`
+-- Table structure for table `student_takes_subject`
 --
 
-CREATE TABLE `student_in_stream` (
-  `id` int(4) NOT NULL,
-  `studentId` int(4) NOT NULL,
-  `streamId` int(4) NOT NULL,
-  `yearRegistered` int(4) NOT NULL,
-  `timeRegistered` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `student_takes_subject` (
+  `id` int(11) NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `subjectId` int(11) NOT NULL,
+  `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `student_takes_subject`
+--
+
+INSERT INTO `student_takes_subject` (`id`, `studentId`, `subjectId`, `dateInserted`) VALUES
+(1, 74, 1, '2018-07-18 06:55:49'),
+(2, 74, 2, '2018-07-18 06:55:49'),
+(3, 74, 3, '2018-07-18 06:56:24'),
+(4, 74, 4, '2018-07-18 06:56:24'),
+(5, 74, 5, '2018-07-18 06:56:24'),
+(6, 74, 6, '2018-07-18 06:56:24'),
+(7, 75, 1, '2018-07-18 06:57:46'),
+(8, 75, 2, '2018-07-18 06:57:46'),
+(9, 75, 3, '2018-07-18 06:57:46'),
+(10, 75, 4, '2018-07-18 06:57:46'),
+(11, 75, 5, '2018-07-18 06:57:46'),
+(12, 75, 6, '2018-07-18 06:57:46');
 
 -- --------------------------------------------------------
 
@@ -262,9 +286,9 @@ ALTER TABLE `students_masomo`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `student_in_stream`
+-- Indexes for table `student_takes_subject`
 --
-ALTER TABLE `student_in_stream`
+ALTER TABLE `student_takes_subject`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -293,19 +317,25 @@ ALTER TABLE `user_category`
 -- AUTO_INCREMENT for table `score`
 --
 ALTER TABLE `score`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `students_masomo`
 --
 ALTER TABLE `students_masomo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
+-- AUTO_INCREMENT for table `student_takes_subject`
+--
+ALTER TABLE `student_takes_subject`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user`
