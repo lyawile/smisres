@@ -11,3 +11,4 @@ uploads/*
 /application/libraries/dompdf/nbproject/private/
 /excelFiles/
 /files/
+!/files/templates/
