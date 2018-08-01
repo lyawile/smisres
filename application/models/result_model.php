@@ -3,7 +3,7 @@
 class Result_model extends CI_Model {
 
     public function load_score($streamId, $studentId, $score, $examType, $subjectName, $attendance) {
-       echo $month = $this->getExamType($examType);
+        echo $month = $this->getExamType($examType);
         $year = date('Y');
         $this->db->select('id,subjectName');
         $out = $this->db->get_where('subject', array('subjectName' => $subjectName));
@@ -32,6 +32,19 @@ class Result_model extends CI_Model {
             fwrite($handle, "$score is out bound" . "\n");
             fclose($handle);
         }
+    }
+
+    public function getResults($class) {
+        $this->db->where('streamId', $class);
+        $result = $this->db->get('score');
+        foreach ($result->result() as $r) {
+            $recId = $r->id;
+            $avgJune = ($r->march + $r->june) / 2;
+            $this->db->query("UPDATE `score` SET `avgJune` = $avgJune WHERE `score`.`id` = $recId;");
+        }
+       $result = $this->db->query("select student.id, CONCAT(firstname,' ', middlename, ' ', surname) as studNames,`streamId`, `subjectID`, march, june, `avgJune` "
+               . "from student INNER JOIN score ON student.id =  score.`studId` where `streamId` = $class");
+       return $result;
     }
 
     public function getExamType($examType) {

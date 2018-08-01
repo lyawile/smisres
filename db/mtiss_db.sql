@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2018 at 05:05 PM
--- Server version: 5.7.16-log
--- PHP Version: 5.6.33
+-- Generation Time: Aug 01, 2018 at 11:44 PM
+-- Server version: 5.7.18-log
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -21,6 +19,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `mtiss_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `results`
+--
+
+CREATE TABLE `results` (
+  `id` int(11) NOT NULL,
+  `studentId` int(11) NOT NULL,
+  `term` int(11) NOT NULL,
+  `avgMark` int(11) NOT NULL,
+  `position` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -39,6 +51,8 @@ CREATE TABLE `score` (
   `june` decimal(3,0) DEFAULT NULL,
   `september` decimal(3,0) DEFAULT NULL,
   `december` decimal(3,0) DEFAULT NULL,
+  `avgJune` decimal(10,0) DEFAULT NULL,
+  `avgDec` decimal(10,0) DEFAULT NULL,
   `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -46,17 +60,12 @@ CREATE TABLE `score` (
 -- Dumping data for table `score`
 --
 
-INSERT INTO `score` (`id`, `studId`, `examYear`, `streamId`, `subjectID`, `attendance`, `march`, `june`, `september`, `december`, `dateInserted`) VALUES
-(60, 74, 2018, 1, 4, 'V', NULL, NULL, '100', NULL, '2018-06-28 15:04:37'),
-(61, 75, 2018, 1, 4, 'V', NULL, NULL, '56', NULL, '2018-06-28 15:04:37'),
-(62, 79, 2018, 1, 4, 'V', NULL, NULL, '78', NULL, '2018-06-28 15:04:37'),
-(63, 80, 2018, 1, 4, 'V', NULL, NULL, '68', NULL, '2018-06-28 15:04:37'),
-(64, 81, 2018, 1, 4, 'V', NULL, NULL, '100', NULL, '2018-06-28 15:04:37'),
-(65, 74, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37'),
-(66, 75, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37'),
-(67, 79, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37'),
-(68, 80, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37'),
-(69, 81, 2018, 1, 1, 'V', NULL, '100', '100', NULL, '2018-06-28 15:06:37');
+INSERT INTO `score` (`id`, `studId`, `examYear`, `streamId`, `subjectID`, `attendance`, `march`, `june`, `september`, `december`, `avgJune`, `avgDec`, `dateInserted`) VALUES
+(70, 74, 2018, 1, 1, 'V', '100', '100', NULL, NULL, '100', NULL, '2018-08-01 20:46:20'),
+(71, 75, 2018, 1, 1, 'V', '54', '100', NULL, NULL, '77', NULL, '2018-08-01 20:45:12'),
+(72, 79, 2018, 1, 1, 'V', '78', '85', NULL, NULL, '82', NULL, '2018-08-01 20:45:12'),
+(73, 80, 2018, 1, 1, 'V', '99', '100', NULL, NULL, '100', NULL, '2018-08-01 20:46:20'),
+(74, 81, 2018, 1, 1, 'V', '78', '100', NULL, NULL, '89', NULL, '2018-08-01 20:46:20');
 
 -- --------------------------------------------------------
 
@@ -262,6 +271,12 @@ INSERT INTO `user_category` (`id`, `group`, `dateInserted`) VALUES
 --
 
 --
+-- Indexes for table `results`
+--
+ALTER TABLE `results`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `score`
 --
 ALTER TABLE `score`
@@ -314,42 +329,40 @@ ALTER TABLE `user_category`
 --
 
 --
+-- AUTO_INCREMENT for table `results`
+--
+ALTER TABLE `results`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `score`
 --
 ALTER TABLE `score`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
-
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
   MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
-
 --
 -- AUTO_INCREMENT for table `students_masomo`
 --
 ALTER TABLE `students_masomo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
-
 --
 -- AUTO_INCREMENT for table `student_takes_subject`
 --
 ALTER TABLE `student_takes_subject`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `UserID` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
 --
 -- AUTO_INCREMENT for table `user_category`
 --
 ALTER TABLE `user_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

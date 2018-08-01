@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp_yangu/htdocs/smis/application/controllers/result.php</file>
-            <file>file:/C:/xampp_yangu/htdocs/smis/public/css/style.css</file>
-            <file>file:/C:/xampp_yangu/htdocs/smis/application/views/main.php</file>
-            <file>file:/C:/xampp_yangu/htdocs/smis/application/models/student_modal.php</file>
-            <file>file:/C:/xampp_yangu/htdocs/smis/application/controllers/student.php</file>
-            <file>file:/C:/xampp_yangu/htdocs/smis/application/models/result_model.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/models/result_model.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/controllers/result.php</file>
+            <file>file:/C:/xampp/htdocs/smis/application/controllers/HandlePdf.php</file>
         </group>
     </open-files>
 </project-private>
