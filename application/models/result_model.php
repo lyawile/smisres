@@ -36,17 +36,127 @@ class Result_model extends CI_Model {
 
     public function getResults($class) {
         $this->db->where('streamId', $class);
+        $this->db->order_by('studId', 'DESC');
         $result = $this->db->get('score');
         foreach ($result->result() as $r) {
             $recId = $r->id;
             $avgJune = ($r->march + $r->june) / 2;
-            $this->db->query("UPDATE `score` SET `avgJune` = $avgJune WHERE `score`.`id` = $recId;");
-        }
-       $result = $this->db->query("select student.id, CONCAT(firstname,' ', middlename, ' ', surname) as studNames,`streamId`, `subjectID`, march, june, `avgJune` "
-               . "from student INNER JOIN score ON student.id =  score.`studId` where `streamId` = $class");
-       return $result;
-    }
 
+            $this->db->query("UPDATE `score` SET `avgJune` = $avgJune WHERE `score`.`id` = $recId;");
+            $studentId = $r->studId;
+            $studIds[] = $studentId; // store all student ids in array for next retrieval 
+        }
+//        var_dump($studIds);
+        $uniqStudId = array_unique($studIds);
+        $studParticulars = array();
+        $studResults = array();
+        foreach ($uniqStudId as $studId) {
+            $this->db->where('id', $studId);
+            $result = $this->db->select(['firstname', 'middlename', 'surname'])->get('student');
+
+            foreach ($result->result() as $studDetails) {
+//                $studentDetails = array($studDetails->firstname, $studDetails->middlename, $studDetails->surname);
+                $studentNames = $studDetails->firstname . " " . $studDetails->middlename . " " . $studDetails->surname;
+                $this->pdf->AddPage();
+                $this->pdf->SetFont('Arial', 'B', 15);
+//        }
+                $this->pdf->Cell(189, 10, "KWA MZAZI / MLEZI WA: " . $studentNames, 1, 1, 'C');
+                $this->pdf->SetFont('Arial', 'B', 10);
+
+                $this->pdf->Cell('', 8, "SEHEMU A: MATOKEO (08 Juni 2018)", '', 1);
+//        $this->pdf->Cell('', 8, date("M, Y"), '', 1);
+                $this->pdf->Cell(10, 10, "NA", 1, '', "C");
+                $this->pdf->Cell(40, 10, "SOMO", 1, '', 'C');
+                $this->pdf->Cell(60, 5, "ALAMA ZA", 1, '', "C");
+                $this->pdf->Cell(54, 5, "NAFASI", 1, '', "C");
+                $this->pdf->Cell(26, 10, "MAONI", 1, 1, "C");
+                $this->pdf->Cell(50);
+                $this->pdf->SetFont('Arial', 'B', 8);
+                $this->pdf->Cell(20, -5, "MAENDELEO", 1);
+                $this->pdf->Cell(20, -5, "MUHULA", 1);
+                $this->pdf->Cell(20, -5, "WASTANI", 1);
+//        $this->pdf->Cell(110);
+                $this->pdf->Cell(18, -5, "NAFASI", 1);
+                $this->pdf->Cell(18, -5, "KATI YA", 1);
+                $this->pdf->Cell(18, -5, "DARAJA", 1, 1);
+//        $this->pdf->Cell(20, 7.5, "WASTANI",1);
+                $this->pdf->Cell('', 5, '', '', 1);
+                $this->pdf->SetFont('Arial', '', 8);
+            }
+
+            $studentResult = $this->db->query("select student.id,`streamId`, `subjectName`, march, june, `avgJune` "
+                    . "from student "
+                    . "INNER JOIN score ON student.id =  score.`studId` "
+                    . "INNER JOIN subject s ON s.id = score.subjectID "
+                    . "where `streamId` = $class and score.studId= $studId"
+                    . " ORDER BY student.id");
+            $i = 0;
+            foreach ($studentResult->result() as $studDetails) {
+
+                // Portion for displaying results
+                $this->pdf->Cell(10, 5, "$i", 1, '', "C");
+                $this->pdf->Cell(40, 5, "$studDetails->subjectName", 1, '', "C");
+                $this->pdf->Cell(20, 5, "$studDetails->march", 1, '', "C");
+                $this->pdf->Cell(20, 5, "$studDetails->june", 1, '', "C");
+                $this->pdf->Cell(20, 5, "$studDetails->avgJune", 1, '', "C");
+                $this->pdf->Cell(18, 5, "1", 1, '', "C");
+                $this->pdf->Cell(18, 5, "1", 1, '', "C");
+                $this->pdf->Cell(18, 5, "1", 1, '', "C");
+                $this->pdf->Cell(26, 5, "1", 1, 1, "C");
+                $i += 1;
+            }
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell('', 10, "SEHEMU B: TATHMINI YA MATOKEO", '', 1);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Cell('', 10, "Jumla ya alama ni:   ", '');
+            $this->pdf->Cell(-150);
+            $this->pdf->Cell('', 10, "|  Wastani wa alama ni:   ", '');
+            $this->pdf->Cell(-105);
+            $this->pdf->Cell('', 10, " |  Nafasi yake darasani ni ya  ", '');
+            $this->pdf->Cell(-56);
+            $this->pdf->Cell('', 10, " kati ya   ", '');
+            $this->pdf->Cell(-43);
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell('', 10, "150", '');
+            $this->pdf->Cell(-58);
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell('', 10, "5");
+            $this->pdf->Cell(-112);
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell('', 10, "54");
+
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell(-160);
+            $this->pdf->Cell('', 10, "682", '', 1);
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell('', 10, "SEHEMU C: UFUNGUO", '', 1);
+            $this->pdf->Cell(20, 10, "Na", 1, '', 'C');
+            $this->pdf->Cell(30, 10, "Alama", 1, '', 'C');
+            $this->pdf->Cell(30, 10, "Daraja", 1, '', 'C');
+            $this->pdf->Cell(30, 10, "Maoni", 1, '', 'C');
+            $this->pdf->Cell(79, 5, "Viwango Vya Ufaulu", 1, 1, 'C');
+            $this->pdf->Cell(110);
+            $this->pdf->Cell(49, 5, "Na", 1, '', 'C');
+            $this->pdf->Cell(30, 5, "Na", 1, 1, 'C');
+            for ($i = 1; $i <= 5; $i++) {
+                $this->pdf->Cell(20, 5, $i, 1, '', 'C');
+                $this->pdf->Cell(30, 5, $i, 1, '', 'C');
+                $this->pdf->Cell(30, 5, $i, 1, '', 'C');
+                $this->pdf->Cell(30, 5, $i, 1, '', 'C');
+                $this->pdf->Cell(49, 5, $i, 1, '', 'C');
+                $this->pdf->Cell(30, 5, $i, 1, 1, 'C');
+            }
+            $this->pdf->Cell('', 10, "SEHEMU D: TAARIFA ZA MWALIMU WA DARASA", '', 1);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Cell('', 5, "Jina: Rashid Ramadhan | Namba ya Simu: 0745122525 | Sahihi: ............. ", '', 1);
+            $this->pdf->Cell('', 5, "Maoni: Aongeze juhudi ya kujifunza zaidi ", '', 1);
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell('', 5, '', '', 1);
+        }
+//       return array($studParticulars, $studResults);
+    }
+// Get exam month using the exam type parameter passed over getExamType function
+// values are integers from 1 to 4, blank returns march exam as default.
     public function getExamType($examType) {
         switch ($examType) {
             case 1:
