@@ -1,0 +1,6 @@
+Results configuration:
+1. exam type - 1 = march, 2=june, 3=september, 4=december
+2. grade configuration
+   a. grade range 
+   b. grade name
+   c. level applied (form I, II,...)
