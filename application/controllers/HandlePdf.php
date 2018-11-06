@@ -27,7 +27,7 @@ class HandlePdf extends CI_Controller {
       
 
        
-        $this->pdf->Output("files.pdf", 'F');
+        $this->pdf->Output("results/results_for_form_$class.pdf", 'F');
         $data['content'] = 'score/results';
         $this->load->view('main', $data);
     }

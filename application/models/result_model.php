@@ -108,26 +108,27 @@ class Result_model extends CI_Model {
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 10, "SEHEMU B: TATHMINI YA MATOKEO", '', 1);
             $this->pdf->SetFont('Arial', '', 10);
-            $this->pdf->Cell('', 10, "Jumla ya alama ni:   ", '');
+            $this->pdf->Cell('', 10, "Alama Muhula I:   ", '');
             $this->pdf->Cell(-150);
-            $this->pdf->Cell('', 10, "|  Wastani wa alama ni:   ", '');
-            $this->pdf->Cell(-105);
-            $this->pdf->Cell('', 10, " |  Nafasi yake darasani ni ya  ", '');
-            $this->pdf->Cell(-56);
+            $this->pdf->Cell('', 10, "|  Alama Muhula II:   ", '');
+            $this->pdf->Cell(-110);
+            $this->pdf->Cell('', 10, "|  Wastani wa alama ni:   ", '', 1);
+            $this->pdf->Cell('', 10, "Nafasi yake darasani ni ya  ", '');
+            $this->pdf->Cell(-145);
             $this->pdf->Cell('', 10, " kati ya   ", '');
-            $this->pdf->Cell(-43);
+            $this->pdf->Cell(-130);
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 10, "150", '');
-            $this->pdf->Cell(-58);
+            $this->pdf->Cell(-147);
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 10, "5");
-            $this->pdf->Cell(-112);
             $this->pdf->SetFont('Arial', 'B', 10);
-            $this->pdf->Cell('', 10, "54");
-
+            $this->pdf->Cell(-163);
+            $this->pdf->Cell('', -10, "700", '');
             $this->pdf->SetFont('Arial', 'B', 10);
-            $this->pdf->Cell(-160);
-            $this->pdf->Cell('', 10, "682", '', 1);
+            $this->pdf->Cell(-120);
+            $this->pdf->Cell('', -10, "682", '');
+            $this->pdf->Cell('',10,"",'', 1);
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 10, "SEHEMU C: UFUNGUO", '', 1);
             $this->pdf->Cell(20, 10, "Na", 1, '', 'C');
@@ -155,6 +156,7 @@ class Result_model extends CI_Model {
         }
 //       return array($studParticulars, $studResults);
     }
+
 // Get exam month using the exam type parameter passed over getExamType function
 // values are integers from 1 to 4, blank returns march exam as default.
     public function getExamType($examType) {

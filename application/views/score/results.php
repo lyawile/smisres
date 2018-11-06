@@ -2,5 +2,11 @@
     Results view
 </div>
 <div class="col-md-12">
-    <iframe src="<?=base_url().'files.pdf' ?>" style="width:100%; height:700px;" frameborder="0"></iframe>
+    <?php
+    $dir = 'results/';
+    $files1 = scandir($dir);
+    $fileName = $files1[2];
+    ?>
+    <iframe src="<?= base_url() . 'results/'.$fileName; ?>" style="width:100%; height:700px;" frameborder="0">
+    </iframe>
 </div>
