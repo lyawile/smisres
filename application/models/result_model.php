@@ -35,14 +35,25 @@ class Result_model extends CI_Model {
     }
 
     public function getResults($class) {
+        $getTerm = $this->getActiveTerm();
+        $termDisplay = ucfirst($getTerm[1]) ;
         $this->db->where('streamId', $class);
         $this->db->order_by('studId', 'DESC');
         $result = $this->db->get('score');
         foreach ($result->result() as $r) {
             $recId = $r->id;
-            $avgJune = ($r->march + $r->june) / 2;
-
-            $this->db->query("UPDATE `score` SET `avgJune` = $avgJune WHERE `score`.`id` = $recId;");
+            $march = $r->march;
+            $june = $r->june;
+            $september = $r->september;
+            $december = $r->december;
+            $march = ($march == NULL) ? 0 : $march;
+            $june = ($june == NULL) ? 0 : $june;
+            $september = ($september == NULL) ? 0 : $september;
+            $december = ($december == NULL) ? 0 : $december;
+            $avgJune = ($march + $june) / 2;
+            $avgDec = ($september + $december) / 2;
+            // Get the average marks 
+            $this->db->query("UPDATE `score` SET `avgJune` = $avgJune, `avgDec` = $avgDec WHERE `score`.`id` = $recId;");
             $studentId = $r->studId;
             $studIds[] = $studentId; // store all student ids in array for next retrieval 
         }
@@ -63,7 +74,7 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(189, 10, "KWA MZAZI / MLEZI WA: " . $studentNames, 1, 1, 'C');
                 $this->pdf->SetFont('Arial', 'B', 10);
 
-                $this->pdf->Cell('', 8, "SEHEMU A: MATOKEO (08 Juni 2018)", '', 1);
+                $this->pdf->Cell('', 8, "SEHEMU A: MATOKEO ($termDisplay, ". date("Y"). ")", '', 1);
 //        $this->pdf->Cell('', 8, date("M, Y"), '', 1);
                 $this->pdf->Cell(10, 10, "NA", 1, '', "C");
                 $this->pdf->Cell(40, 10, "SOMO", 1, '', 'C');
@@ -83,8 +94,11 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell('', 5, '', '', 1);
                 $this->pdf->SetFont('Arial', '', 8);
             }
-
-            $studentResult = $this->db->query("select student.id,`streamId`, `subjectName`, march, june, `avgJune` "
+            // Query active term i.e June or December trough the function call 
+            $resultData = $this->getActiveTerm();
+            $active = $resultData[0];
+            $term = $resultData[1];
+            $studentResult = $this->db->query("select student.id,`streamId`, `subjectName`, march, june, `avgJune`, september, december, `avgDec` "
                     . "from student "
                     . "INNER JOIN score ON student.id =  score.`studId` "
                     . "INNER JOIN subject s ON s.id = score.subjectID "
@@ -92,13 +106,15 @@ class Result_model extends CI_Model {
                     . " ORDER BY student.id");
             $i = 0;
             foreach ($studentResult->result() as $studDetails) {
-
+                $score1 = ($active = 1 && $term == 'june') ? $studDetails->march : $studDetails->september;
+                $score2 = ($active = 1 && $term == 'june') ? $studDetails->june : $studDetails->december;
+                $score3 = ($active = 1 && $term == 'june') ? $studDetails->avgJune : $studDetails->avgDec;
                 // Portion for displaying results
                 $this->pdf->Cell(10, 5, "$i", 1, '', "C");
                 $this->pdf->Cell(40, 5, "$studDetails->subjectName", 1, '', "C");
-                $this->pdf->Cell(20, 5, "$studDetails->march", 1, '', "C");
-                $this->pdf->Cell(20, 5, "$studDetails->june", 1, '', "C");
-                $this->pdf->Cell(20, 5, "$studDetails->avgJune", 1, '', "C");
+                $this->pdf->Cell(20, 5, "$score1", 1, '', "C");
+                $this->pdf->Cell(20, 5, "$score2", 1, '', "C");
+                $this->pdf->Cell(20, 5, "$score3", 1, '', "C");
                 $this->pdf->Cell(18, 5, "1", 1, '', "C");
                 $this->pdf->Cell(18, 5, "1", 1, '', "C");
                 $this->pdf->Cell(18, 5, "1", 1, '', "C");
@@ -128,7 +144,7 @@ class Result_model extends CI_Model {
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell(-120);
             $this->pdf->Cell('', -10, "682", '');
-            $this->pdf->Cell('',10,"",'', 1);
+            $this->pdf->Cell('', 10, "", '', 1);
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 10, "SEHEMU C: UFUNGUO", '', 1);
             $this->pdf->Cell(20, 10, "Na", 1, '', 'C');
@@ -173,6 +189,29 @@ class Result_model extends CI_Model {
             default :
                 return $examMonth = 'march';
         }
+    }
+
+    public function getActiveTerm() {
+        // Query active term i.e June or December 
+        $this->db->where("active", 1);
+        $queryActiveTerm = $this->db->get('system_setup');
+        foreach ($queryActiveTerm->result() as $resultSet) {
+            $active = $resultSet->active;
+            $term = $resultSet->muhula;
+        }
+        return array($active, $term);
+    }
+
+    public function updateTerm($term) {
+        // change the active value to 1 for selected term
+        $this->db->where('muhula', $term);
+        $this->db->set('active', 1);
+        $this->db->update('system_setup');
+        // reset all terms active status not equal to selected term to 0
+        $this->db->where('muhula !=', $term);
+        $this->db->set('active', 0);
+        $this->db->update('system_setup');
+        return 'OK';
     }
 
 }
