@@ -36,7 +36,7 @@ class Result_model extends CI_Model {
 
     public function getResults($class) {
         $getTerm = $this->getActiveTerm();
-        $termDisplay = ucfirst($getTerm[1]) ;
+        $termDisplay = ucfirst($getTerm[1]);
         $this->db->where('streamId', $class);
         $this->db->order_by('studId', 'DESC');
         $result = $this->db->get('score');
@@ -46,12 +46,20 @@ class Result_model extends CI_Model {
             $june = $r->june;
             $september = $r->september;
             $december = $r->december;
-            $march = ($march == NULL) ? 0 : $march;
-            $june = ($june == NULL) ? 0 : $june;
-            $september = ($september == NULL) ? 0 : $september;
-            $december = ($december == NULL) ? 0 : $december;
-            $avgJune = ($march + $june) / 2;
-            $avgDec = ($september + $december) / 2;
+//            $march = ($march == NULL) ? 0 : $march;
+//            $june = ($june == NULL) ? 0 : $june;
+//            $september = ($september == NULL) ? 0 : $september;
+//            $december = ($december == NULL) ? 0 : $december;
+            if ($march == '' && $june == '') {
+                $avgJune = "NULL";
+            } else {
+                $avgJune = ($march + $june) / 2;
+            }
+            if ($september == '' && $december == '') {
+                $avgDec = "NULL";
+            } else {
+                $avgDec = ($september + $december) / 2;
+            }
             // Get the average marks 
             $this->db->query("UPDATE `score` SET `avgJune` = $avgJune, `avgDec` = $avgDec WHERE `score`.`id` = $recId;");
             $studentId = $r->studId;
@@ -74,7 +82,7 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(189, 10, "KWA MZAZI / MLEZI WA: " . $studentNames, 1, 1, 'C');
                 $this->pdf->SetFont('Arial', 'B', 10);
 
-                $this->pdf->Cell('', 8, "SEHEMU A: MATOKEO ($termDisplay, ". date("Y"). ")", '', 1);
+                $this->pdf->Cell('', 8, "SEHEMU A: MATOKEO ($termDisplay, " . date("Y") . ")", '', 1);
 //        $this->pdf->Cell('', 8, date("M, Y"), '', 1);
                 $this->pdf->Cell(10, 10, "NA", 1, '', "C");
                 $this->pdf->Cell(40, 10, "SOMO", 1, '', 'C');
@@ -98,17 +106,52 @@ class Result_model extends CI_Model {
             $resultData = $this->getActiveTerm();
             $active = $resultData[0];
             $term = $resultData[1];
-            $studentResult = $this->db->query("select student.id,`streamId`, `subjectName`, march, june, `avgJune`, september, december, `avgDec` "
+            $studentResult = $this->db->query("select student.id studentId,`streamId`,s.id 'subjectIdentification',gradeJune,gradeDec, `subjectName`, march, june, `avgJune`, september, december, `avgDec` "
                     . "from student "
                     . "INNER JOIN score ON student.id =  score.`studId` "
                     . "INNER JOIN subject s ON s.id = score.subjectID "
                     . "where `streamId` = $class and score.studId= $studId"
                     . " ORDER BY student.id");
             $i = 0;
+            $sumOfAverageMarks = 0;
+            $totalJune = 0;
             foreach ($studentResult->result() as $studDetails) {
+                // get the total average scores for June 
+                $totalJune += $studDetails->avgJune;
+                // get the total scores based on the selected term
                 $score1 = ($active = 1 && $term == 'june') ? $studDetails->march : $studDetails->september;
                 $score2 = ($active = 1 && $term == 'june') ? $studDetails->june : $studDetails->december;
                 $score3 = ($active = 1 && $term == 'june') ? $studDetails->avgJune : $studDetails->avgDec;
+                $subjectIdentification = $studDetails->subjectIdentification;
+//                exit();
+                // get the average score grade for the term
+                if (empty($score3))
+                    $score3 = -1; // fake the score value
+                $termGrade = $this->getGrade($score3);
+                $score3 = ($active = 1 && $term == 'june') ? $studDetails->avgJune : $studDetails->avgDec;
+                $studentIdententificationNumber = $studDetails->studentId;
+                // get sum of the total score 
+                $sumOfAverageMarks += $score3;
+                // update the score based on the current term
+                if ($term === 'june') {
+                    //update June Grade
+                    $this->db->set('gradeJune', $termGrade)->where(['studId' => $studentIdententificationNumber, 'subjectID' => $subjectIdentification])->update('score');
+                    // set the June score grade to display
+                    $scoreGrade = $studDetails->gradeJune;
+
+                    // set display name muhula I and set the muhulaI total score
+                    $termDisplayJune = "Muhula I";
+                    $termTotalJune = $sumOfAverageMarks;
+                }
+                if ($term === 'december') {
+                    //Update December grade
+                    $this->db->set('gradeDec', $termGrade)->where(['studId' => $studentIdententificationNumber, 'subjectID' => $subjectIdentification])->update('score');
+                    // set the December score grade to display
+                    $scoreGrade = $studDetails->gradeDec;
+                    // set display name muhula I and set the muhulaI total score
+                    $termDisplayDec = "Muhula II";
+                    $termTotalDec = $sumOfAverageMarks;
+                }
                 // Portion for displaying results
                 $this->pdf->Cell(10, 5, "$i", 1, '', "C");
                 $this->pdf->Cell(40, 5, "$studDetails->subjectName", 1, '', "C");
@@ -117,16 +160,23 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(20, 5, "$score3", 1, '', "C");
                 $this->pdf->Cell(18, 5, "1", 1, '', "C");
                 $this->pdf->Cell(18, 5, "1", 1, '', "C");
-                $this->pdf->Cell(18, 5, "1", 1, '', "C");
+                $this->pdf->Cell(18, 5, "$scoreGrade", 1, '', "C");
                 $this->pdf->Cell(26, 5, "1", 1, 1, "C");
                 $i += 1;
             }
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 10, "SEHEMU B: TATHMINI YA MATOKEO", '', 1);
             $this->pdf->SetFont('Arial', '', 10);
-            $this->pdf->Cell('', 10, "Alama Muhula I:   ", '');
+            if (!empty($termTotalJune)) {
+                $this->pdf->Cell('', 10, "Alama Muhula I:   ", '');
+            }
+            if (!empty($termTotalDec)) {
+                $this->pdf->Cell('', 10, "Alama Muhula I:   ", '');
+            }
             $this->pdf->Cell(-150);
-            $this->pdf->Cell('', 10, "|  Alama Muhula II:   ", '');
+            if (!empty($termTotalDec)) {
+                $this->pdf->Cell('', 10, "Alama Muhula II:   ", '');
+            }
             $this->pdf->Cell(-110);
             $this->pdf->Cell('', 10, "|  Wastani wa alama ni:   ", '', 1);
             $this->pdf->Cell('', 10, "Nafasi yake darasani ni ya  ", '');
@@ -140,10 +190,17 @@ class Result_model extends CI_Model {
             $this->pdf->Cell('', 10, "5");
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell(-163);
-            $this->pdf->Cell('', -10, "700", '');
+            if (!empty($termTotalJune)) {
+                $this->pdf->Cell('', -10, "$termTotalJune", '');
+            }
+            if (!empty($termTotalDec)) {
+                $this->pdf->Cell('', -10, "$totalJune", '');
+            }
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell(-120);
-            $this->pdf->Cell('', -10, "682", '');
+            if (!empty($termTotalDec)) {
+                $this->pdf->Cell('', -10, "$termTotalDec", '');
+            }
             $this->pdf->Cell('', 10, "", '', 1);
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 10, "SEHEMU C: UFUNGUO", '', 1);
@@ -212,6 +269,22 @@ class Result_model extends CI_Model {
         $this->db->set('active', 0);
         $this->db->update('system_setup');
         return 'OK';
+    }
+
+    public function getGrade($marks) {
+        if ($marks >= 0 && $marks <= 20)
+            $grade = 'F';
+        elseif ($marks >= 21 && $marks <= 40)
+            $grade = 'D';
+        elseif ($marks >= 41 && $marks <= 60)
+            $grade = 'C';
+        elseif ($marks >= 61 && $marks <= 80)
+            $grade = 'B';
+        elseif ($marks >= 81 && $marks <= 100)
+            $grade = 'A';
+        else
+            $grade = '-';
+        return $grade;
     }
 
 }

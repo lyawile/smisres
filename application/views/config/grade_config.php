@@ -13,6 +13,6 @@ if ($result == "OK") {
 <?php echo form_open('result_config/updateTerm') ?>
 <?php echo form_radio($data, $value = 'june', $checked = ($term === 'june') ? TRUE : FALSE); ?> June <br/>
 <?php echo form_radio($data, $value = 'december', $checked = ($term === 'december') ? TRUE : FALSE); ?> December <br/>
-<?php echo form_submit('', 'upload file', 'class="submit" style="display: inline !important; margin-right: 20px;"') ?>
+<?php echo form_submit('', 'Change term', 'class="submit" style="display: inline !important; margin-right: 20px;"') ?>
 <?php
 echo form_close()?>
