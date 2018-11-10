@@ -65,6 +65,9 @@ class Result_model extends CI_Model {
             $studentId = $r->studId;
             $studIds[] = $studentId; // store all student ids in array for next retrieval 
         }
+        // get the number of students in the class
+        $query = $this->db->where('classId', $class)->get('student');
+        $numberOfStudentsInClass = $query->num_rows();
 //        var_dump($studIds);
         $uniqStudId = array_unique($studIds);
         $studParticulars = array();
@@ -116,6 +119,8 @@ class Result_model extends CI_Model {
             $sumOfAverageMarks = 0;
             $totalJune = 0;
             foreach ($studentResult->result() as $studDetails) {
+                // get the avgJune
+                $avgJuneIndividual = $studDetails->avgJune;
                 // get the total average scores for June 
                 $totalJune += $studDetails->avgJune;
                 // get the total scores based on the selected term
@@ -123,7 +128,6 @@ class Result_model extends CI_Model {
                 $score2 = ($active = 1 && $term == 'june') ? $studDetails->june : $studDetails->december;
                 $score3 = ($active = 1 && $term == 'june') ? $studDetails->avgJune : $studDetails->avgDec;
                 $subjectIdentification = $studDetails->subjectIdentification;
-//                exit();
                 // get the average score grade for the term
                 if (empty($score3))
                     $score3 = -1; // fake the score value
@@ -151,6 +155,35 @@ class Result_model extends CI_Model {
                     // set display name muhula I and set the muhulaI total score
                     $termDisplayDec = "Muhula II";
                     $termTotalDec = $sumOfAverageMarks;
+                    $avgJunePerCand = $avgJuneIndividual;
+                    $totalAverageAnnual = ($score3 + $avgJunePerCand) / 2; // $score3 stores the avgDec for if term is DEC
+                    $this->db->set('totalAnnual', $totalAverageAnnual)->where(['studId' => $studentIdententificationNumber, 'subjectID' => $subjectIdentification])->update('score');
+                    if (empty($totalAverageAnnual))
+                        $totalAverageAnnual = -1; // fake the score value
+                    $avTotalAnnualGrade = $this->getGrade($totalAverageAnnual);
+                    // update grade
+                    $this->db->set('gradeTotalAnnual', $avTotalAnnualGrade)->where(['studId' => $studentIdententificationNumber, 'subjectID' => $subjectIdentification])->update('score');
+                    $termTotalAnnual = $sumOfAverageMarks;
+                }
+                // Initialize loop in order to run once 
+                $index = 0;
+                while ($index < 1) {
+                    if (!empty($termTotalJune)) {
+                        // truncate the june_ranking table
+                        $this->db->query("truncate june_ranking");
+                        // populate data into ranking table for June
+                        $this->db->query("INSERT INTO june_ranking(studId, totalScore) "
+                                . "SELECT studId, sum(avgJune) totalAvg FROM score  "
+                                . "WHERE streamId = $class GROUP BY studId ORDER BY totalAvg DESC; ");
+                    }
+
+                    if (!empty($termTotalAnnual)) {
+                        // truncate the june_ranking table
+                        $this->db->query("truncate annual_ranking");
+                        // populate data into ranking table for Annual
+                        $this->db->query("INSERT INTO annual_ranking(studId, totalScore) SELECT studId, sum(totalAnnual) totalAvg FROM score   WHERE streamId = $class GROUP BY studId ORDER BY totalAvg DESC;");
+                    }
+                    $index += 20;
                 }
                 // Portion for displaying results
                 $this->pdf->Cell(10, 5, "$i", 1, '', "C");
@@ -159,11 +192,29 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(20, 5, "$score2", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score3", 1, '', "C");
                 $this->pdf->Cell(18, 5, "1", 1, '', "C");
-                $this->pdf->Cell(18, 5, "1", 1, '', "C");
+                $this->pdf->Cell(18, 5, "$numberOfStudentsInClass", 1, '', "C");
                 $this->pdf->Cell(18, 5, "$scoreGrade", 1, '', "C");
                 $this->pdf->Cell(26, 5, "1", 1, 1, "C");
                 $i += 1;
             }
+            // set position values 
+            // get the position of the student from the ranking table
+            if (!empty(@$termTotalAnnual) || @$termTotalAnnual === 0) {
+                echo $studId;
+                echo "<br>";
+                $rankingDetails = $this->db->where('studId', $studId)->select('id')->get('annual_ranking');
+                foreach ($rankingDetails->result() as $rankData) {
+                    $position = $rankData->id;
+                }
+            }
+            if (!empty($termTotalJune) || @$termTotalJune === 0) {
+                // get the position of the student from the ranking table
+                $rankingDetails = $this->db->where('studId', $studId)->select('id')->get('june_ranking');
+                foreach ($rankingDetails->result() as $rankData) {
+                    $position = $rankData->id;
+                }
+            }
+
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 10, "SEHEMU B: TATHMINI YA MATOKEO", '', 1);
             $this->pdf->SetFont('Arial', '', 10);
@@ -179,15 +230,15 @@ class Result_model extends CI_Model {
             }
             $this->pdf->Cell(-110);
             $this->pdf->Cell('', 10, "|  Wastani wa alama ni:   ", '', 1);
-            $this->pdf->Cell('', 10, "Nafasi yake darasani ni ya  ", '');
+            $this->pdf->Cell('', 10, "Nafasi yake darasani ni ya: ", '');
             $this->pdf->Cell(-145);
             $this->pdf->Cell('', 10, " kati ya   ", '');
             $this->pdf->Cell(-130);
             $this->pdf->SetFont('Arial', 'B', 10);
-            $this->pdf->Cell('', 10, "150", '');
+            $this->pdf->Cell('', 10, "$numberOfStudentsInClass", '');
             $this->pdf->Cell(-147);
             $this->pdf->SetFont('Arial', 'B', 10);
-            $this->pdf->Cell('', 10, "5");
+            $this->pdf->Cell('', 10, "$position");
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell(-163);
             if (!empty($termTotalJune)) {
@@ -227,6 +278,7 @@ class Result_model extends CI_Model {
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 5, '', '', 1);
         }
+
 //       return array($studParticulars, $studResults);
     }
 
