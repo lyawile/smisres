@@ -1,0 +1,7 @@
+get the class id
+get the subject code
+get the avgJune for that subject
+order avgJune in descending order
+insert the ranking values in subject_ranking table
+
+subject_ranking( id, studId, subjec_code) 

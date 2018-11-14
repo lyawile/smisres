@@ -3,12 +3,12 @@
 class Result_model extends CI_Model {
 
     public function load_score($streamId, $studentId, $score, $examType, $subjectName, $attendance) {
-        echo $month = $this->getExamType($examType);
+        $month = $this->getExamType($examType);
         $year = date('Y');
         $this->db->select('id,subjectName');
         $out = $this->db->get_where('subject', array('subjectName' => $subjectName));
         foreach ($out->result() as $v) {
-            echo $subjectId = $v->id;
+             $subjectId = $v->id;
         }
         $result = $this->db->query("SELECT `studId` "
                 . "FROM score "
@@ -200,8 +200,6 @@ class Result_model extends CI_Model {
             // set position values 
             // get the position of the student from the ranking table
             if (!empty(@$termTotalAnnual) || @$termTotalAnnual === 0) {
-                echo $studId;
-                echo "<br>";
                 $rankingDetails = $this->db->where('studId', $studId)->select('id')->get('annual_ranking');
                 foreach ($rankingDetails->result() as $rankData) {
                     $position = $rankData->id;
