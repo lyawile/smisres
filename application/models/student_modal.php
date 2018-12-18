@@ -91,7 +91,7 @@ class Student_modal extends CI_Model {
     }
 
     public function listStudentSubjects($classId) {
-        $result = $this->db->query("select s.id studId, s.firstname, s.surname, Chemistry, Physics, Mathematics, Civics, Geography, Islamic_Knowledge,Quran, Kiswahili, English "
+        $result = $this->db->query("select s.id studId, s.firstname, s.surname, Chemistry, Physics, Mathematics, Civics, Geography, Islamic_Knowledge,Quran, Kiswahili, English, Biology "
                 . "from student s, students_masomo sm "
                 . "where s.id = sm.`studentId`  and s.`classId` = $classId");
         return $result;

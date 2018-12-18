@@ -10,6 +10,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Result extends CI_Controller {
 
     public function index() {
+//        $this->load->model("result_model");
+//        echo $this->result_model->generateSubjectRankingStores(1);
+//        exit();
         if(file_exists('problems.txt')){ // check if error file exists, if yes, remove it
             unlink('problems.txt');
         }

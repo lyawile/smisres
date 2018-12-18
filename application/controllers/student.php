@@ -183,7 +183,7 @@ class Student extends CI_Controller {
         $this->load->view('main', $data);
     }
 
-    public function listStudentSubjects($classId = 2) {
+    public function listStudentSubjects($classId = 1) {
 //        $data['content'] = 'student/liststudentsubjects';
 //        $data['result'] = $this->db->get('subject');
         $this->load->model('student_modal');
@@ -204,6 +204,7 @@ class Student extends CI_Controller {
                     <th scope="col">Quran</th>
                     <th scope="col">Kiswahili</th>
                     <th scope="col">English</th>
+                    <th scope="col">Biology</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -256,6 +257,11 @@ class Student extends CI_Controller {
                         <td>
                             <div >
                                 <label><input id="English" type="checkbox" <?php if ($data->English == 1) echo "checked" ?> value="" ></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div >
+                                <label><input id="Biology" type="checkbox" <?php if ($data->Biology == 1) echo "checked" ?> value="" ></label>
                             </div>
                         </td>
                         <td>

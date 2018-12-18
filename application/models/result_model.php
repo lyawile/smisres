@@ -8,7 +8,7 @@ class Result_model extends CI_Model {
         $this->db->select('id,subjectName');
         $out = $this->db->get_where('subject', array('subjectName' => $subjectName));
         foreach ($out->result() as $v) {
-             $subjectId = $v->id;
+            $subjectId = $v->id;
         }
         $result = $this->db->query("SELECT `studId` "
                 . "FROM score "
@@ -127,7 +127,10 @@ class Result_model extends CI_Model {
                 $score1 = ($active = 1 && $term == 'june') ? $studDetails->march : $studDetails->september;
                 $score2 = ($active = 1 && $term == 'june') ? $studDetails->june : $studDetails->december;
                 $score3 = ($active = 1 && $term == 'june') ? $studDetails->avgJune : $studDetails->avgDec;
-                $subjectIdentification = $studDetails->subjectIdentification;
+                $subjectIdentification = $studDetails->subjectIdentification; // su
+                $studentIdentification = $studDetails->studentId; // Im going to use it to check student positon in subject
+                //Get the position of each candidate in respective subject
+                $this->generateSubjectRankingStores($subjectIdentification);
                 // get the average score grade for the term
                 if (empty($score3))
                     $score3 = -1; // fake the score value
@@ -191,7 +194,7 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(20, 5, "$score1", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score2", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score3", 1, '', "C");
-                $this->pdf->Cell(18, 5, "1", 1, '', "C");
+                $this->pdf->Cell(18, 5, $this->getSubjectPosition($studentIdentification, $subjectIdentification),1 , '', "C");
                 $this->pdf->Cell(18, 5, "$numberOfStudentsInClass", 1, '', "C");
                 $this->pdf->Cell(18, 5, "$scoreGrade", 1, '', "C");
                 $this->pdf->Cell(26, 5, "1", 1, 1, "C");
@@ -335,6 +338,31 @@ class Result_model extends CI_Model {
         else
             $grade = '-';
         return $grade;
+    }
+
+    public function getSubjectPosition($studentId, $subjectId) {
+        $query = $this->db->get_where('subject_position', ['studentId' => $studentId, 'subjectId' => $subjectId]);
+        foreach ($query->result() as $data) {
+            return $data->position;
+        }
+    }
+    public function generateSubjectRankingStores($subjectId){
+        // delete ranking data from subject_position table corresponding to the respective subject
+        $this->db->delete('subject_position',array('subjectId'=> $subjectId));
+        // create table for storing each subject ranking
+        $this->db->query("create  table subject_rank ( id int primary key auto_increment, studentId int not null, subjectId int not null,marks int not null)");
+        // insert data of the specific subject to the subject ranking table
+        $this->db->query("insert into  subject_rank(studentId, subjectID, marks)
+                          select score.studId, score.subjectID , score.avgJune 
+                          from score 
+                          where score.subjectID = $subjectId
+                          order by score.avgJune desc ");
+        // insert into the general table storing the subject ranking 
+        $this->db->query("insert into subject_position(studentId, subjectId,marks, position)
+                          select studentId, subjectId, marks, id from subject_rank; ");
+        // drop the specific subject ranking table 
+        $this->db->query("drop table subject_rank");
+        
     }
 
 }
