@@ -130,7 +130,7 @@ class Result_model extends CI_Model {
                 $subjectIdentification = $studDetails->subjectIdentification; // su
                 $studentIdentification = $studDetails->studentId; // Im going to use it to check student positon in subject
                 //Get the position of each candidate in respective subject
-                $this->generateSubjectRankingStores($subjectIdentification);
+                $this->generateSubjectRankingStores($subjectIdentification, $class);
                 // get the average score grade for the term
                 if (empty($score3))
                     $score3 = -1; // fake the score value
@@ -194,7 +194,7 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(20, 5, "$score1", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score2", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score3", 1, '', "C");
-                $this->pdf->Cell(18, 5, $this->getSubjectPosition($studentIdentification, $subjectIdentification),1 , '', "C");
+                $this->pdf->Cell(18, 5, $this->getSubjectPosition($studentIdentification, $subjectIdentification), 1, '', "C");
                 $this->pdf->Cell(18, 5, "$numberOfStudentsInClass", 1, '', "C");
                 $this->pdf->Cell(18, 5, "$scoreGrade", 1, '', "C");
                 $this->pdf->Cell(26, 5, "1", 1, 1, "C");
@@ -346,9 +346,12 @@ class Result_model extends CI_Model {
             return $data->position;
         }
     }
-    public function generateSubjectRankingStores($subjectId){
+
+    public function generateSubjectRankingStores($subjectId, $classId) {
+        // drop the specific subject ranking table 
+        $this->db->query("drop table if exists subject_rank");
         // delete ranking data from subject_position table corresponding to the respective subject
-        $this->db->delete('subject_position',array('subjectId'=> $subjectId));
+        $this->db->delete('subject_position', array('subjectId' => $subjectId, 'classId' => $classId));
         // create table for storing each subject ranking
         $this->db->query("create  table subject_rank ( id int primary key auto_increment, studentId int not null, subjectId int not null,marks int not null)");
         // insert data of the specific subject to the subject ranking table
@@ -358,11 +361,8 @@ class Result_model extends CI_Model {
                           where score.subjectID = $subjectId
                           order by score.avgJune desc ");
         // insert into the general table storing the subject ranking 
-        $this->db->query("insert into subject_position(studentId, subjectId,marks, position)
-                          select studentId, subjectId, marks, id from subject_rank; ");
-        // drop the specific subject ranking table 
-        $this->db->query("drop table subject_rank");
-        
+        $this->db->query("insert into subject_position(studentId, subjectId,marks, position, classId)
+                          select studentId, subjectId, marks,id, $classId 'classId'   from subject_rank; ");
     }
 
 }
