@@ -77,9 +77,24 @@ class Result_model extends CI_Model {
             $result = $this->db->select(['firstname', 'middlename', 'surname'])->get('student');
 
             foreach ($result->result() as $studDetails) {
+                // Display personal information
+                $logoFile = 'public/img/MTISSlogo.png';
+                $bismillahiFile = 'public/img/bismillahi_image.jpg';
+                $studentImage = 'public/img/student.jpg';
+                $this->pdf->addPage();
+                $this->pdf->SetFont('Arial', 'B', 13);
+                $this->pdf->Image($bismillahiFile, 75, 0, 60);
+                $this->pdf->Image($studentImage, 170, 10, 25, 30);
+                $this->pdf->Image($logoFile, 8, 10, 30, 30);
+                $this->pdf->Cell(45, 0, '', '');
+                $this->pdf->Cell(100, 15, "MTWARA ISLAMIC SECONDARY SCHOOL", '', 1, 'C');
+                $this->pdf->Cell(45, 0, '', '');
+                $this->pdf->Cell(100, 0, "TAARIFA YA MAENDELEO YA MWANAFUNZI", '', 1, 'C');
+                $this->pdf->Cell(45, 0, '', '');
+                $this->pdf->Cell(100, 15, "MATOKEO YA MTIHANI WA MUHULA WA I & II", '', 1, 'C');
+                $this->pdf->Cell(189, 10, "Anuani: S.L.P 261, Mtwara | Simu: 0718440572 | Barua Pepe: headmaster@mtiss.ac.tz", '', 1, 'c');
 //                $studentDetails = array($studDetails->firstname, $studDetails->middlename, $studDetails->surname);
                 $studentNames = $studDetails->firstname . " " . $studDetails->middlename . " " . $studDetails->surname;
-                $this->pdf->AddPage();
                 $this->pdf->SetFont('Arial', 'B', 15);
 //        }
                 $this->pdf->Cell(189, 10, "KWA MZAZI / MLEZI WA: " . $studentNames, 1, 1, 'C');
@@ -188,6 +203,7 @@ class Result_model extends CI_Model {
                     }
                     $index += 20;
                 }
+
                 // Portion for displaying results
                 $this->pdf->Cell(10, 5, "$i", 1, '', "C");
                 $this->pdf->Cell(40, 5, "$studDetails->subjectName", 1, '', "C");
@@ -278,6 +294,20 @@ class Result_model extends CI_Model {
             $this->pdf->Cell('', 5, "Maoni: Aongeze juhudi ya kujifunza zaidi ", '', 1);
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 5, '', '', 1);
+
+            // Old footer starts here 
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell('', 5, "SEHEMU E: MAAGIZO MUHIMU", '', 1);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Cell('', 5, "Shule Imefungwa tarehe: 14/06/2018 na itafunguliwa tarehe 17/07/2018", '', 1);
+            $this->pdf->Cell('', 5, "Shule ifunguliwapo aje na: 1. Pesa ya ada ya T-Shirt 15,000 2. Fagio la "
+                    . "chelewa la mnazi 3. Sare zinazokubalika na shule", '', 1);
+            $this->pdf->Cell('', 5, '', '', 1);
+            $this->pdf->SetFont('Arial', 'I', 10);
+            $this->pdf->Cell('', 5, "Wako Katika Maendeleo ya Uislamu na Elimu,", '', 1);
+            $this->pdf->Cell('', 5, "SHAFII RAMADHANI JUMBE", '', 1);
+            $this->pdf->Cell('', 5, '.....................', '', 1);
+            $this->pdf->Cell('', 5, "Mkuu wa Shule", '', 1);
         }
 
 //       return array($studParticulars, $studResults);
