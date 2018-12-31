@@ -46,20 +46,23 @@ class Result_model extends CI_Model {
             $june = $r->june;
             $september = $r->september;
             $december = $r->december;
-//            $march = ($march == NULL) ? 0 : $march;
-//            $june = ($june == NULL) ? 0 : $june;
-//            $september = ($september == NULL) ? 0 : $september;
-//            $december = ($december == NULL) ? 0 : $december;
-            if ($march == '' && $june == '') {
-                $avgJune = "NULL";
-            } else {
-                $avgJune = ($march + $june) / 2;
-            }
-            if ($september == '' && $december == '') {
-                $avgDec = "NULL";
-            } else {
-                $avgDec = ($september + $december) / 2;
-            }
+////            $march = ($march == NULL) ? 0 : $march;
+////            $june = ($june == NULL) ? 0 : $june;
+////            $september = ($september == NULL) ? 0 : $september;
+////            $december = ($december == NULL) ? 0 : $december;
+//            if ($march == '' && $june == '') {
+//                $avgJune = "NULL";
+//            } else {
+//                $avgJune = ($march + $june) / 2;
+//            }
+//            if ($september == '' && $december == '') {
+//                $avgDec = "NULL";
+//            } else {
+//                $avgDec = ($september + $december) / 2;
+//            }
+//          Get the average scores for each set of marks 
+            $avgJune = $this->avgJune($march, $june);
+            $avgDec = $this->avgDec($september, $december);
             // Get the average marks 
             $this->db->query("UPDATE `score` SET `avgJune` = $avgJune, `avgDec` = $avgDec WHERE `score`.`id` = $recId;");
             $studentId = $r->studId;
@@ -393,6 +396,26 @@ class Result_model extends CI_Model {
         // insert into the general table storing the subject ranking 
         $this->db->query("insert into subject_position(studentId, subjectId,marks, position, classId)
                           select studentId, subjectId, marks,id, $classId 'classId'   from subject_rank; ");
+    }
+
+    public function avgJune($march, $june) {
+        if ($march == '' && $june != '') {
+            return $avgJune = $june;
+        } elseif ($march != '' && $june == '') {
+            return $avgJune = $march;
+        } else {
+            return $avgJune = ($march + $june) / 2;
+        }
+    }
+
+    public function avgDec($september, $december) {
+        if ($september == '' && $december != '') {
+            return $avgDec = $december;
+        } elseif ($september != '' && $december == '') {
+            return $avgDec = $december;
+        } else {
+            return $avgDec = ($september + $december) / 2;
+        }
     }
 
 }
