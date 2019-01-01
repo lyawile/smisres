@@ -14,3 +14,4 @@ uploads/*
 !/files/templates/
 /results/
 nbproject/private/private.xml
+application/config/config.php
