@@ -193,9 +193,9 @@ class Result_model extends CI_Model {
                         // truncate the june_ranking table
                         $this->db->query("truncate june_ranking");
                         // populate data into ranking table for June
-                        $this->db->query("INSERT INTO june_ranking(studId, totalScore) "
-                                . "SELECT studId, sum(avgJune) totalAvg FROM score  "
-                                . "WHERE streamId = $class GROUP BY studId ORDER BY totalAvg DESC; ");
+                        $this->db->query("INSERT INTO june_ranking(studId, totalScore, averageScore) "
+                                . "SELECT studId, sum(avgJune) totalAvg, avg(avgJune) averageJune FROM score  "
+                                . "WHERE streamId = $class GROUP BY studId ORDER BY averageJune DESC; ");
                     }
 
                     if (!empty($termTotalAnnual)) {
