@@ -8,7 +8,7 @@ class Result_model extends CI_Model {
         $this->db->select('id,subjectName');
         $out = $this->db->get_where('subject', array('subjectName' => $subjectName));
         foreach ($out->result() as $v) {
-             $subjectId = $v->id;
+            $subjectId = $v->id;
         }
         $result = $this->db->query("SELECT `studId` "
                 . "FROM score "
@@ -46,20 +46,23 @@ class Result_model extends CI_Model {
             $june = $r->june;
             $september = $r->september;
             $december = $r->december;
-//            $march = ($march == NULL) ? 0 : $march;
-//            $june = ($june == NULL) ? 0 : $june;
-//            $september = ($september == NULL) ? 0 : $september;
-//            $december = ($december == NULL) ? 0 : $december;
-            if ($march == '' && $june == '') {
-                $avgJune = "NULL";
-            } else {
-                $avgJune = ($march + $june) / 2;
-            }
-            if ($september == '' && $december == '') {
-                $avgDec = "NULL";
-            } else {
-                $avgDec = ($september + $december) / 2;
-            }
+////            $march = ($march == NULL) ? 0 : $march;
+////            $june = ($june == NULL) ? 0 : $june;
+////            $september = ($september == NULL) ? 0 : $september;
+////            $december = ($december == NULL) ? 0 : $december;
+//            if ($march == '' && $june == '') {
+//                $avgJune = "NULL";
+//            } else {
+//                $avgJune = ($march + $june) / 2;
+//            }
+//            if ($september == '' && $december == '') {
+//                $avgDec = "NULL";
+//            } else {
+//                $avgDec = ($september + $december) / 2;
+//            }
+//          Get the average scores for each set of marks 
+            $avgJune = $this->avgJune($march, $june);
+            $avgDec = $this->avgDec($september, $december);
             // Get the average marks 
             $this->db->query("UPDATE `score` SET `avgJune` = $avgJune, `avgDec` = $avgDec WHERE `score`.`id` = $recId;");
             $studentId = $r->studId;
@@ -77,9 +80,24 @@ class Result_model extends CI_Model {
             $result = $this->db->select(['firstname', 'middlename', 'surname'])->get('student');
 
             foreach ($result->result() as $studDetails) {
+                // Display personal information
+                $logoFile = 'public/img/MTISSlogo.png';
+                $bismillahiFile = 'public/img/bismillahi_image.jpg';
+                $studentImage = 'public/img/student.jpg';
+                $this->pdf->addPage();
+                $this->pdf->SetFont('Arial', 'B', 13);
+                $this->pdf->Image($bismillahiFile, 75, 0, 60);
+                $this->pdf->Image($studentImage, 170, 10, 25, 30);
+                $this->pdf->Image($logoFile, 8, 10, 30, 30);
+                $this->pdf->Cell(45, 0, '', '');
+                $this->pdf->Cell(100, 15, "MTWARA ISLAMIC SECONDARY SCHOOL", '', 1, 'C');
+                $this->pdf->Cell(45, 0, '', '');
+                $this->pdf->Cell(100, 0, "TAARIFA YA MAENDELEO YA MWANAFUNZI", '', 1, 'C');
+                $this->pdf->Cell(45, 0, '', '');
+                $this->pdf->Cell(100, 15, "MATOKEO YA MTIHANI WA MUHULA WA I & II", '', 1, 'C');
+                $this->pdf->Cell(189, 10, "Anuani: S.L.P 261, Mtwara | Simu: 0718440572 | Barua Pepe: headmaster@mtiss.ac.tz", '', 1, 'c');
 //                $studentDetails = array($studDetails->firstname, $studDetails->middlename, $studDetails->surname);
                 $studentNames = $studDetails->firstname . " " . $studDetails->middlename . " " . $studDetails->surname;
-                $this->pdf->AddPage();
                 $this->pdf->SetFont('Arial', 'B', 15);
 //        }
                 $this->pdf->Cell(189, 10, "KWA MZAZI / MLEZI WA: " . $studentNames, 1, 1, 'C');
@@ -127,7 +145,10 @@ class Result_model extends CI_Model {
                 $score1 = ($active = 1 && $term == 'june') ? $studDetails->march : $studDetails->september;
                 $score2 = ($active = 1 && $term == 'june') ? $studDetails->june : $studDetails->december;
                 $score3 = ($active = 1 && $term == 'june') ? $studDetails->avgJune : $studDetails->avgDec;
-                $subjectIdentification = $studDetails->subjectIdentification;
+                $subjectIdentification = $studDetails->subjectIdentification; // su
+                $studentIdentification = $studDetails->studentId; // Im going to use it to check student positon in subject
+                //Get the position of each candidate in respective subject
+                $this->generateSubjectRankingStores($subjectIdentification, $class);
                 // get the average score grade for the term
                 if (empty($score3))
                     $score3 = -1; // fake the score value
@@ -185,13 +206,14 @@ class Result_model extends CI_Model {
                     }
                     $index += 20;
                 }
+
                 // Portion for displaying results
                 $this->pdf->Cell(10, 5, "$i", 1, '', "C");
                 $this->pdf->Cell(40, 5, "$studDetails->subjectName", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score1", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score2", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score3", 1, '', "C");
-                $this->pdf->Cell(18, 5, "1", 1, '', "C");
+                $this->pdf->Cell(18, 5, $this->getSubjectPosition($studentIdentification, $subjectIdentification), 1, '', "C");
                 $this->pdf->Cell(18, 5, "$numberOfStudentsInClass", 1, '', "C");
                 $this->pdf->Cell(18, 5, "$scoreGrade", 1, '', "C");
                 $this->pdf->Cell(26, 5, "1", 1, 1, "C");
@@ -275,6 +297,20 @@ class Result_model extends CI_Model {
             $this->pdf->Cell('', 5, "Maoni: Aongeze juhudi ya kujifunza zaidi ", '', 1);
             $this->pdf->SetFont('Arial', 'B', 10);
             $this->pdf->Cell('', 5, '', '', 1);
+
+            // Old footer starts here 
+            $this->pdf->SetFont('Arial', 'B', 10);
+            $this->pdf->Cell('', 5, "SEHEMU E: MAAGIZO MUHIMU", '', 1);
+            $this->pdf->SetFont('Arial', '', 10);
+            $this->pdf->Cell('', 5, "Shule Imefungwa tarehe: 14/06/2018 na itafunguliwa tarehe 17/07/2018", '', 1);
+            $this->pdf->Cell('', 5, "Shule ifunguliwapo aje na: 1. Pesa ya ada ya T-Shirt 15,000 2. Fagio la "
+                    . "chelewa la mnazi 3. Sare zinazokubalika na shule", '', 1);
+            $this->pdf->Cell('', 5, '', '', 1);
+            $this->pdf->SetFont('Arial', 'I', 10);
+            $this->pdf->Cell('', 5, "Wako Katika Maendeleo ya Uislamu na Elimu,", '', 1);
+            $this->pdf->Cell('', 5, "SHAFII RAMADHANI JUMBE", '', 1);
+            $this->pdf->Cell('', 5, '.....................', '', 1);
+            $this->pdf->Cell('', 5, "Mkuu wa Shule", '', 1);
         }
 
 //       return array($studParticulars, $studResults);
@@ -335,6 +371,51 @@ class Result_model extends CI_Model {
         else
             $grade = '-';
         return $grade;
+    }
+
+    public function getSubjectPosition($studentId, $subjectId) {
+        $query = $this->db->get_where('subject_position', ['studentId' => $studentId, 'subjectId' => $subjectId]);
+        foreach ($query->result() as $data) {
+            return $data->position;
+        }
+    }
+
+    public function generateSubjectRankingStores($subjectId, $classId) {
+        // drop the specific subject ranking table 
+        $this->db->query("drop table if exists subject_rank");
+        // delete ranking data from subject_position table corresponding to the respective subject
+        $this->db->delete('subject_position', array('subjectId' => $subjectId, 'classId' => $classId));
+        // create table for storing each subject ranking
+        $this->db->query("create  table subject_rank ( id int primary key auto_increment, studentId int not null, subjectId int not null,marks int not null)");
+        // insert data of the specific subject to the subject ranking table
+        $this->db->query("insert into  subject_rank(studentId, subjectID, marks)
+                          select score.studId, score.subjectID , score.avgJune 
+                          from score 
+                          where score.subjectID = $subjectId
+                          order by score.avgJune desc ");
+        // insert into the general table storing the subject ranking 
+        $this->db->query("insert into subject_position(studentId, subjectId,marks, position, classId)
+                          select studentId, subjectId, marks,id, $classId 'classId'   from subject_rank; ");
+    }
+
+    public function avgJune($march, $june) {
+        if ($march == '' && $june != '') {
+            return $avgJune = $june;
+        } elseif ($march != '' && $june == '') {
+            return $avgJune = $march;
+        } else {
+            return $avgJune = ($march + $june) / 2;
+        }
+    }
+
+    public function avgDec($september, $december) {
+        if ($september == '' && $december != '') {
+            return $avgDec = $december;
+        } elseif ($september != '' && $december == '') {
+            return $avgDec = $december;
+        } else {
+            return $avgDec = ($september + $december) / 2;
+        }
     }
 
 }

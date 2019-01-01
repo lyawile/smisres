@@ -12,4 +12,5 @@ uploads/*
 /excelFiles/
 /files/
 !/files/templates/
+/results/
 nbproject/private/private.xml

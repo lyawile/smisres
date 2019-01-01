@@ -68,7 +68,7 @@ if (isset($username) && !empty($username)) {
                         //dataType: 'json',
                         type: 'POST',
                         data: {classId: classId},
-                        url: "<?= base_url(); ?>" + "student/listStudent/" + classId,
+                        url: "<?= base_url(); ?>" + "index.php/student/listStudent/" + classId,
                         success: function (data) {
                             console.log(data);
                             $('p').replaceWith(data);
@@ -133,7 +133,7 @@ if (isset($username) && !empty($username)) {
                 $(this).addClass('active');
                 $('div.mylist').html("");
                 $.ajax({
-                    url: "<?= base_url(); ?>" + "student/listStudentSubjects/" + classId,
+                    url: "<?= base_url(); ?>" + "index.php/student/listStudentSubjects/" + classId,
                     success: function (data, textStatus, jqXHR) {
                         $('div.mylist').html(data);
                     },
@@ -163,7 +163,7 @@ if (isset($username) && !empty($username)) {
                         var selectedSubject = selectedSubject;
                         console.log(subject + "-" + studentId + " - " + selectedSubject);
                         $.ajax({
-                            url: "<?= base_url(); ?>" + "student/changeSub/" + studentId + '/' + subject + '/' + selectedSubject,
+                            url: "<?= base_url(); ?>" + "index.php/student/changeSub/" + studentId + '/' + subject + '/' + selectedSubject,
                             success: function (data, textStatus, jqXHR) {
                                 console.log(data);
                             },
