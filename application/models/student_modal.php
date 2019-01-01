@@ -32,7 +32,7 @@ class Student_modal extends CI_Model {
             }
             if ($studNo == 0) {
                 // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table 
-                $this->db->query("INSERT INTO mtiss_db.students_masomo VALUES( NULL, $studentId, 1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, NULL) ;");
+                $this->db->query("INSERT INTO mtiss_db.students_masomo VALUES( NULL, $studentId, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL) ;");
             } else {
                 // if student exists, update subjects records. It is assumed that initially all students takes all subjects
                 $status = $subArray->subjectName;
@@ -91,7 +91,8 @@ class Student_modal extends CI_Model {
     }
 
     public function listStudentSubjects($classId) {
-        $result = $this->db->query("select s.id studId, s.firstname, s.surname, Chemistry, Physics, Mathematics, Civics, Geography, Islamic_Knowledge,Quran, Kiswahili, English, Biology "
+        $result = $this->db->query("select s.id studId, s.firstname, s.surname, Chemistry, Physics, Mathematics, Civics, Geography, Islamic_Knowledge,Quran, "
+                . "Kiswahili, English, Biology, History, Arabic_Knowledge, Commerce, Book_keeping "
                 . "from student s, students_masomo sm "
                 . "where s.id = sm.`studentId`  and s.`classId` = $classId");
         return $result;

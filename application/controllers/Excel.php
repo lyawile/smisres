@@ -39,9 +39,9 @@ Class Excel extends CI_Controller {
             $sheet->setCellValue('F' . $counter, 'V'); // v for present and x for absent 
             $counter++;
         }
-        $filename = $subjectName.$stream;
+        $filename = $subjectName . $stream;
         $writer = new Xlsx($spreadsheet);
-        $writer->save($filename. '.xlsx');
+        $writer->save($filename . '.xlsx');
         echo $filename;
     }
 
@@ -99,30 +99,25 @@ Class Excel extends CI_Controller {
                     $this->db->insert('student', $data);
                     $studentId = $this->db->insert_id(); // get the id of the currently inserted student
                     $querySubjectId = $this->db->query("SELECT `subjectName` FROM subject");
+                    
                     foreach ($querySubjectId->result() as $subArray) {
                         $queryStud = $this->db->query("SELECT COUNT(studentId) studNo from students_masomo where `studentId` = $studentId;");
                         foreach ($queryStud->result() as $v) {
                             $studNo = $v->studNo;
                         }
                         if ($studNo == 0) {
-                            // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table 
-                            $this->db->query("INSERT INTO mtiss_db.students_masomo VALUES( NULL, $studentId, 1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL, NULL) ;");
+                            // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table
+                            $this->db->query("INSERT INTO mtiss_db.students_masomo VALUES( NULL, $studentId, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL) ;");
                         } else {
                             // if student exists, update subjects records. It is assumed that initially all students takes all subjects
                             $status = $subArray->subjectName;
-                            var_dump($v);
+//                            var_dump($v);
                             $this->db->query("UPDATE mtiss_db.students_masomo SET $status = 1 where `studentId` = $studentId");
                         }
                     }
                     $records += $this->db->affected_rows();
                 }
-                $r = $this->db->query("SELECT COUNT(id) numberOfRecords FROM student");
-                foreach ($r->result() as $value) {
-                    $value = $value->numberOfRecords;
-                    if (isset($value)) {
-                        $message = "<p> " . $records . " Records uploaded successfully</p>";
-                    }
-                }
+                $message = "<p> " . $records . " Records uploaded successfully</p>";
                 echo $message;
             } else {
                 $data['mpunga'] = $this->upload->display_errors();

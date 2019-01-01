@@ -133,7 +133,7 @@ class Result_model extends CI_Model {
                     . "INNER JOIN subject s ON s.id = score.subjectID "
                     . "where `streamId` = $class and score.studId= $studId"
                     . " ORDER BY student.id");
-            $i = 0;
+            $i = 1;
             $sumOfAverageMarks = 0;
             $totalJune = 0;
             foreach ($studentResult->result() as $studDetails) {
@@ -206,8 +206,9 @@ class Result_model extends CI_Model {
                     }
                     $index += 20;
                 }
-
+                
                 // Portion for displaying results
+                
                 $this->pdf->Cell(10, 5, "$i", 1, '', "C");
                 $this->pdf->Cell(40, 5, "$studDetails->subjectName", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score1", 1, '', "C");
