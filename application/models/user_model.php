@@ -14,7 +14,7 @@ class user_model extends CI_Model {
             $data['username'] = $this->input->post('username');
             $username = $this->input->post('username');
             $data['active'] = 1;
-            $query = $this->db->query("SELECT `UserID` FROM mtiss_db.`user`  WHERE username ='$username'");
+            $query = $this->db->query("SELECT `UserID` FROM `user`  WHERE username ='$username'");
             $numberOfUsers = $query->num_rows();
             if ($numberOfUsers == 0) {
                 // if 0 insert data into the database
@@ -29,7 +29,7 @@ class user_model extends CI_Model {
         return $this->db->query("SELECT id, `group` FROM user_category ");
     }
     public function login($username, $password){
-        return $this->db->query("SELECT `UserID` FROM mtiss_db.`user`  WHERE username = '$username' and password = '$password'"); 
+        return $this->db->query("SELECT `UserID` FROM `user`  WHERE username = '$username' and password = '$password'"); 
     }
 
 }

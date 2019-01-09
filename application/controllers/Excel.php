@@ -107,12 +107,12 @@ Class Excel extends CI_Controller {
                         }
                         if ($studNo == 0) {
                             // insert the records of the currently inserted student id and subject codes into the student_takes_subjects table
-                            $this->db->query("INSERT INTO mtiss_db.students_masomo VALUES( NULL, $studentId, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL) ;");
+                            $this->db->query("INSERT INTO students_masomo VALUES( NULL, $studentId, NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL) ;");
                         } else {
                             // if student exists, update subjects records. It is assumed that initially all students takes all subjects
                             $status = $subArray->subjectName;
 //                            var_dump($v);
-                            $this->db->query("UPDATE mtiss_db.students_masomo SET $status = 1 where `studentId` = $studentId");
+                            $this->db->query("UPDATE students_masomo SET $status = 1 where `studentId` = $studentId");
                         }
                     }
                     $records += $this->db->affected_rows();

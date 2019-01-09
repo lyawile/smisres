@@ -77,13 +77,18 @@ class Result_model extends CI_Model {
         $studResults = array();
         foreach ($uniqStudId as $studId) {
             $this->db->where('id', $studId);
-            $result = $this->db->select(['firstname', 'middlename', 'surname'])->get('student');
+            $result = $this->db->select(['firstname', 'middlename', 'surname', 'picUrl'])->get('student');
 
             foreach ($result->result() as $studDetails) {
+                //Taking student picture 
+                if ($studDetails->picUrl == '') {
+                    $studentImage = 'public/img/student.jpg';
+                } else {
+                    $studentImage = 'files/' . $studDetails->picUrl;
+                }
                 // Display personal information
                 $logoFile = 'public/img/MTISSlogo.png';
                 $bismillahiFile = 'public/img/bismillahi_image.jpg';
-                $studentImage = 'public/img/student.jpg';
                 $this->pdf->addPage();
                 $this->pdf->SetFont('Arial', 'B', 13);
                 $this->pdf->Image($bismillahiFile, 75, 0, 60);
@@ -206,9 +211,9 @@ class Result_model extends CI_Model {
                     }
                     $index += 20;
                 }
-                
+
                 // Portion for displaying results
-                
+
                 $this->pdf->Cell(10, 5, "$i", 1, '', "C");
                 $this->pdf->Cell(40, 5, "$studDetails->subjectName", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score1", 1, '', "C");
