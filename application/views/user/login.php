@@ -1,4 +1,5 @@
-<?php echo $this->session->userdata('username');?>
+<?php echo $this->session->userdata('username'); ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,6 +12,12 @@
         <div class="container-fluid">
             <img src="<?= base_url(); ?>public/img/MTISSlogo.png" style="display: block; margin:20px auto; width:15em; height: 15em;" />
             <div class="col-md-4 col-md-offset-4 login">
+
+                <?php
+                if (isset($loginError))
+                    echo '<p class="error-message">' . $loginError . ' </p>';
+                ?>
+
                 <?php
                 echo form_open('user/login', array('class' => 'col-md-12'));
                 ?>
