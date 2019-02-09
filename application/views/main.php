@@ -36,19 +36,19 @@ if (isset($username) && !empty($username)) {
             </div>
         </div>
         <div class="col-md-12 wrapper">
-            <div class=" col-md-3 margin-control navigation">
+            <div class=" col-md-3 margin-control navigation list-group">
                 <ul><?php $data = array('target' => '_blank') ?>
-                    <li><?php echo anchor('student/register', 'Register student'); ?></li>
-                    <li><?php echo anchor('student/load', 'Load students') ?></li>
-                    <li><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
-                    <li><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
-                    <li><?php echo anchor('student/loadListView', 'students subjects'); ?> </li>
-                    <li><?php echo anchor('handlepdf/show', 'View Results'); ?> </li>
-                    <!--<li><?php echo anchor('handlepdf/show', 'View Results', $data); ?> </li>--> 
-                    <li><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
-                    <li><?php echo anchor('result', 'Load Scores'); ?> </li>
-                    <li><?php echo anchor('user/register', 'Register Users'); ?> </li>
-                    <li><?php echo anchor('result_config/index', 'Change Term'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('student/register', 'Register student'); ?></li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('student/load', 'Load students') ?></li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('student/loadListView', 'students subjects'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('handlepdf/show', 'View Results'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('result/selectBatch', 'View Batch Results'); ?> </li> 
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('result', 'Load Scores'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('user/register', 'Register Users'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('result_config/index', 'Change Term'); ?> </li>
                 </ul> 
             </div>
             <div class="col-md-9 col-md-offset-3 margin-control">
@@ -82,6 +82,9 @@ if (isset($username) && !empty($username)) {
                         }
 
                     });
+                });
+                $('li.list-group-item').click(function (e) {
+
                 });
             }
             );

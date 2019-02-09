@@ -13,7 +13,7 @@ class Result extends CI_Controller {
 //        $this->load->model("result_model");
 //        echo $this->result_model->generateSubjectRankingStores(1);
 //        exit();
-        if(file_exists('problems.txt')){ // check if error file exists, if yes, remove it
+        if (file_exists('problems.txt')) { // check if error file exists, if yes, remove it
             unlink('problems.txt');
         }
         $data['content'] = 'score/load_score';
@@ -42,8 +42,8 @@ class Result extends CI_Controller {
                     $examType = $spreadsheet->getActiveSheet()->getCell('B3')->getValue();
                     $attendance = $spreadsheet->getActiveSheet()->getCell('F' . $i)->getValue();
                     $score = $spreadsheet->getActiveSheet()->getCell('G' . $i)->getValue();
-                    if(trim($score)==""){
-                        $score='NULL';
+                    if (trim($score) == "") {
+                        $score = 'NULL';
                     }
                     if ($studentId != "") {
                         $this->load->model("result_model");
@@ -62,10 +62,32 @@ class Result extends CI_Controller {
         }
         $this->load->view('main', $data); // display the view on index action call
     }
-    public function show(){
-        $data['content']='score/results';
-        $this->load->view('main',$data);
+
+    public function show() {
+        $data['content'] = 'score/results';
+        $this->load->view('main', $data);
 //        echo "The results of all students per class will be shown here";
+    }
+
+    public function getBatchResults($streamId) {
+        $this->load->model("result_model");
+        $data = $this->result_model->getTheBatchResults($streamId);
+//        foreach($data as $data){
+//            echo $data->studId. " - ".$data->Chemistry. "<br/>";
+//        }
+        if (empty($data)) {
+            $out['data'] = '';
+            $this->load->view('score/batch_results', $out);
+        } else {
+            $out['data'] = $data[0];
+            $out['streamName'] = $data[1];
+            $out['term'] = $data[2];
+            $this->load->view('score/batch_results', $out);
+        }
+    }
+    public function selectBatch(){
+        $data['content']='score/choose_batch';
+        $this->load->view('main', $data);
     }
 
 }
