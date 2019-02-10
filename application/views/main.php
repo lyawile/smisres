@@ -43,8 +43,9 @@ if (isset($username) && !empty($username)) {
                     <li class="list-group-item list-group-item-action "><?php echo anchor('student/searchStudent', 'Edit Student details'); ?> </li>
                     <li class="list-group-item list-group-item-action "><?php echo anchor('student/viewStudents', 'View/Edit student Details'); ?> </li>
                     <li class="list-group-item list-group-item-action "><?php echo anchor('student/loadListView', 'students subjects'); ?> </li>
-                    <li class="list-group-item list-group-item-action "><?php echo anchor('handlepdf/show', 'View Results'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('result/resultsGen', 'Generate Results'); ?> </li>
                     <li class="list-group-item list-group-item-action "><?php echo anchor('result/selectBatch', 'View Batch Results'); ?> </li> 
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('result/showResults', 'View PDF Results'); ?> </li> 
                     <li class="list-group-item list-group-item-action "><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
                     <li class="list-group-item list-group-item-action "><?php echo anchor('result', 'Load Scores'); ?> </li>
                     <li class="list-group-item list-group-item-action "><?php echo anchor('user/register', 'Register Users'); ?> </li>

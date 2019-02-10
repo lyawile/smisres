@@ -46,24 +46,10 @@ class Result_model extends CI_Model {
             $june = $r->june;
             $september = $r->september;
             $december = $r->december;
-////            $march = ($march == NULL) ? 0 : $march;
-////            $june = ($june == NULL) ? 0 : $june;
-////            $september = ($september == NULL) ? 0 : $september;
-////            $december = ($december == NULL) ? 0 : $december;
-//            if ($march == '' && $june == '') {
-//                $avgJune = "NULL";
-//            } else {
-//                $avgJune = ($march + $june) / 2;
-//            }
-//            if ($september == '' && $december == '') {
-//                $avgDec = "NULL";
-//            } else {
-//                $avgDec = ($september + $december) / 2;
-//            }
 //          Get the average scores for each set of marks 
             $avgJune = $this->avgJune($march, $june);
             $avgDec = $this->avgDec($september, $december);
-            // Get the average marks 
+            // Update the average marks 
             $this->db->query("UPDATE `score` SET `avgJune` = $avgJune, `avgDec` = $avgDec WHERE `score`.`id` = $recId;");
             $studentId = $r->studId;
             $studIds[] = $studentId; // store all student ids in array for next retrieval 

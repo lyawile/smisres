@@ -85,8 +85,37 @@ class Result extends CI_Controller {
             $this->load->view('score/batch_results', $out);
         }
     }
-    public function selectBatch(){
-        $data['content']='score/choose_batch';
+
+    public function selectBatch() {
+        $data['content'] = 'score/choose_batch';
+        $this->load->view('main', $data);
+    }
+
+    public function resultsGen() {
+        $data['content'] = 'score/generate_results';
+        $this->load->view('main', $data);
+    }
+
+    // Generate the results 
+    public function generate($classId) {
+        $this->load->library('pdf');
+        $this->load->model('result_model');
+        $queryStudentDetails = $this->result_model->getResults($classId);
+        $this->pdf->Output("results/results_for_form_$classId.pdf", 'F');
+//        $data['content'] = 'score/results'; displays PDF
+        $data['content'] = 'score/generate_results';
+        $this->load->view('main', $data);
+    }
+
+    // shows list of links to get results
+    public function showResults() {
+        $data['content'] = 'score/show_results';
+        $this->load->view('main', $data);
+    }
+    // shows the list of PDF results
+    public function getIndividualResults($classId){
+        $data['classId'] = $classId;
+        $data['content']='score/results';
         $this->load->view('main', $data);
     }
 
