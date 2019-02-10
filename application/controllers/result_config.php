@@ -26,4 +26,16 @@ class result_config extends CI_Controller {
         }
     }
 
+    // dsplay grades configuration per class 
+    public function displayGrades($classId) {
+         $this->db->where(['stream_id'=>$classId]);
+        $grades = $this->db->get('grade_config');
+        foreach ($grades->result() as $grades){
+            $scoreRanges[]=$grades;
+        }
+        $params['grades'] = $scoreRanges; 
+        $data = 'config/display_grades';
+        $this->load->view($data,$params);
+    }
+
 }

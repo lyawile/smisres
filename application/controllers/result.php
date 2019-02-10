@@ -112,11 +112,14 @@ class Result extends CI_Controller {
         $data['content'] = 'score/show_results';
         $this->load->view('main', $data);
     }
+
     // shows the list of PDF results
-    public function getIndividualResults($classId){
+    public function getIndividualResults($classId) {
         $data['classId'] = $classId;
-        $data['content']='score/results';
+        $data['content'] = 'score/results';
         $this->load->view('main', $data);
     }
+
+   
 
 }

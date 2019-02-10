@@ -14,6 +14,8 @@ if (isset($username) && !empty($username)) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/bootstrap.css"/>
         <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/style.css"/>
+        <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/AdminLTE.min.css"/>
+        <link type="text/css" rel="stylesheet" href="<?= base_url(); ?>public/css/font-awesome.min.css"/>
         <style>
         </style>
     </head>
@@ -84,8 +86,20 @@ if (isset($username) && !empty($username)) {
 
                     });
                 });
-                $('li.list-group-item').click(function (e) {
-
+                $('#classIdForGrades').change(function (e) {
+                    var classId = $(this).val();
+                    $.ajax({
+                        url: "http://localhost/smis/index.php/result_config/displayGrades/" + classId,
+                        beforeSend: function (xhr) {
+                            $('.display-grades').text("");
+                            $('.display-grades').text("loading");
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            $('.display-grades').text("loading");
+                            $('.display-grades').text("");
+                            $('.display-grades').html(data);
+                        }
+                    });
                 });
             }
             );
