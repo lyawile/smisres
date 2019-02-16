@@ -96,12 +96,22 @@ class Result extends CI_Controller {
         $this->load->view('main', $data);
     }
 
-    // Generate the results 
+    // Generate the results
     public function generate($classId) {
         $this->load->library('pdf');
         $this->load->model('result_model');
         $queryStudentDetails = $this->result_model->getResults($classId);
-        $this->pdf->Output("results/results_for_form_$classId.pdf", 'F');
+        $dir = 'results\form_' . $classId;
+        $files = scandir($dir);
+        $directory = array_diff($files, array('.', '..'));
+        // check if  there is any file in the directory 
+        if (!empty($directory[2])) {
+            foreach ($directory as $file) {
+                $actualFile = 'C:\xampp_yangu\htdocs\smis\\' . $dir . '\\' . $file;
+                unlink($actualFile);
+            }
+        }
+        $this->pdf->Output("results/form_" . $classId . "/" . date("YMdHis") . "results_for_form_$classId.pdf", 'F');
 //        $data['content'] = 'score/results'; displays PDF
         $data['content'] = 'score/generate_results';
         $this->load->view('main', $data);
@@ -119,7 +129,5 @@ class Result extends CI_Controller {
         $data['content'] = 'score/results';
         $this->load->view('main', $data);
     }
-
-   
 
 }

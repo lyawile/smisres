@@ -72,6 +72,10 @@ class Result_model extends CI_Model {
                 } else {
                     $studentImage = 'files/' . $studDetails->picUrl;
                 }
+                // Query active term i.e June or December trough the function call 
+                $resultData = $this->getActiveTerm();
+                $active = $resultData[0];
+                $term = $resultData[1];
                 // Display personal information
                 $logoFile = 'public/img/MTISSlogo.png';
                 $bismillahiFile = 'public/img/bismillahi_image.jpg';
@@ -85,7 +89,7 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(45, 0, '', '');
                 $this->pdf->Cell(100, 0, "TAARIFA YA MAENDELEO YA MWANAFUNZI", '', 1, 'C');
                 $this->pdf->Cell(45, 0, '', '');
-                $this->pdf->Cell(100, 15, "MATOKEO YA MTIHANI WA MUHULA WA I & II", '', 1, 'C');
+                $this->pdf->Cell(100, 15, "MATOKEO YA MTIHANI WA MUHULA WA ". strtoupper($term). " ".date("Y"), '', 1, 'C');
                 $this->pdf->Cell(189, 10, "Anuani: S.L.P 261, Mtwara | Simu: 0718440572 | Barua Pepe: headmaster@mtiss.ac.tz", '', 1, 'c');
 //                $studentDetails = array($studDetails->firstname, $studDetails->middlename, $studDetails->surname);
                 $studentNames = $studDetails->firstname . " " . $studDetails->middlename . " " . $studDetails->surname;
@@ -114,10 +118,6 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell('', 5, '', '', 1);
                 $this->pdf->SetFont('Arial', '', 8);
             }
-            // Query active term i.e June or December trough the function call 
-            $resultData = $this->getActiveTerm();
-            $active = $resultData[0];
-            $term = $resultData[1];
             $studentResult = $this->db->query("select student.id studentId,`streamId`,s.id 'subjectIdentification',gradeJune,gradeDec, `subjectName`, march, june, `avgJune`, september, december, `avgDec` "
                     . "from student "
                     . "INNER JOIN score ON student.id =  score.`studId` "
@@ -275,13 +275,19 @@ class Result_model extends CI_Model {
             $this->pdf->Cell(110);
             $this->pdf->Cell(49, 5, "Na", 1, '', 'C');
             $this->pdf->Cell(30, 5, "Na", 1, 1, 'C');
-            for ($i = 1; $i <= 5; $i++) {
+            // Query the grade configuration to pupulate the table 
+            $this->db->where(['stream_id'=>$class]);
+            $gradesInfo = $this->db->get('grade_config');
+            $this->pdf->SetFont('Arial', '', 10);
+             $i =1;
+            foreach ($gradesInfo->result() as $grades){
                 $this->pdf->Cell(20, 5, $i, 1, '', 'C');
-                $this->pdf->Cell(30, 5, $i, 1, '', 'C');
-                $this->pdf->Cell(30, 5, $i, 1, '', 'C');
-                $this->pdf->Cell(30, 5, $i, 1, '', 'C');
-                $this->pdf->Cell(49, 5, $i, 1, '', 'C');
-                $this->pdf->Cell(30, 5, $i, 1, 1, 'C');
+                $this->pdf->Cell(30, 5, $grades->low ."-".$grades->high, 1, '', 'C');
+                $this->pdf->Cell(30, 5,$grades->grade , 1, '', 'C');
+                $this->pdf->Cell(30, 5, $grades->remarks, 1, '', 'C');
+                $this->pdf->Cell(49, 5, '', 1, '', 'C');
+                $this->pdf->Cell(30, 5, '', 1, 1, 'C');
+                $i +=1;
             }
             $this->pdf->Cell('', 10, "SEHEMU D: TAARIFA ZA MWALIMU WA DARASA", '', 1);
             $this->pdf->SetFont('Arial', '', 10);
@@ -605,9 +611,9 @@ class Result_model extends CI_Model {
         $className = $this->db->get('stream')->row()
                 ->streamName;
         // get the current exam term month
-        $this->db->where(['active'=>1]);
+        $this->db->where(['active' => 1]);
         $term = $this->db->get('system_setup')->row()->muhula;
-        return array(@$resultRow, $className, $term) ;
+        return array(@$resultRow, $className, $term);
     }
 
 }
