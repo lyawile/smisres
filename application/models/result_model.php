@@ -35,8 +35,14 @@ class Result_model extends CI_Model {
     }
 
     public function getResults($class) {
+        // get stream name by class id 
+        $this->db->where(['id' => $class]);
+        $className = $this->db->get('stream')->row()
+                ->streamName;
+        // get the active term
         $getTerm = $this->getActiveTerm();
         $termDisplay = ucfirst($getTerm[1]);
+        // get the score details 
         $this->db->where('streamId', $class);
         $this->db->order_by('studId', 'DESC');
         $result = $this->db->get('score');
@@ -94,8 +100,7 @@ class Result_model extends CI_Model {
 //                $studentDetails = array($studDetails->firstname, $studDetails->middlename, $studDetails->surname);
                 $studentNames = $studDetails->firstname . " " . $studDetails->middlename . " " . $studDetails->surname;
                 $this->pdf->SetFont('Arial', 'B', 15);
-//        }
-                $this->pdf->Cell(189, 10, "KWA MZAZI / MLEZI WA: " . $studentNames, 1, 1, 'C');
+                $this->pdf->Cell(189, 10, "KWA MZAZI / MLEZI WA: " . $studentNames. "($className)", 1, 1, 'C');
                 $this->pdf->SetFont('Arial', 'B', 10);
 
                 $this->pdf->Cell('', 8, "SEHEMU A: MATOKEO ($termDisplay, " . date("Y") . ")", '', 1);
