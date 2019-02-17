@@ -7,11 +7,9 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 user_guide/*
-uploads/*
 /application/libraries/dompdf/nbproject/private/
 /excelFiles/
 /files/
 !/files/templates/
-/results/
 nbproject/private/private.xml
 application/config/config.php
