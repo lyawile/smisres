@@ -132,6 +132,9 @@ class Result_model extends CI_Model {
             $i = 1;
             $sumOfAverageMarks = 0;
             $totalJune = 0;
+            // Truncate tables for rankings 
+            $this->db->query('truncate subject_position;');
+            $this->db->query('truncate subject_rank;');
             foreach ($studentResult->result() as $studDetails) {
                 // get the avgJune
                 $avgJuneIndividual = $studDetails->avgJune;
@@ -210,7 +213,7 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(20, 5, "$score1", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score2", 1, '', "C");
                 $this->pdf->Cell(20, 5, "$score3", 1, '', "C");
-                $this->pdf->Cell(18, 5, $this->getSubjectPosition($studentIdentification, $subjectIdentification), 1, '', "C");
+                $this->pdf->Cell(18, 5, $this->getSubjectPosition($studentIdentification, $subjectIdentification,$class), 1, '', "C");
                 $this->pdf->Cell(18, 5, "$numberOfStudentsInClass", 1, '', "C");
                 $this->pdf->Cell(18, 5, "$scoreGrade", 1, '', "C");
                 $this->pdf->Cell(26, 5, "1", 1, 1, "C");
@@ -371,8 +374,8 @@ class Result_model extends CI_Model {
         }
     }
 
-    public function getSubjectPosition($studentId, $subjectId) {
-        $query = $this->db->get_where('subject_position', ['studentId' => $studentId, 'subjectId' => $subjectId]);
+    public function getSubjectPosition($studentId, $subjectId, $classId) {
+        $query = $this->db->get_where('subject_position', ['studentId' => $studentId, 'subjectId' => $subjectId, 'classId'=>$classId]);
         foreach ($query->result() as $data) {
             return $data->position;
         }
@@ -389,7 +392,7 @@ class Result_model extends CI_Model {
         $this->db->query("insert into  subject_rank(studentId, subjectID, marks)
                           select score.studId, score.subjectID , score.avgJune 
                           from score 
-                          where score.subjectID = $subjectId
+                          where score.subjectID = $subjectId and streamId = $classId
                           order by score.avgJune desc ");
         // insert into the general table storing the subject ranking 
         $this->db->query("insert into subject_position(studentId, subjectId,marks, position, classId)
