@@ -51,7 +51,7 @@ if (isset($username) && !empty($username)) {
                     <li class="list-group-item list-group-item-action "><?php echo anchor('student/scoreTemplate', 'Get Score Template'); ?> </li>
                     <li class="list-group-item list-group-item-action "><?php echo anchor('result', 'Load Scores'); ?> </li>
                     <li class="list-group-item list-group-item-action "><?php echo anchor('user/register', 'Register Users'); ?> </li>
-                    <li class="list-group-item list-group-item-action "><?php echo anchor('result_config/index', 'Change Term'); ?> </li>
+                    <li class="list-group-item list-group-item-action "><?php echo anchor('result_config/index', 'Cofigurations'); ?> </li>
                 </ul> 
             </div>
             <div class="col-md-9 col-md-offset-3 margin-control">

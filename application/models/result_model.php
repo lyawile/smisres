@@ -89,7 +89,7 @@ class Result_model extends CI_Model {
                 $this->pdf->Cell(45, 0, '', '');
                 $this->pdf->Cell(100, 0, "TAARIFA YA MAENDELEO YA MWANAFUNZI", '', 1, 'C');
                 $this->pdf->Cell(45, 0, '', '');
-                $this->pdf->Cell(100, 15, "MATOKEO YA MTIHANI WA MUHULA WA ". strtoupper($term). " ".date("Y"), '', 1, 'C');
+                $this->pdf->Cell(100, 15, "MATOKEO YA MTIHANI WA MUHULA WA " . strtoupper($term) . " " . date("Y"), '', 1, 'C');
                 $this->pdf->Cell(189, 10, "Anuani: S.L.P 261, Mtwara | Simu: 0718440572 | Barua Pepe: headmaster@mtiss.ac.tz", '', 1, 'c');
 //                $studentDetails = array($studDetails->firstname, $studDetails->middlename, $studDetails->surname);
                 $studentNames = $studDetails->firstname . " " . $studDetails->middlename . " " . $studDetails->surname;
@@ -276,18 +276,18 @@ class Result_model extends CI_Model {
             $this->pdf->Cell(49, 5, "Na", 1, '', 'C');
             $this->pdf->Cell(30, 5, "Na", 1, 1, 'C');
             // Query the grade configuration to pupulate the table 
-            $this->db->where(['stream_id'=>$class]);
+            $this->db->where(['stream_id' => $class]);
             $gradesInfo = $this->db->get('grade_config');
             $this->pdf->SetFont('Arial', '', 10);
-             $i =1;
-            foreach ($gradesInfo->result() as $grades){
+            $i = 1;
+            foreach ($gradesInfo->result() as $grades) {
                 $this->pdf->Cell(20, 5, $i, 1, '', 'C');
-                $this->pdf->Cell(30, 5, $grades->low ."-".$grades->high, 1, '', 'C');
-                $this->pdf->Cell(30, 5,$grades->grade , 1, '', 'C');
+                $this->pdf->Cell(30, 5, $grades->low . "-" . $grades->high, 1, '', 'C');
+                $this->pdf->Cell(30, 5, $grades->grade, 1, '', 'C');
                 $this->pdf->Cell(30, 5, $grades->remarks, 1, '', 'C');
                 $this->pdf->Cell(49, 5, '', 1, '', 'C');
                 $this->pdf->Cell(30, 5, '', 1, 1, 'C');
-                $i +=1;
+                $i += 1;
             }
             $this->pdf->Cell('', 10, "SEHEMU D: TAARIFA ZA MWALIMU WA DARASA", '', 1);
             $this->pdf->SetFont('Arial', '', 10);
@@ -356,19 +356,14 @@ class Result_model extends CI_Model {
     }
 
     public function getGrade($marks) {
-        if ($marks >= 0 && $marks <= 20)
-            $grade = 'F';
-        elseif ($marks >= 21 && $marks <= 40)
-            $grade = 'D';
-        elseif ($marks >= 41 && $marks <= 60)
-            $grade = 'C';
-        elseif ($marks >= 61 && $marks <= 80)
-            $grade = 'B';
-        elseif ($marks >= 81 && $marks <= 100)
-            $grade = 'A';
-        else
-            $grade = '-';
-        return $grade;
+        $gradesInfo = $this->db->get('grade_config');
+        foreach ($gradesInfo->result() as $grades) {
+            $lowMark = $grades->low;
+            $highMark = $grades->high;
+            $grade = $grades->grade;
+            if (($marks >= $lowMark && $marks <= $highMark) === true)
+                return $grades->grade;
+        }
     }
 
     public function getSubjectPosition($studentId, $subjectId) {
