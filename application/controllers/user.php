@@ -45,6 +45,8 @@ class User extends CI_Controller {
     }
 
     public function login() {
+        echo CI_VERSION;
+        exit;
         if ($_SERVER['REQUEST_METHOD'] == 'POST') { // if submit button is pressed
             $username = $this->input->post('username');
             $password = md5($this->input->post('password'));

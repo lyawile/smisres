@@ -13,6 +13,7 @@ class Auth extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->database();
+                $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
 		$this->load->library(['ion_auth', 'form_validation']);
 		$this->load->helper(['url', 'language']);
 
